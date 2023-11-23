@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.ui.theme.Background
 import com.app.desafiodourado.ui.theme.BackgroundTransparent
 import com.app.desafiodourado.ui.theme.BrowLight
+import com.app.desafiodourado.ui.theme.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +68,7 @@ fun TextFieldCustom(
         },
         placeholder = { Text(placeholder, color = BrowLight) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = BrowLight, errorLabelColor = MaterialTheme.colorScheme.error,
+            focusedBorderColor = BrowLight, errorLabelColor = Error,
             containerColor = BackgroundTransparent,
             unfocusedBorderColor = BrowLight,
             textColor = Color.White
@@ -81,7 +82,7 @@ fun TextFieldCustom(
         isError = error,
         supportingText = {
             Text(
-                supportText, color = if (error) MaterialTheme.colorScheme.error else Color.White
+                supportText, color = if (error) Error else Color.White
             )
         },
         trailingIcon = {
@@ -93,7 +94,7 @@ fun TextFieldCustom(
                     Icon(
                         imageVector = visibilityIcon,
                         contentDescription = description,
-                        tint = if (error) MaterialTheme.colorScheme.error else BrowLight
+                        tint = if (error) Error else BrowLight
                     )
                 }
             } else {
@@ -102,7 +103,7 @@ fun TextFieldCustom(
                         Icon(
                             imageVector = it,
                             contentDescription = endIconDescription,
-                            tint = if (error) MaterialTheme.colorScheme.error else BrowLight
+                            tint = if (error) Error else BrowLight
                         )
                     }
                 }
@@ -114,5 +115,5 @@ fun TextFieldCustom(
 @Preview
 @Composable
 fun TextInputPreview() {
-    TextFieldCustom(label = "aqui", onChangeListener = {})
+    TextFieldCustom(label = "example", onChangeListener = {})
 }
