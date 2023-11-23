@@ -115,5 +115,5 @@ fun TextFieldCustom(
 @Preview
 @Composable
 fun TextInputPreview() {
-    TextFieldCustom(label = "example", onChangeListener = {})
+    TextFieldCustom(label = "Nome de aventureiro(a)", onChangeListener = {})
 }
