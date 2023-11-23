@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 object InitialModule {
     val modules = module {
-        factory<InitialRepository> { InitialRepositoryImpl(client = get()) }
+        factory<InitialRepository> { InitialRepositoryImpl(accountManager = get()) }
         factory { CreateUserUseCase(context = androidContext(), repository = get()) }
         viewModel { InitialViewModel(createUserUseCase = get()) }
     }

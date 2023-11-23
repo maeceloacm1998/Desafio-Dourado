@@ -142,7 +142,9 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = k
 
 @Composable
 fun Observables(
-    navController: NavController, viewModel: InitialViewModel?, onLoading: (state: Boolean) -> Unit
+    navController: NavController,
+    viewModel: InitialViewModel?,
+    onLoading: (state: Boolean) -> Unit
 ) {
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     val uiState by produceState<UiState<Boolean>>(
