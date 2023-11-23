@@ -6,15 +6,15 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.app.desafiodourado.core.accountManager.AccountManagerModule
 import com.app.desafiodourado.core.firebase.FirebaseModule
 import com.app.desafiodourado.core.routes.Routes
+import com.app.desafiodourado.core.sharedPreferences.SharedPreferencesModule
 import com.app.desafiodourado.feature.initial.data.di.InitialModule
 import com.app.desafiodourado.feature.initial.ui.InitialScreen
 import com.app.desafiodourado.ui.theme.DesafioDouradoTheme
@@ -52,8 +52,10 @@ class MainActivity : ComponentActivity() {
             androidContext(this@MainActivity)
             modules(
                 listOf(
+                    FirebaseModule.modules,
+                    SharedPreferencesModule.modules,
+                    AccountManagerModule.modules,
                     InitialModule.modules,
-                    FirebaseModule.modules
                 )
             )
         }
