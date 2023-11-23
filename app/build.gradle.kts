@@ -76,7 +76,6 @@ dependencies {
 
     implementation("androidx.room:room-runtime:2.6.0")
     implementation("androidx.room:room-ktx:2.6.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     annotationProcessor("androidx.room:room-compiler:2.6.0")
     ksp("androidx.room:room-compiler:2.6.0")
     //noinspection KaptUsageInsteadOfKsp
@@ -87,6 +86,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
