@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "233442009312",
+    "project_id": "desafio-dourado",
+    "storage_bucket": "desafio-dourado.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233442009312:android:054b369457d4e31e7db085",
+        "android_client_info": {
+          "package_name": "com.app.desafiodourado"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6EHlYjZyQEweDfCLZ0vMVk2k_kQbspIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
