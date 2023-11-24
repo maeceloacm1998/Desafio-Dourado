@@ -26,7 +26,7 @@ import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Background(
-    snackbarHostState: SnackbarHostState?,
+    snackbarHostState: SnackbarHostState? = null,
     snackbarType: SnackbarCustomType = SnackbarCustomType.SUCCESS,
     foreground: @Composable () -> Unit
 ) {
