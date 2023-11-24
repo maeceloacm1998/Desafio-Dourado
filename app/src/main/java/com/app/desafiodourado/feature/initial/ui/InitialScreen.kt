@@ -13,30 +13,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 import com.app.desafiodourado.components.textfield.TextFieldCustom
+import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.ui.theme.BackgroundTransparent
 import com.app.desafiodourado.ui.theme.BrowLight
@@ -44,15 +41,76 @@ import com.app.desafiodourado.ui.theme.CustomDimensions
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = koinViewModel()) {
+fun InitialScreen(navController: NavController, viewModel: InitialViewModel = koinViewModel()) {
     val snackbarHostState = remember { SnackbarHostState() }
-
     var nameState by rememberSaveable { mutableStateOf("") }
     var isLoading by rememberSaveable { mutableStateOf(false) }
 
-    val userNameError by viewModel?.userNameError!!.observeAsState(initial = false)
-    val snackbarType by viewModel?.snackbarType!!.observeAsState(initial = SnackbarCustomType.SUCCESS)
+    val userNameError by viewModel.userNameError.observeAsState(initial = false)
+    val snackbarType by viewModel.snackbarType.observeAsState(initial = SnackbarCustomType.SUCCESS)
 
+    Observables(
+        snackbarHostState = snackbarHostState,
+        navController = navController,
+        viewModel = viewModel,
+        onLoading = {
+            isLoading = it
+        })
+
+    InitialComponents(
+        snackbarHostState = snackbarHostState,
+        isLoading = isLoading,
+        userNameError = userNameError,
+        snackbarType = snackbarType,
+        onNameState = { name -> nameState = name },
+        onSubmitButton = { viewModel.createUser(nameState) }
+    )
+}
+
+@Composable
+fun Observables(
+    snackbarHostState: SnackbarHostState,
+    navController: NavController,
+    viewModel: InitialViewModel,
+    onLoading: (state: Boolean) -> Unit
+) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    when (uiState) {
+        is UiState.Loading -> {
+            onLoading(true)
+        }
+
+        is UiState.Success -> {
+            navController.navigate(Routes.Home.route) {
+                popUpTo(Routes.Initial.route) {
+                    inclusive = true
+                }
+            }
+        }
+
+        is UiState.Error -> {
+            onLoading(false)
+            viewModel.showSnackBar(
+                snackbarHostState = snackbarHostState,
+                message = stringResource(id = R.string.initial_screen_snackbar_error),
+                snackbarType = SnackbarCustomType.ERROR
+            )
+        }
+
+        else -> Unit
+    }
+}
+
+@Composable
+fun InitialComponents(
+    snackbarHostState: SnackbarHostState,
+    isLoading: Boolean,
+    userNameError: Boolean,
+    snackbarType: SnackbarCustomType,
+    onSubmitButton: () -> Unit,
+    onNameState: (name: String) -> Unit
+) {
     Background(
         snackbarHostState = snackbarHostState,
         snackbarType = snackbarType
@@ -60,14 +118,6 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = k
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (imgChallenger, tfName, btGoToAdventure) = createRefs()
             val image = painterResource(id = R.drawable.challenger)
-
-            Observables(
-                snackbarHostState = snackbarHostState,
-                navController = navController,
-                viewModel = viewModel,
-                onLoading = {
-                    isLoading = it
-                })
 
             createVerticalChain(
                 imgChallenger, tfName, btGoToAdventure, chainStyle = ChainStyle.Packed
@@ -105,7 +155,7 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = k
                     },
                 label = stringResource(id = R.string.initial_screen_tf_label),
                 onChangeListener = {
-                    nameState = it
+                    onNameState(it)
                 },
                 error = userNameError,
                 supportText = if (userNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
@@ -125,9 +175,7 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = k
                     disabledContainerColor = BackgroundTransparent
                 ),
                 enabled = !isLoading,
-                onClick = {
-                    viewModel?.createUser(nameState)
-                },
+                onClick = { onSubmitButton() },
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(
@@ -148,46 +196,17 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel? = k
     }
 }
 
-@Composable
-fun Observables(
-    snackbarHostState: SnackbarHostState,
-    navController: NavController,
-    viewModel: InitialViewModel?,
-    onLoading: (state: Boolean) -> Unit
-) {
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val uiState by produceState<UiState<Boolean>>(
-        initialValue = UiState.Success(false), key1 = lifecycle, key2 = viewModel
-    ) {
-        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            viewModel?.uiState?.collect { value = it }
-        }
-    }
-
-    when (uiState) {
-        is UiState.Loading -> {
-            onLoading(true)
-        }
-
-        is UiState.Success -> {
-//            navController.navigate(Routes.Home.route)
-        }
-
-        is UiState.Error -> {
-            onLoading(false)
-            viewModel?.showSnackBar(
-                snackbarHostState = snackbarHostState,
-                message = "Erro ao cadastrar o usuário",
-                snackbarType = SnackbarCustomType.ERROR
-            )
-        }
-    }
-}
-
 @Preview
 @Composable
 fun InitialScreenPreview() {
-    InitialScreen(
-        navController = rememberNavController(), viewModel = null
+    val fakeSnackbarHostState = remember { SnackbarHostState() }
+
+    InitialComponents(
+        snackbarHostState = fakeSnackbarHostState,
+        isLoading = false,
+        userNameError = false,
+        snackbarType = SnackbarCustomType.ERROR,
+        onSubmitButton = {},
+        onNameState = {}
     )
 }

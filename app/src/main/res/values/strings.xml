@@ -4,4 +4,5 @@
     <string name="initial_screen_tf_label">Nome de aventureiro(a)</string>
     <string name="initial_screen_tf_error">Digite seu nome para iniciar sua jornada :)</string>
     <string name="initial_screen_bt_label">Praparar para a aventura</string>
+    <string name="initial_screen_snackbar_error">Erro ao cadastrar você aventureiro, tente novamente.</string>
 </resources>

@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class InitialViewModel(private val createUserUseCase: CreateUserUseCase) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<Boolean>>(UiState.Success(false))
-    val uiState: StateFlow<UiState<Boolean>> = _uiState
+    private val _uiState = MutableStateFlow<UiState<Boolean>?>(null)
+    val uiState: StateFlow<UiState<Boolean>?> = _uiState
 
     private val _userNameError = MutableLiveData<Boolean>()
     val userNameError: LiveData<Boolean> = _userNameError
@@ -30,8 +30,8 @@ class InitialViewModel(private val createUserUseCase: CreateUserUseCase) : ViewM
                 setUserNameError(false)
 
                 createUserUseCase(userName)
-                    .onSuccess {
-                        _uiState.value = UiState.Success(it)
+                    .onSuccess { success ->
+                        _uiState.value = UiState.Success(true)
                     }.onFailure {
                         _uiState.value = UiState.Error(it)
                     }
