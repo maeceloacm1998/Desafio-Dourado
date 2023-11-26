@@ -22,5 +22,6 @@ class FirebaseConstants {
 
     object Collections {
         const val USERS = "users"
+        const val CHALLENGERS = "challengers"
     }
 }

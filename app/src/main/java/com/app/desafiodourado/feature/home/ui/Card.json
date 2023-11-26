@@ -1,0 +1,502 @@
+[
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Assistir a um filme ou s\u00e9rie juntos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Fazer uma noite de degusta\u00e7\u00e3o de chocolates",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Fazer um passeio de bicicleta",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 41000,
+    "isComplete": false,
+    "award": "Um dia no spa",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Ir a um spa",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Fazer uma noite de degusta\u00e7\u00e3o de queijos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Jogar um jogo de tabuleiro",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Jogar um jogo de tabuleiro",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Jantar rom\u00e2ntico",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1250,
+    "award": "Um Caf\u00e9 da manh\u00e3",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 31750,
+    "isComplete": false,
+    "award": "Rodizio de Sushi",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Fazer uma noite de jogos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 33000,
+    "isComplete": false,
+    "award": "Um par de \u00f3culos de sol elegantes",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1250,
+    "award": "Jogar um jogo de tabuleiro",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Fazer uma noite de jogos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Fazer uma sess\u00e3o de fotos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Fazer uma sess\u00e3o de fotos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Fazer uma noite de degusta\u00e7\u00e3o de doces",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Jantar rom\u00e2ntico",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 42000,
+    "isComplete": false,
+    "award": "Ingressos para um teatro ou concerto",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Fazer uma viagem de fim de semana",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 47000,
+    "isComplete": false,
+    "award": "Um kit de queijos e vinhos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 30750,
+    "isComplete": false,
+    "award": "Viagem de fim de semana",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Fazer uma sess\u00e3o de fotos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1250,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Ir em uma sorveteria",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 48750,
+    "isComplete": false,
+    "award": "Um livro a sua escolha",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Fazer uma sess\u00e3o de fotos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Ir a um concerto",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Fazer uma noite de degusta\u00e7\u00e3o de queijos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Ir a seu restaurante favorito",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Cozinhar juntos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 42750,
+    "isComplete": false,
+    "award": "Um di\u00e1rio ou caderno de notas bonito",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 37750,
+    "isComplete": false,
+    "award": "Viagem de fim de semana",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 500,
+    "award": "Passeio Surpresa",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Fazer uma viagem de fim de semana",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Jogar um jogo de tabuleiro",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 750,
+    "award": "Jogar um jogo de tabuleiro",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Fazer uma noite de degusta\u00e7\u00e3o de vinhos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Piquenique no parque",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1500,
+    "award": "Cozinhar juntos",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/default.png?alt=media&token=853a1cf6-62bf-4ac8-a0f2-19286af6efdf",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeDeafult.png?alt=media&token=49d3b7ff-b38b-4315-8b7e-0af40f6589c9",
+    "type": "NORMAL",
+    "details": "Essa carta \u00e9 considerada comum, nela tem chance de vir algum presente ou item para sua cole\u00e7\u00e3o, contudo tem chances de n\u00e3o vir nada",
+    "isComplete": false,
+    "value": 1000,
+    "award": "Visitar um museu",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/box.png?alt=media&token=f79e0f2c-4179-41f7-8b85-1fc56356737e"
+  },
+  {
+    "image": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/golldChallenger.png?alt=media&token=692ca564-3ac1-459f-82af-f9293647267d",
+    "completeImage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/completeGoldChallenger.png?alt=media&token=a15c4c0e-8b04-4979-8aa0-7d4dc44ecf3e",
+    "type": "GOLD_CHALLENGER",
+    "details": "Essa \u00e9 a carta de Desafio Dourado, normalmente ela cont\u00e9m premios que podem ser bastante especiais e sempre vir\u00e1 um premio.",
+    "value": 41750,
+    "isComplete": false,
+    "award": "Um livro a sua escolha",
+    "awardInage": "https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1"
+  }
+]
