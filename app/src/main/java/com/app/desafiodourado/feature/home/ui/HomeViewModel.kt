@@ -21,8 +21,11 @@ class HomeViewModel(
     private val setChallengersUseCase: SetChallengersUseCase,
     private val getCoinsUseCase: GetCoinsUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<List<Challenger.Card>>>(UiState.Loading)
-    val uiState: StateFlow<UiState<List<Challenger.Card>>> = _uiState
+    private val _challengerState = MutableStateFlow<UiState<List<Challenger.Card>>>(UiState.Loading)
+    val challengerState: StateFlow<UiState<List<Challenger.Card>>> = _challengerState
+
+    private val _headerState = MutableStateFlow<UiState<Int>>(UiState.Loading)
+    val headerState: StateFlow<UiState<Int>> = _headerState
 
     private var challengerList: MutableList<Challenger.Card> = mutableListOf()
 
@@ -32,10 +35,16 @@ class HomeViewModel(
                 val challenger = checkNotNull(document.toObject(Challenger::class.java))
                 challengerList = challenger.challengers.toMutableList()
                 val filtersChallengerNotCompleted = challenger.challengers.filter { !it.isComplete }
-                _uiState.value = UiState.Success(filtersChallengerNotCompleted)
+                _challengerState.value = UiState.Success(filtersChallengerNotCompleted)
             }.onFailure {
-                _uiState.value = UiState.Error(it)
+                _challengerState.value = UiState.Error(it)
             }
+        }
+    }
+
+    fun getHeaderInfo() {
+        viewModelScope.launch {
+            _headerState.value = UiState.Success(2)
         }
     }
 
@@ -43,12 +52,12 @@ class HomeViewModel(
         when (TopTabIndexType.fromValue(index)) {
             PENDING -> {
                 val challengerNotCompleted = challengerList.filter { !it.isComplete }
-                _uiState.value = UiState.Success(challengerNotCompleted)
+                _challengerState.value = UiState.Success(challengerNotCompleted)
             }
 
             COMPLETED -> {
                 val challengerCompleted = challengerList.filter { it.isComplete }
-                _uiState.value = UiState.Success(challengerCompleted)
+                _challengerState.value = UiState.Success(challengerCompleted)
             }
         }
     }

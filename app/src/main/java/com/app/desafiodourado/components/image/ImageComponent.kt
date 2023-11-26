@@ -30,10 +30,11 @@ fun ImageComponent(modifier: Modifier = Modifier, url: String) {
         if (painter.state is AsyncImagePainter.State.Loading) {
             CircularProgressIndicator(
                 color = BrowLight,
-                modifier = Modifier.size(
-                    width = CustomDimensions.padding10,
-                    height = CustomDimensions.padding10
-                )
+                modifier = Modifier
+                    .size(
+                        width = CustomDimensions.padding10,
+                        height = CustomDimensions.padding10
+                    )
             )
         } else {
             Image(
