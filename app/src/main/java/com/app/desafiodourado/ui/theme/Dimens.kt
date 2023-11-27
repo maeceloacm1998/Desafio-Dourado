@@ -3,6 +3,7 @@ package com.app.desafiodourado.ui.theme
 import androidx.compose.ui.unit.dp
 
 object CustomDimensions {
+    val padding300 = 300.dp
     val padding160 = 160.dp
     val padding150 = 150.dp
     val padding80 = 80.dp

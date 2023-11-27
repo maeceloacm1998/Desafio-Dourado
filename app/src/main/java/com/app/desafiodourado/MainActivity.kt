@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity(), KoinComponent {
             startDestination = if (accountManager.userIsLogged()) Routes.Home.route else Routes.Initial.route
         ) {
             composable(Routes.Initial.route) { InitialScreen(navController) }
-            composable(Routes.Home.route) { HomeScreen(navController) }
+            composable(Routes.Home.route) { HomeScreen() }
         }
     }
 }

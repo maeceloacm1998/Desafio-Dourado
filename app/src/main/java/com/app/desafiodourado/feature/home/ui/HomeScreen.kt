@@ -1,27 +1,15 @@
 package com.app.desafiodourado.feature.home.ui
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Update
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -29,11 +17,9 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -42,9 +28,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.coinview.CoinView
-import com.app.desafiodourado.components.image.ImageComponent
+import com.app.desafiodourado.components.states.Error
+import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.core.utils.UiState
+import com.app.desafiodourado.feature.home.ui.components.ChallengerList
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.ui.theme.Background
 import com.app.desafiodourado.ui.theme.BrowLight
@@ -53,7 +41,7 @@ import com.app.desafiodourado.ui.theme.PurpleLight
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinViewModel()) {
+fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val tabs = listOf("Desafios Pendentes", "Desafios Concluidos")
 
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -79,8 +67,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinView
         }
     }
 
-    HomeComponents(
-        headerState = headerState,
+    HomeComponents(headerState = headerState,
         challengerState = challengerState,
         tabs = tabs,
         coins = viewModel.getCoins(),
@@ -92,8 +79,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinView
         },
         onClickRetryChallengerListener = {
             viewModel.getChallengers()
-        }
-    )
+        })
 }
 
 @Composable
@@ -118,8 +104,7 @@ fun HomeComponents(
                 onClickRetryListener = onClickRetryChallengerListener
             )
             ChallengerListObservable(
-                challengerState = challengerState,
-                onClickRetryListener = onClickRetryHeaderListener
+                challengerState = challengerState, onClickRetryListener = onClickRetryHeaderListener
             )
         }
     }
@@ -134,9 +119,7 @@ fun HeaderObservable(
     onClickRetryListener: () -> Unit
 ) {
     when (headerState) {
-        is UiState.Loading -> {
-            Loading()
-        }
+        is UiState.Loading -> Loading()
 
         is UiState.Success -> {
             val badgeCount = headerState.response
@@ -160,13 +143,10 @@ fun HeaderObservable(
 
 @Composable
 fun ChallengerListObservable(
-    challengerState: UiState<List<Challenger.Card>>,
-    onClickRetryListener: () -> Unit
+    challengerState: UiState<List<Challenger.Card>>, onClickRetryListener: () -> Unit
 ) {
     when (challengerState) {
-        is UiState.Loading -> {
-            Loading()
-        }
+        is UiState.Loading -> Unit
 
         is UiState.Success -> {
             val response = challengerState.response
@@ -192,8 +172,7 @@ fun TopBar(coin: Int) {
         Text(
             modifier = Modifier
                 .padding(
-                    horizontal = CustomDimensions.padding20,
-                    vertical = CustomDimensions.padding14
+                    horizontal = CustomDimensions.padding20, vertical = CustomDimensions.padding14
                 )
                 .constrainAs(txtVersion) {
                     end.linkTo(coinView.start)
@@ -208,8 +187,7 @@ fun TopBar(coin: Int) {
         CoinView(
             modifier = Modifier
                 .padding(
-                    horizontal = CustomDimensions.padding20,
-                    vertical = CustomDimensions.padding14
+                    horizontal = CustomDimensions.padding20, vertical = CustomDimensions.padding14
                 )
                 .constrainAs(coinView) {
                     end.linkTo(parent.end)
@@ -226,136 +204,25 @@ fun TopTabRow(tabs: List<String>, onClickTabOptionListener: (position: Int) -> U
     var state by remember { mutableIntStateOf(0) }
 
     ConstraintLayout(modifier = Modifier.padding(top = CustomDimensions.padding20)) {
-        TabRow(
-            selectedTabIndex = state,
-            containerColor = Background,
-            indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
-                    Modifier
-                        .tabIndicatorOffset(tabPositions[state]),
-                    height = CustomDimensions.padding2,
-                    color = BrowLight
-                )
-            }
-        ) {
+        TabRow(selectedTabIndex = state, containerColor = Background, indicator = { tabPositions ->
+            TabRowDefaults.Indicator(
+                Modifier.tabIndicatorOffset(tabPositions[state]),
+                height = CustomDimensions.padding2,
+                color = BrowLight
+            )
+        }) {
             tabs.forEachIndexed { position, title ->
-                Tab(
-                    selected = state == position,
-                    onClick = {
-                        state = position
-                        onClickTabOptionListener(position)
-                    },
-                    text = {
-                        Text(
-                            text = title,
-                            color = if (position != state) PurpleLight else BrowLight,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                )
+                Tab(selected = state == position, onClick = {
+                    state = position
+                    onClickTabOptionListener(position)
+                }, text = {
+                    Text(
+                        text = title,
+                        color = if (position != state) PurpleLight else BrowLight,
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                })
             }
-        }
-    }
-}
-
-@Composable
-fun ChallengerList(challengerList: List<Challenger.Card>) {
-    val state = rememberLazyGridState()
-
-    if (challengerList.isEmpty()) {
-        ChallengerListError()
-    } else {
-        LazyVerticalGrid(state = state, columns = GridCells.Fixed(count = 3)) {
-            items(challengerList) { item ->
-                ImageComponent(
-                    modifier = Modifier
-                        .size(
-                            width = CustomDimensions.padding160,
-                            height = CustomDimensions.padding160
-                        )
-                        .padding(vertical = CustomDimensions.padding2),
-                    url = item.image
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun ChallengerListError() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "Nenhum evento encontrado",
-            color = Color.White,
-            style = MaterialTheme.typography.titleMedium
-        )
-    }
-}
-
-@Composable
-fun Loading() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(CustomDimensions.padding150),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = BrowLight,
-            modifier = Modifier
-                .size(
-                    width = CustomDimensions.padding50,
-                    height = CustomDimensions.padding50
-                )
-        )
-    }
-}
-
-@Composable
-fun Error(title: String, onClickRetryListener: () -> Unit) {
-    ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
-        val (txtTitle, btRetry) = createRefs()
-
-        Text(
-            modifier = Modifier
-                .padding(
-                    horizontal = CustomDimensions.padding20,
-                    vertical = CustomDimensions.padding14
-                )
-                .constrainAs(txtTitle) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    top.linkTo(parent.top)
-                },
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            color = Color.White,
-            textAlign = TextAlign.Center
-        )
-
-        TextButton(
-            modifier = Modifier.constrainAs(btRetry) {
-                top.linkTo(txtTitle.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-            }, onClick = { onClickRetryListener() }) {
-            Text(
-                modifier = Modifier.padding(end = CustomDimensions.padding10),
-                text = "Tentar novamente",
-                style = MaterialTheme.typography.titleSmall,
-                color = BrowLight,
-                textAlign = TextAlign.Center
-            )
-            Icon(
-                imageVector = Icons.Filled.Update,
-                tint = BrowLight,
-                contentDescription = "Localized description"
-            )
         }
     }
 }
@@ -369,7 +236,22 @@ fun TopTabRowPreview() {
 
 @Preview
 @Composable
-fun HomePreview() {
+fun HomePreviewLoading() {
+    val titles = listOf("Desafios Pendentes", "Desafios Concluidos")
+    HomeComponents(
+        challengerState = UiState.Loading,
+        headerState = UiState.Loading,
+        tabs = titles,
+        coins = 200,
+        onClickTabOptionListener = {},
+        onClickRetryChallengerListener = {},
+        onClickRetryHeaderListener = {}
+    )
+}
+
+@Preview
+@Composable
+fun HomePreviewError() {
     val titles = listOf("Desafios Pendentes", "Desafios Concluidos")
     HomeComponents(
         challengerState = UiState.Error(Throwable()),
@@ -378,8 +260,7 @@ fun HomePreview() {
         coins = 200,
         onClickTabOptionListener = {},
         onClickRetryChallengerListener = {},
-        onClickRetryHeaderListener = {}
-    )
+        onClickRetryHeaderListener = {})
 }
 
 @Preview

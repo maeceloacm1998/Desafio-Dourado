@@ -71,7 +71,7 @@ fun TextFieldCustom(
             focusedBorderColor = BrowLight, errorLabelColor = Error,
             containerColor = BackgroundTransparent,
             unfocusedBorderColor = BrowLight,
-            textColor = Color.White
+            focusedTextColor = Color.White
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType, imeAction = imeAction
