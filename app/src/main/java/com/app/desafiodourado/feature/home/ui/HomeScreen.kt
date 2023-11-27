@@ -12,6 +12,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.produceState
@@ -43,22 +44,8 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val tabs = listOf("Desafios Pendentes", "Desafios Concluidos")
-
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val challengerState by produceState<UiState<List<Challenger.Card>>>(
-        initialValue = UiState.Loading, key1 = lifecycle, key2 = viewModel
-    ) {
-        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            viewModel.challengerState.collect { value = it }
-        }
-    }
-    val headerState by produceState<UiState<Int>>(
-        initialValue = UiState.Loading, key1 = lifecycle, key2 = viewModel
-    ) {
-        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            viewModel.headerState.collect { value = it }
-        }
-    }
+    val challengerState by viewModel.challengerState.collectAsState(initial = UiState.Loading)
+    val headerState by viewModel.headerState.collectAsState(initial = UiState.Loading)
 
     LaunchedEffect(key1 = Lifecycle.State.STARTED) {
         viewModel.run {
