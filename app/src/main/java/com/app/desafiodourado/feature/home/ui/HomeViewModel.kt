@@ -6,7 +6,9 @@ import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.feature.home.domain.GetChallengersUseCase
 import com.app.desafiodourado.feature.home.domain.GetCoinsUseCase
 import com.app.desafiodourado.feature.home.domain.SetChallengersUseCase
+import com.app.desafiodourado.feature.home.domain.UpdateChallengersUseCase
 import com.app.desafiodourado.feature.home.ui.model.Challenger
+import com.app.desafiodourado.feature.home.ui.model.Challenger.Card
 import com.app.desafiodourado.feature.home.ui.model.TopTabIndexType
 import com.app.desafiodourado.feature.home.ui.model.TopTabIndexType.COMPLETED
 import com.app.desafiodourado.feature.home.ui.model.TopTabIndexType.PENDING
@@ -19,25 +21,39 @@ import kotlinx.coroutines.launch
 class HomeViewModel(
     private val getChallengersUseCase: GetChallengersUseCase,
     private val setChallengersUseCase: SetChallengersUseCase,
-    private val getCoinsUseCase: GetCoinsUseCase
+    private val getCoinsUseCase: GetCoinsUseCase,
+    private val updateChallengersUseCase: UpdateChallengersUseCase
 ) : ViewModel() {
-    private val _challengerState = MutableStateFlow<UiState<List<Challenger.Card>>>(UiState.Loading)
-    val challengerState: StateFlow<UiState<List<Challenger.Card>>> = _challengerState
+    private val _challengerState = MutableStateFlow<UiState<List<Card>>>(UiState.Loading)
+    val challengerState: StateFlow<UiState<List<Card>>> = _challengerState
 
     private val _headerState = MutableStateFlow<UiState<Int>>(UiState.Loading)
     val headerState: StateFlow<UiState<Int>> = _headerState
 
-    private var challengerList: MutableList<Challenger.Card> = mutableListOf()
+    private var challengerList: MutableList<Card> = mutableListOf()
 
     fun getChallengers() {
         viewModelScope.launch {
             getChallengersUseCase().onSuccess { document ->
                 val challenger = checkNotNull(document.toObject(Challenger::class.java))
                 challengerList = challenger.challengers.toMutableList()
-                val filtersChallengerNotCompleted = challenger.challengers.filter { !it.isComplete }
+                val filtersChallengerNotCompleted = challenger.challengers.filter { !it.complete }
                 _challengerState.value = UiState.Success(filtersChallengerNotCompleted)
             }.onFailure {
                 _challengerState.value = UiState.Error(it)
+            }
+        }
+    }
+
+    fun updateChallenger(challenger: Card) {
+        viewModelScope.launch {
+            updateChallengersUseCase(
+                challengerList = challengerList,
+                challenger = challenger
+            ).onSuccess {
+                getChallengers()
+            }.onFailure {
+
             }
         }
     }
@@ -51,12 +67,12 @@ class HomeViewModel(
     fun updateChallengerList(index: Int) {
         when (TopTabIndexType.fromValue(index)) {
             PENDING -> {
-                val challengerNotCompleted = challengerList.filter { !it.isComplete }
+                val challengerNotCompleted = challengerList.filter { !it.complete }
                 _challengerState.value = UiState.Success(challengerNotCompleted)
             }
 
             COMPLETED -> {
-                val challengerCompleted = challengerList.filter { it.isComplete }
+                val challengerCompleted = challengerList.filter { it.complete}
                 _challengerState.value = UiState.Success(challengerCompleted)
             }
         }
@@ -567,9 +583,9 @@ class HomeViewModel(
                 "    \"awardInage\": \"https://firebasestorage.googleapis.com/v0/b/desafio-dourado.appspot.com/o/boxGolden.png?alt=media&token=05070a50-6fde-49ee-b7df-42c624c6a3e1\"\n" +
                 "  }\n" +
                 "]"
-        val listType = object : TypeToken<List<Challenger.Card>>() {}.type
+        val listType = object : TypeToken<List<Card>>() {}.type
 
-        val cards: List<Challenger.Card> = Gson().fromJson(json, listType)
+        val cards: List<Card> = Gson().fromJson(json, listType)
         viewModelScope.launch {
             setChallengersUseCase(Challenger(cards))
         }

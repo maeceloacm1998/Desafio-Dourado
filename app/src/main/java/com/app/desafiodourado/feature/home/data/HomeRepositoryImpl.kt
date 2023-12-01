@@ -20,6 +20,11 @@ class HomeRepositoryImpl(
         client.setSpecificDocument(collectionPath = CHALLENGERS, documentPath = id, data = cardList)
     }
 
+    override suspend fun updateChallengers(challenger: Challenger): Result<Boolean> {
+        val id = accountManager.getUserId()
+        return client.setSpecificDocument(collectionPath = CHALLENGERS, documentPath = id, data = challenger)
+    }
+
     override fun getCoins(): Int = accountManager.getQuantityCoins()
 
 }

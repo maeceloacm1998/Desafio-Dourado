@@ -67,7 +67,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
         },
         onClickRetryListener = { viewModel.getChallengers() },
         onUpdateChallengerList = { challenger ->
-
+            viewModel.updateChallenger(challenger)
         }
     )
 }
@@ -79,7 +79,7 @@ fun HomeComponents(
     coins: Int,
     onClickTabOptionListener: (position: Int) -> Unit,
     onClickRetryListener: () -> Unit,
-    onUpdateChallengerList: (challenger: Challenger.Card) -> Unit
+    onUpdateChallengerList: (challenger: Card) -> Unit
 ) {
     Background {
         Column(
@@ -113,7 +113,7 @@ fun HomeComponents(
                             challenger = challengerSelected,
                             onClickCancelListener = { dialogState = false },
                             onClickSubmitListener = { challenger ->
-
+                                onUpdateChallengerList(challenger)
                             }
                         )
                     }

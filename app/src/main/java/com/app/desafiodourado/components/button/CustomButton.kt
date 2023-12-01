@@ -54,7 +54,7 @@ fun CustomButton(
 
     OutlinedButton(
         modifier = modifier,
-        onClick = { state = true },
+        onClick = { onClickListener() },
         border = BorderStroke(
             color = color,
             width = CustomDimensions.padding1

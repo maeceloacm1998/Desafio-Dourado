@@ -8,7 +8,7 @@ data class Challenger(
         val completeImage: String = "",
         val type: String = "NORMAL",
         val details: String = "",
-        val isComplete: Boolean = false,
+        val complete: Boolean = false,
         val value: Int = 0,
         val award: String = "",
         val awardImage: String = ""

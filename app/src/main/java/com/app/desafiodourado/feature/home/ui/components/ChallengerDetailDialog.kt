@@ -72,7 +72,7 @@ fun DialogDetails(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-            url = if (challenger.isComplete) challenger.completeImage else challenger.image,
+            url = if (challenger.complete) challenger.completeImage else challenger.image,
             onCLickImageListener = {}
         )
 
