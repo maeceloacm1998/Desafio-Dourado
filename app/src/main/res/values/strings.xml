@@ -5,4 +5,13 @@
     <string name="initial_screen_tf_error">Digite seu nome para iniciar sua jornada :)</string>
     <string name="initial_screen_bt_label">Praparar para a aventura</string>
     <string name="initial_screen_snackbar_error">Erro ao cadastrar você aventureiro, tente novamente.</string>
+
+
+    <string name="dialog_title">Desafio da missaão</string>
+    <string name="dialog_description">Essa carta é considerada comum, nela tem chance de vir algum presente ou item para sua coleção, contudo tem chances de não vir nada</string>
+    <string name="dialog_award_title">Prêmio</string>
+    <string name="dialog_cancel_button_title">Cancelar</string>
+
+    <string name="challenger_list_error_title">Nenhum evento encontrado</string>
+
 </resources>

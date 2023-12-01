@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.app.desafiodourado.feature.home.ui.components
 
 import androidx.compose.foundation.layout.Column
@@ -26,7 +28,6 @@ import com.app.desafiodourado.ui.theme.Background
 import com.app.desafiodourado.ui.theme.BrowLight
 import com.app.desafiodourado.ui.theme.CustomDimensions
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun InfoComponent() {

@@ -11,12 +11,12 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,15 +26,18 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.NavController
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.coinview.CoinView
+import com.app.desafiodourado.components.dialog.CustomDialog
 import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.feature.home.ui.components.ChallengerList
+import com.app.desafiodourado.feature.home.ui.components.DialogDetails
+import com.app.desafiodourado.feature.home.ui.components.InfoComponent
 import com.app.desafiodourado.feature.home.ui.model.Challenger
+import com.app.desafiodourado.feature.home.ui.model.Challenger.Card
 import com.app.desafiodourado.ui.theme.Background
 import com.app.desafiodourado.ui.theme.BrowLight
 import com.app.desafiodourado.ui.theme.CustomDimensions
@@ -44,107 +47,85 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val tabs = listOf("Desafios Pendentes", "Desafios Concluidos")
-    val challengerState by viewModel.challengerState.collectAsState(initial = UiState.Loading)
-    val headerState by viewModel.headerState.collectAsState(initial = UiState.Loading)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    val uiState by produceState<UiState<List<Card>>>(
+        initialValue = UiState.Loading, key1 = lifecycle, key2 = viewModel
+    ) {
+        viewModel.getChallengers()
 
-    LaunchedEffect(key1 = Lifecycle.State.STARTED) {
-        viewModel.run {
-            getChallengers()
-            getHeaderInfo()
+        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            viewModel.challengerState.collect { value = it }
         }
     }
 
-    HomeComponents(headerState = headerState,
-        challengerState = challengerState,
+    HomeComponents(
+        challengerState = uiState,
         tabs = tabs,
         coins = viewModel.getCoins(),
         onClickTabOptionListener = { index ->
             viewModel.updateChallengerList(index)
         },
-        onClickRetryHeaderListener = {
-            viewModel.getHeaderInfo()
-        },
-        onClickRetryChallengerListener = {
-            viewModel.getChallengers()
-        })
+        onClickRetryListener = { viewModel.getChallengers() },
+        onUpdateChallengerList = { challenger ->
+
+        }
+    )
 }
 
 @Composable
 fun HomeComponents(
-    headerState: UiState<Int>,
-    challengerState: UiState<List<Challenger.Card>>,
+    challengerState: UiState<List<Card>>,
     tabs: List<String>,
     coins: Int,
     onClickTabOptionListener: (position: Int) -> Unit,
-    onClickRetryChallengerListener: () -> Unit,
-    onClickRetryHeaderListener: () -> Unit
+    onClickRetryListener: () -> Unit,
+    onUpdateChallengerList: (challenger: Challenger.Card) -> Unit
 ) {
     Background {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            HeaderObservable(
-                headerState = headerState,
-                tabs = tabs,
-                coins = coins,
-                onClickTabOptionListener = onClickTabOptionListener,
-                onClickRetryListener = onClickRetryChallengerListener
-            )
-            ChallengerListObservable(
-                challengerState = challengerState, onClickRetryListener = onClickRetryHeaderListener
-            )
-        }
-    }
-}
+            var dialogState by rememberSaveable { mutableStateOf(false) }
+            var challengerSelected by remember { mutableStateOf(Card()) }
 
-@Composable
-fun HeaderObservable(
-    headerState: UiState<Int>,
-    tabs: List<String>,
-    coins: Int,
-    onClickTabOptionListener: (position: Int) -> Unit,
-    onClickRetryListener: () -> Unit
-) {
-    when (headerState) {
-        is UiState.Loading -> Loading()
+            when (challengerState) {
+                is UiState.Loading -> Loading()
 
-        is UiState.Success -> {
-            val badgeCount = headerState.response
-            TopBar(coin = coins)
-            ToolbarCustom(title = "Premios Misteriosos", badgeCount = badgeCount) {
+                is UiState.Success -> {
+                    val response = challengerState.response
+                    TopBar(coin = coins)
+                    ToolbarCustom(title = "Premios Misteriosos", badgeCount = 2) {
 
+                    }
+                    TopTabRow(tabs = tabs) { index ->
+                        onClickTabOptionListener(index)
+                    }
+                    InfoComponent()
+                    ChallengerList(response) { challenger ->
+                        dialogState = true
+                        challengerSelected = challenger
+                    }
+                    CustomDialog(
+                        showDialog = dialogState,
+                        onDismissDialog = { dialogState = false }
+                    ) {
+                        DialogDetails(
+                            challenger = challengerSelected,
+                            onClickCancelListener = { dialogState = false },
+                            onClickSubmitListener = { challenger ->
+
+                            }
+                        )
+                    }
+                }
+
+                is UiState.Error -> {
+                    Error(
+                        title = "Ops, ocorreu um problema ao carregar os desafios.",
+                        onClickRetryListener = onClickRetryListener
+                    )
+                }
             }
-            TopTabRow(tabs = tabs) { index ->
-                onClickTabOptionListener(index)
-            }
-        }
-
-        is UiState.Error -> {
-            Error(
-                title = "Ops, ocorreu um problema ao carregar os dados.",
-                onClickRetryListener = onClickRetryListener
-            )
-        }
-    }
-}
-
-@Composable
-fun ChallengerListObservable(
-    challengerState: UiState<List<Challenger.Card>>, onClickRetryListener: () -> Unit
-) {
-    when (challengerState) {
-        is UiState.Loading -> Unit
-
-        is UiState.Success -> {
-            val response = challengerState.response
-            ChallengerList(response)
-        }
-
-        is UiState.Error -> {
-            Error(
-                title = "Ops, ocorreu um problema ao carregar os desafios.",
-                onClickRetryListener = onClickRetryListener
-            )
         }
     }
 }
@@ -227,12 +208,11 @@ fun HomePreviewLoading() {
     val titles = listOf("Desafios Pendentes", "Desafios Concluidos")
     HomeComponents(
         challengerState = UiState.Loading,
-        headerState = UiState.Loading,
         tabs = titles,
         coins = 200,
         onClickTabOptionListener = {},
-        onClickRetryChallengerListener = {},
-        onClickRetryHeaderListener = {}
+        onUpdateChallengerList = {},
+        onClickRetryListener = {}
     )
 }
 
@@ -242,12 +222,12 @@ fun HomePreviewError() {
     val titles = listOf("Desafios Pendentes", "Desafios Concluidos")
     HomeComponents(
         challengerState = UiState.Error(Throwable()),
-        headerState = UiState.Error(Throwable()),
         tabs = titles,
         coins = 200,
         onClickTabOptionListener = {},
-        onClickRetryChallengerListener = {},
-        onClickRetryHeaderListener = {})
+        onUpdateChallengerList = {},
+        onClickRetryListener = {},
+    )
 }
 
 @Preview

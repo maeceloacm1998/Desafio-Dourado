@@ -3,6 +3,7 @@ package com.app.desafiodourado.components.states
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.ui.theme.BrowLight
+import com.app.desafiodourado.ui.theme.CustomDimensions
 
 @Composable
 fun Loading(modifier: Modifier = Modifier) {
@@ -22,7 +24,13 @@ fun Loading(modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CircularProgressIndicator(color = BrowLight)
+        CircularProgressIndicator(
+            color = BrowLight,
+            modifier = Modifier.size(
+                width = CustomDimensions.padding16,
+                height = CustomDimensions.padding16
+            )
+        )
         Text(
             text = "carregando...",
             style = MaterialTheme.typography.titleMedium,
