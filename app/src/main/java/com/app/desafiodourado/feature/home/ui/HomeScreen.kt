@@ -11,12 +11,12 @@ import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,17 +26,16 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.coinview.CoinView
-import com.app.desafiodourado.components.dialog.CustomDialog
 import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
+import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.feature.home.ui.components.ChallengerList
-import com.app.desafiodourado.feature.home.ui.components.DialogDetails
 import com.app.desafiodourado.feature.home.ui.components.InfoComponent
-import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.model.Challenger.Card
 import com.app.desafiodourado.ui.theme.Background
 import com.app.desafiodourado.ui.theme.BrowLight
@@ -45,17 +44,12 @@ import com.app.desafiodourado.ui.theme.PurpleLight
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinViewModel()) {
     val tabs = listOf("Desafios Pendentes", "Desafios Concluidos")
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-    val uiState by produceState<UiState<List<Card>>>(
-        initialValue = UiState.Loading, key1 = lifecycle, key2 = viewModel
-    ) {
-        viewModel.getChallengers()
+    val uiState by viewModel.challengerState.observeAsState(UiState.Loading)
 
-        lifecycle.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            viewModel.challengerState.collect { value = it }
-        }
+    LaunchedEffect(key1 = Lifecycle.State.RESUMED) {
+        viewModel.clearOffset()
     }
 
     HomeComponents(
@@ -66,8 +60,8 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
             viewModel.updateChallengerList(index)
         },
         onClickRetryListener = { viewModel.getChallengers() },
-        onUpdateChallengerList = { challenger ->
-            viewModel.updateChallenger(challenger)
+        onClickChallengerSelected = { id ->
+            navController.navigate(Routes.Details.createRoute(id))
         }
     )
 }
@@ -79,43 +73,33 @@ fun HomeComponents(
     coins: Int,
     onClickTabOptionListener: (position: Int) -> Unit,
     onClickRetryListener: () -> Unit,
-    onUpdateChallengerList: (challenger: Card) -> Unit
+    onClickChallengerSelected: (id: String) -> Unit
 ) {
     Background {
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            var dialogState by rememberSaveable { mutableStateOf(false) }
-            var challengerSelected by remember { mutableStateOf(Card()) }
-
             when (challengerState) {
                 is UiState.Loading -> Loading()
 
                 is UiState.Success -> {
                     val response = challengerState.response
                     TopBar(coin = coins)
-                    ToolbarCustom(title = "Premios Misteriosos", badgeCount = 2) {
+                    ToolbarCustom(
+                        title = "Premios Misteriosos",
+                        badgeCount = 2,
+                        showNavigationIcon = false,
+                        showBadgeCount = true,
+                        onChallengerListener = {},
+                        onNavigationListener = {}
+                    )
 
-                    }
                     TopTabRow(tabs = tabs) { index ->
                         onClickTabOptionListener(index)
                     }
                     InfoComponent()
-                    ChallengerList(response) { challenger ->
-                        dialogState = true
-                        challengerSelected = challenger
-                    }
-                    CustomDialog(
-                        showDialog = dialogState,
-                        onDismissDialog = { dialogState = false }
-                    ) {
-                        DialogDetails(
-                            challenger = challengerSelected,
-                            onClickCancelListener = { dialogState = false },
-                            onClickSubmitListener = { challenger ->
-                                onUpdateChallengerList(challenger)
-                            }
-                        )
+                    ChallengerList(response) { id ->
+                        onClickChallengerSelected(id)
                     }
                 }
 
@@ -211,7 +195,7 @@ fun HomePreviewLoading() {
         tabs = titles,
         coins = 200,
         onClickTabOptionListener = {},
-        onUpdateChallengerList = {},
+        onClickChallengerSelected = {},
         onClickRetryListener = {}
     )
 }
@@ -225,7 +209,7 @@ fun HomePreviewError() {
         tabs = titles,
         coins = 200,
         onClickTabOptionListener = {},
-        onUpdateChallengerList = {},
+        onClickChallengerSelected = {},
         onClickRetryListener = {},
     )
 }

@@ -39,8 +39,17 @@ import com.app.desafiodourado.ui.theme.RedDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ToolbarCustom(title: String, badgeCount: Int, onChallengerListener: () -> Unit) {
+fun ToolbarCustom(
+    modifier: Modifier = Modifier,
+    title: String,
+    badgeCount: Int = 0,
+    showNavigationIcon: Boolean = true,
+    showBadgeCount: Boolean = false,
+    onChallengerListener: () -> Unit,
+    onNavigationListener: () -> Unit,
+) {
     TopAppBar(
+        modifier = modifier,
         title = {
             Text(
                 style = MaterialTheme.typography.titleMedium,
@@ -53,48 +62,66 @@ fun ToolbarCustom(title: String, badgeCount: Int, onChallengerListener: () -> Un
             navigationIconContentColor = Background
         ),
         navigationIcon = {
-            val image = painterResource(id = R.drawable.challenger)
-
-            Image(
-                painter = image,
-                contentDescription = "Background Image",
-                modifier = Modifier
-                    .padding(end = CustomDimensions.padding10, start = CustomDimensions.padding20)
-                    .size(height = CustomDimensions.padding50, width = CustomDimensions.padding50),
-                contentScale = ContentScale.Crop,
-            )
-        },
-        actions = {
-            Box(
-                modifier = Modifier.padding(end = CustomDimensions.padding20)
-            ) {
-                IconButton(
-                    onClick = { onChallengerListener() },
-                    modifier = Modifier
-                        .size(CustomDimensions.padding50)
-                        .clip(CircleShape)
-                        .background(color = PurpleLight)
-                ) {
+            if (showNavigationIcon) {
+                IconButton(onClick = { onNavigationListener() }) {
                     Icon(
-                        imageVector = Icons.Filled.EmojiEvents,
-                        tint = BrowLight,
-                        contentDescription = "Localized description"
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = "voltar",
+                        tint = BrowLight
                     )
                 }
-                if (badgeCount > 0) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .align(Alignment.TopEnd)
-                            .offset(x = CustomDimensions.padding10)
-                            .size(CustomDimensions.padding24)
-                            .background(RedDark, CircleShape)
-                    ) {
-                        Text(
-                            text = badgeCount.toString(),
-                            color = Color.White,
-                            style = MaterialTheme.typography.titleMedium
+            } else {
+                val image = painterResource(id = R.drawable.challenger)
+
+                Image(
+                    painter = image,
+                    contentDescription = "Background Image",
+                    modifier = Modifier
+                        .padding(
+                            end = CustomDimensions.padding10,
+                            start = CustomDimensions.padding20
                         )
+                        .size(
+                            height = CustomDimensions.padding50,
+                            width = CustomDimensions.padding50
+                        ),
+                    contentScale = ContentScale.Crop,
+                )
+            }
+        },
+        actions = {
+            if (showBadgeCount) {
+                Box(
+                    modifier = Modifier.padding(end = CustomDimensions.padding20)
+                ) {
+                    IconButton(
+                        onClick = { onChallengerListener() },
+                        modifier = Modifier
+                            .size(CustomDimensions.padding50)
+                            .clip(CircleShape)
+                            .background(color = PurpleLight)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.EmojiEvents,
+                            tint = BrowLight,
+                            contentDescription = "Localized description"
+                        )
+                    }
+                    if (badgeCount > 0) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .offset(x = CustomDimensions.padding10)
+                                .size(CustomDimensions.padding24)
+                                .background(RedDark, CircleShape)
+                        ) {
+                            Text(
+                                text = badgeCount.toString(),
+                                color = Color.White,
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                     }
                 }
             }
@@ -105,5 +132,22 @@ fun ToolbarCustom(title: String, badgeCount: Int, onChallengerListener: () -> Un
 @Preview
 @Composable
 fun ToolbarPreview() {
-    ToolbarCustom(title = "Premios Misteriosos", 2) {}
+    ToolbarCustom(
+        title = "Premios Misteriosos",
+        badgeCount = 2,
+        showNavigationIcon = false,
+        showBadgeCount = true,
+        onChallengerListener = {},
+        onNavigationListener = {}
+    )
+}
+
+@Preview
+@Composable
+fun ToolbarNavigationPreview() {
+    ToolbarCustom(
+        title = "Premios Misteriosos",
+        onChallengerListener = {},
+        onNavigationListener = {}
+    )
 }

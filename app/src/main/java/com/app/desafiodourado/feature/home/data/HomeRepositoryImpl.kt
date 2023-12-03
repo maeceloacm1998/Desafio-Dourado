@@ -5,6 +5,8 @@ import com.app.desafiodourado.core.firebase.FirebaseClient
 import com.app.desafiodourado.core.firebase.FirebaseConstants.Collections.CHALLENGERS
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.google.firebase.firestore.DocumentSnapshot
+import java.lang.Math.abs
+import kotlin.random.Random
 
 class HomeRepositoryImpl(
     private val client: FirebaseClient,
@@ -17,12 +19,9 @@ class HomeRepositoryImpl(
 
     override suspend fun setChallengers(cardList: Challenger) {
         val id = accountManager.getUserId()
-        client.setSpecificDocument(collectionPath = CHALLENGERS, documentPath = id, data = cardList)
-    }
-
-    override suspend fun updateChallengers(challenger: Challenger): Result<Boolean> {
-        val id = accountManager.getUserId()
-        return client.setSpecificDocument(collectionPath = CHALLENGERS, documentPath = id, data = challenger)
+        val newCard = cardList.challengers.toMutableList()
+        newCard.map { it.id = kotlin.math.abs(Random.nextLong()).toString() }
+        client.setSpecificDocument(collectionPath = CHALLENGERS, documentPath = id, data = newCard)
     }
 
     override fun getCoins(): Int = accountManager.getQuantityCoins()

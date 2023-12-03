@@ -4,6 +4,7 @@ import androidx.compose.ui.unit.dp
 
 object CustomDimensions {
     val padding300 = 300.dp
+    val padding250 = 250.dp
     val padding200 = 200.dp
     val padding180 = 180.dp
     val padding160 = 160.dp

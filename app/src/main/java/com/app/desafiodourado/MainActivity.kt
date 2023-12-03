@@ -8,16 +8,23 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.app.desafiodourado.core.accountManager.AccountManager
 import com.app.desafiodourado.core.accountManager.AccountManagerModule
 import com.app.desafiodourado.core.firebase.FirebaseModule
 import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.core.sharedPreferences.SharedPreferencesModule
+import com.app.desafiodourado.feature.details.data.di.DetailsModule
+import com.app.desafiodourado.feature.details.ui.DetailsScreen
 import com.app.desafiodourado.feature.home.data.di.HomeModule
 import com.app.desafiodourado.feature.home.ui.HomeScreen
+import com.app.desafiodourado.feature.home.ui.HomeScreenV2
+import com.app.desafiodourado.feature.home.ui.model.Challenger
+import com.app.desafiodourado.feature.home.ui.model.Challenger.Card
 import com.app.desafiodourado.feature.initial.data.di.InitialModule
 import com.app.desafiodourado.feature.initial.ui.InitialScreen
 import com.app.desafiodourado.ui.theme.DesafioDouradoTheme
@@ -63,7 +70,8 @@ class MainActivity : ComponentActivity(), KoinComponent {
                     SharedPreferencesModule.modules,
                     AccountManagerModule.modules,
                     InitialModule.modules,
-                    HomeModule.modules
+                    HomeModule.modules,
+                    DetailsModule.modules
                 )
             )
         }
@@ -78,7 +86,13 @@ class MainActivity : ComponentActivity(), KoinComponent {
             startDestination = if (accountManager.userIsLogged()) Routes.Home.route else Routes.Initial.route
         ) {
             composable(Routes.Initial.route) { InitialScreen(navController) }
-            composable(Routes.Home.route) { HomeScreen() }
+            composable(Routes.Home.route) { HomeScreen(navController) }
+            composable(
+                Routes.Details.route,
+                arguments = listOf(navArgument("challengerId") { type = NavType.StringType })
+            ) { navBackStackEntry ->
+                DetailsScreen(navController, navBackStackEntry.arguments?.getString("challengerId"))
+            }
         }
     }
 }
