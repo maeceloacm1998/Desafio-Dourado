@@ -43,7 +43,6 @@ import kotlinx.coroutines.runBlocking
 fun ChallengerFeed(
     uiState: HomeUiState,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
-    onClickTabOptionListener: (index: Int) -> Unit,
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
 ) {
@@ -64,10 +63,6 @@ fun ChallengerFeed(
                 onChallengerListener = {},
                 onNavigationListener = {}
             )
-
-            TopTabRow(tabs = tabs) { index ->
-                onClickTabOptionListener(index)
-            }
             InfoComponent()
             ChallengerList(uiState.challengers.challengers) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
@@ -108,7 +103,6 @@ private fun HomeScreenWithList(
             }
         }
     )
-
 }
 
 @Composable
@@ -167,35 +161,6 @@ fun TopBar(coin: Int) {
     }
 }
 
-@Composable
-fun TopTabRow(tabs: List<String>, onClickTabOptionListener: (position: Int) -> Unit) {
-    var state by remember { mutableIntStateOf(0) }
-
-    ConstraintLayout(modifier = Modifier.padding(top = CustomDimensions.padding20)) {
-        TabRow(selectedTabIndex = state, containerColor = Background, indicator = { tabPositions ->
-            TabRowDefaults.Indicator(
-                Modifier.tabIndicatorOffset(tabPositions[state]),
-                height = CustomDimensions.padding2,
-                color = BrowLight
-            )
-        }) {
-            tabs.forEachIndexed { position, title ->
-                Tab(selected = state == position, onClick = {
-                    state = position
-                    onClickTabOptionListener(position)
-                }, text = {
-                    Text(
-                        text = title,
-                        color = if (position != state) PurpleLight else BrowLight,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                })
-            }
-        }
-    }
-}
-
-
 @Preview("Home challenger screen")
 @Preview("Home list drawer screen (big font)", fontScale = 1.5f)
 @Composable
@@ -215,7 +180,6 @@ fun PreviewChallengerFeedScreen() {
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
                 onChallengerSelected = {},
-                onClickTabOptionListener = {},
                 onRefreshChallengers = {},
                 onRetryChallengers = {}
             )

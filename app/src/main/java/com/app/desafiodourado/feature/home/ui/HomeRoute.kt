@@ -20,7 +20,7 @@ fun HomeRoute(
         uiState = uiState,
         onChallengerSelected = { homeViewModel.challengerSelected(it) },
         onInteractionWithFeed = { homeViewModel.onInteractionFeed() },
-        onClickTabOptionListener = {},
+        onClickSubmitListener = { homeViewModel.completedChallenger(it) },
         onRefreshChallengers = { homeViewModel.updateChallengers() },
         onRetryChallengers = { homeViewModel.updateChallengers() },
     )
@@ -31,7 +31,7 @@ fun HomeRoute(
     uiState: HomeUiState,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
     onInteractionWithFeed: () -> Unit,
-    onClickTabOptionListener: (index: Int) -> Unit,
+    onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
 ) {
@@ -40,7 +40,6 @@ fun HomeRoute(
             ChallengerFeed(
                 uiState = uiState,
                 onChallengerSelected = onChallengerSelected,
-                onClickTabOptionListener = onClickTabOptionListener,
                 onRefreshChallengers = onRefreshChallengers,
                 onRetryChallengers = onRetryChallengers
             )
@@ -51,7 +50,8 @@ fun HomeRoute(
             uiState.selectedChallenger?.let {
                 DetailsScreen(
                     challengerItem = it,
-                    onBack = onInteractionWithFeed
+                    onBack = onInteractionWithFeed,
+                    onClickSubmitListener = onClickSubmitListener
                 )
                 BackHandler {
                     onInteractionWithFeed()

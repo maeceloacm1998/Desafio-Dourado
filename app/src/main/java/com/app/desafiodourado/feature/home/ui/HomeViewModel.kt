@@ -20,6 +20,7 @@ class HomeViewModel(
     private val homeRepository: HomeRepository
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(HomeViewModelState(isLoading = true))
+    private var challengerList: MutableList<Challenger.Card> = mutableListOf()
 
     val uiState = viewModelState
         .map(HomeViewModelState::toUiState)
@@ -43,7 +44,39 @@ class HomeViewModel(
 
             viewModelState.update {
                 when (result) {
-                    is Success -> it.copy(challengers = result.data, isLoading = false)
+                    is Success -> {
+                        challengerList = result.data.challengers.toMutableList()
+                        it.copy(challengers = result.data, isLoading = false)
+                    }
+
+                    is Error -> {
+                        val errorMessages = ErrorMessage(
+                            id = UUID.randomUUID().mostSignificantBits,
+                            messageId = R.string.load_error
+                        )
+                        it.copy(errorMessages = errorMessages, isLoading = false)
+                    }
+                }
+            }
+        }
+    }
+
+    fun completedChallenger(challengerSelected: Challenger.Card) {
+        viewModelScope.launch {
+            val index = challengerList.indexOf(challengerSelected)
+            challengerList[index] = challengerList[index].copy(complete = true)
+            val result = homeRepository.completeChallenger(challengerList)
+
+            viewModelState.update {
+                when (result) {
+                    is Success -> {
+                        it.copy(
+                            challengers = result.data,
+                            selectedChallenger = challengerSelected.copy(complete = true),
+                            isLoading = false
+                        )
+                    }
+
                     is Error -> {
                         val errorMessages = ErrorMessage(
                             id = UUID.randomUUID().mostSignificantBits,

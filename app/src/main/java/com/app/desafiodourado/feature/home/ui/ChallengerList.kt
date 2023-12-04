@@ -10,8 +10,8 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import com.app.desafiodourado.R
+import androidx.compose.ui.layout.ContentScale
+import com.app.desafiodourado.components.image.ImageComponent
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.ui.theme.CustomDimensions
 
@@ -20,9 +20,6 @@ fun ChallengerList(
     challengerList: List<Challenger.Card>,
     onClickItemListener: (challengerItem: Challenger.Card) -> Unit
 ) {
-    val image = painterResource(id = R.drawable.default_redux)
-    val imageGold = painterResource(id = R.drawable.golld_challenger_redux)
-
     val state = rememberLazyGridState()
 
     if (challengerList.isEmpty()) {
@@ -33,10 +30,8 @@ fun ChallengerList(
             columns = GridCells.Fixed(count = 3),
         ) {
             items(challengerList) { item ->
-                
-                Image(
-                    painter = if (item.type == "NORMAL") image else imageGold,
-                    contentDescription = "Background Image",
+                ImageComponent(
+                    url = if (item.complete) item.completeImage else item.image,
                     modifier = Modifier
                         .size(
                             width = CustomDimensions.padding160,
@@ -44,8 +39,9 @@ fun ChallengerList(
                         )
                         .padding(
                             vertical = CustomDimensions.padding2
-                        )
-                        .clickable { onClickItemListener(item) },
+                        ),
+                    onCLickImageListener = { onClickItemListener(item) },
+                    contentScale = ContentScale.Inside
                 )
             }
         }

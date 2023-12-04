@@ -5,7 +5,7 @@ import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class FakeHomeRepositoryImpl: HomeRepository {
+class FakeHomeRepositoryImpl : HomeRepository {
     override suspend fun getChallengers(): Result<Challenger> {
         return withContext(Dispatchers.IO) {
             val challenger = challenger
@@ -17,7 +17,18 @@ class FakeHomeRepositoryImpl: HomeRepository {
         }
     }
 
+    override suspend fun completeChallenger(challengerList: List<Challenger.Card>): Result<Challenger> {
+        return withContext(Dispatchers.IO) {
+            val challengerWithCardComplete = challengerWithCardComplete
+            if (challengerWithCardComplete == null) {
+                Result.Error(IllegalArgumentException("Challenger not found"))
+            } else {
+                Result.Success(challengerWithCardComplete)
+            }
+        }
+    }
+
     override fun getCoins(): Int {
-        TODO("Not yet implemented")
+        return 200
     }
 }

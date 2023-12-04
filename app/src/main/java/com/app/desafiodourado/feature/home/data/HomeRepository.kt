@@ -5,5 +5,6 @@ import com.app.desafiodourado.feature.home.ui.model.Challenger
 
 interface HomeRepository {
     suspend fun getChallengers(): Result<Challenger>
+    suspend fun completeChallenger(challengerList: List<Challenger.Card>): Result<Challenger>
     fun getCoins(): Int
 }

@@ -1,6 +1,5 @@
 package com.app.desafiodourado.feature.challengerdetails
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -12,8 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.button.CustomButton
@@ -21,15 +20,17 @@ import com.app.desafiodourado.components.image.ImageComponent
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.ui.theme.Success
 
 @Composable
 fun DetailsScreen(
     challengerItem: Challenger.Card,
+    onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit
 ) {
     DetailsComponent(
         challenger = challengerItem,
-        onClickSubmitListener = {},
+        onClickSubmitListener = onClickSubmitListener,
         onBack = onBack
     )
 }
@@ -37,12 +38,9 @@ fun DetailsScreen(
 @Composable
 fun DetailsComponent(
     challenger: Challenger.Card,
-    onClickSubmitListener: () -> Unit,
+    onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit,
 ) {
-    val image = painterResource(id = R.drawable.default_redux)
-    val imageGold = painterResource(id = R.drawable.golld_challenger_redux)
-
     ConstraintLayout(
         modifier = Modifier
             .fillMaxSize()
@@ -53,6 +51,7 @@ fun DetailsComponent(
             imgCard,
             txtDetails,
             imgAward,
+            txtShowAward,
             txtAward,
             btOpenAward
         ) = createRefs()
@@ -66,9 +65,8 @@ fun DetailsComponent(
             onChallengerListener = {}
         )
 
-        Image(
-            painter = if (challenger.type == "NORMAL") image else imageGold,
-            contentDescription = "Background Image",
+        ImageComponent(
+            url = if (challenger.complete) challenger.completeImage else challenger.image,
             modifier = Modifier
                 .size(
                     width = CustomDimensions.padding150,
@@ -80,6 +78,7 @@ fun DetailsComponent(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
+            onCLickImageListener = {},
             contentScale = ContentScale.Inside
         )
 
@@ -99,37 +98,72 @@ fun DetailsComponent(
             style = MaterialTheme.typography.titleMedium
         )
 
-        ImageComponent(
-            modifier = Modifier
-                .size(
-                    width = CustomDimensions.padding80,
-                    height = CustomDimensions.padding80
-                )
-                .padding(top = CustomDimensions.padding16)
-                .constrainAs(imgAward) {
-                    top.linkTo(txtDetails.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-            url = challenger.awardImage,
-            onCLickImageListener = {}
-        )
+        if (challenger.complete) {
+            Text(
+                modifier = Modifier
+                    .constrainAs(txtShowAward) {
+                        top.linkTo(txtDetails.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(btOpenAward.top)
+                    }
+                    .padding(
+                        start = CustomDimensions.padding16,
+                        end = CustomDimensions.padding16,
+                    ),
+                text = challenger.award,
+                textAlign = TextAlign.Center,
+                color = Success,
+                style = MaterialTheme.typography.titleLarge
+            )
 
-        Text(
-            modifier = Modifier
-                .constrainAs(txtAward) {
-                    top.linkTo(imgAward.bottom)
-                    start.linkTo(imgAward.start)
-                    end.linkTo(imgAward.end)
-                }
-                .padding(
-                    start = CustomDimensions.padding16,
-                    end = CustomDimensions.padding16,
-                ),
-            text = stringResource(id = R.string.dialog_award_title),
-            color = Color.White,
-            style = MaterialTheme.typography.titleMedium
-        )
+            Text(
+                modifier = Modifier
+                    .constrainAs(txtAward) {
+                        top.linkTo(txtShowAward.bottom)
+                        start.linkTo(txtShowAward.start)
+                        end.linkTo(txtShowAward.end)
+                    }
+                    .padding(
+                        start = CustomDimensions.padding16,
+                        end = CustomDimensions.padding16,
+                    ),
+                text = stringResource(id = R.string.dialog_award_title),
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
+        } else {
+            ImageComponent(
+                modifier = Modifier
+                    .size(
+                        width = CustomDimensions.padding80,
+                        height = CustomDimensions.padding80
+                    )
+                    .padding(top = CustomDimensions.padding16)
+                    .constrainAs(imgAward) {
+                        top.linkTo(txtDetails.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    },
+                url = challenger.awardImage
+            ) {}
+
+            Text(
+                modifier = Modifier
+                    .constrainAs(txtAward) {
+                        top.linkTo(imgAward.bottom)
+                        start.linkTo(imgAward.start)
+                        end.linkTo(imgAward.end)
+                    }
+                    .padding(
+                        start = CustomDimensions.padding16,
+                        end = CustomDimensions.padding16,
+                    ),
+                text = stringResource(id = R.string.dialog_award_title),
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
 
         CustomButton(
             modifier = Modifier
@@ -143,8 +177,9 @@ fun DetailsComponent(
                     bottom.linkTo(parent.bottom)
                 },
             coin = challenger.value,
+            isSuccess = challenger.complete,
             onClickListener = {
-                onClickSubmitListener()
+                onClickSubmitListener(challenger)
             }
         )
     }
