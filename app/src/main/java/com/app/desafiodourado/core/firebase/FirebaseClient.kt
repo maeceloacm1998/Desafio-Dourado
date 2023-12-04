@@ -26,13 +26,6 @@ interface FirebaseClient {
         data: T,
     ): Result<Boolean>
 
-    suspend fun updateDocument(
-        collectionPath: String,
-        documentPath: String,
-        field: String,
-        value: Any
-    ): Result<Boolean>
-
     suspend fun createDocument(collectionPath: String, data: Any): Result<String>
     suspend fun deleteDocument(collectionPath: String, documentPath: String): Result<Boolean>
 }

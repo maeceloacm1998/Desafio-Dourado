@@ -27,8 +27,8 @@ fun Loading(modifier: Modifier = Modifier) {
         CircularProgressIndicator(
             color = BrowLight,
             modifier = Modifier.size(
-                width = CustomDimensions.padding16,
-                height = CustomDimensions.padding16
+                width = CustomDimensions.padding20,
+                height = CustomDimensions.padding20
             )
         )
         Text(

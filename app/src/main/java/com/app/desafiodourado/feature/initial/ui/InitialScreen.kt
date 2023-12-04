@@ -111,86 +111,82 @@ fun InitialComponents(
     onSubmitButton: () -> Unit,
     onNameState: (name: String) -> Unit
 ) {
-    Background(
-        snackbarHostState = snackbarHostState,
-        snackbarType = snackbarType
-    ) {
-        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-            val (imgChallenger, tfName, btGoToAdventure) = createRefs()
-            val image = painterResource(id = R.drawable.challenger)
 
-            createVerticalChain(
-                imgChallenger, tfName, btGoToAdventure, chainStyle = ChainStyle.Packed
-            )
+    ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+        val (imgChallenger, tfName, btGoToAdventure) = createRefs()
+        val image = painterResource(id = R.drawable.challenger)
 
-            Image(
-                painter = image,
-                contentDescription = "Background Image",
-                modifier = Modifier
-                    .size(
-                        height = CustomDimensions.padding150,
-                        width = CustomDimensions.padding150
-                    )
-                    .constrainAs(imgChallenger) {
-                        top.linkTo(parent.top)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(tfName.top)
-                        start.linkTo(parent.start)
-                    },
-                contentScale = ContentScale.Crop,
-            )
+        createVerticalChain(
+            imgChallenger, tfName, btGoToAdventure, chainStyle = ChainStyle.Packed
+        )
 
-            TextFieldCustom(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = CustomDimensions.padding20,
-                        end = CustomDimensions.padding20,
-                        top = CustomDimensions.padding50,
-                        bottom = CustomDimensions.padding10
-                    )
-                    .constrainAs(tfName) {
-                        top.linkTo(imgChallenger.bottom)
-                        bottom.linkTo(btGoToAdventure.top)
-                    },
-                label = stringResource(id = R.string.initial_screen_tf_label),
-                onChangeListener = {
-                    onNameState(it)
+        Image(
+            painter = image,
+            contentDescription = "Background Image",
+            modifier = Modifier
+                .size(
+                    height = CustomDimensions.padding150,
+                    width = CustomDimensions.padding150
+                )
+                .constrainAs(imgChallenger) {
+                    top.linkTo(parent.top)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(tfName.top)
+                    start.linkTo(parent.start)
                 },
-                error = userNameError,
-                supportText = if (userNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
-            )
+            contentScale = ContentScale.Crop,
+        )
 
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(CustomDimensions.padding50)
-                    .padding(horizontal = CustomDimensions.padding20)
-                    .constrainAs(btGoToAdventure) {
-                        top.linkTo(tfName.bottom)
-                        bottom.linkTo(parent.bottom)
-                    },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = BrowLight,
-                    disabledContainerColor = BackgroundTransparent
-                ),
-                enabled = !isLoading,
-                onClick = { onSubmitButton() },
-            ) {
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        color = Color.White, modifier = Modifier.size(
-                            width = CustomDimensions.padding20,
-                            height = CustomDimensions.padding20
-                        )
+        TextFieldCustom(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    start = CustomDimensions.padding20,
+                    end = CustomDimensions.padding20,
+                    top = CustomDimensions.padding50,
+                    bottom = CustomDimensions.padding10
+                )
+                .constrainAs(tfName) {
+                    top.linkTo(imgChallenger.bottom)
+                    bottom.linkTo(btGoToAdventure.top)
+                },
+            label = stringResource(id = R.string.initial_screen_tf_label),
+            onChangeListener = {
+                onNameState(it)
+            },
+            error = userNameError,
+            supportText = if (userNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
+        )
+
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(CustomDimensions.padding50)
+                .padding(horizontal = CustomDimensions.padding20)
+                .constrainAs(btGoToAdventure) {
+                    top.linkTo(tfName.bottom)
+                    bottom.linkTo(parent.bottom)
+                },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = BrowLight,
+                disabledContainerColor = BackgroundTransparent
+            ),
+            enabled = !isLoading,
+            onClick = { onSubmitButton() },
+        ) {
+            if (isLoading) {
+                CircularProgressIndicator(
+                    color = Color.White, modifier = Modifier.size(
+                        width = CustomDimensions.padding20,
+                        height = CustomDimensions.padding20
                     )
-                } else {
-                    Text(
-                        text = stringResource(id = R.string.initial_screen_bt_label),
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleMedium
-                    )
-                }
+                )
+            } else {
+                Text(
+                    text = stringResource(id = R.string.initial_screen_bt_label),
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         }
     }

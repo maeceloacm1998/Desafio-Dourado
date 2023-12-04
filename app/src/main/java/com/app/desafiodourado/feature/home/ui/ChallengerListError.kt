@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.home.ui.components
+package com.app.desafiodourado.feature.home.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

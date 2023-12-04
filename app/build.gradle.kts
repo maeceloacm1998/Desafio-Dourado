@@ -55,7 +55,7 @@ android {
 
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0-rc01")
     implementation("androidx.activity:activity-compose:1.8.1")
     implementation(platform("androidx.compose:compose-bom:2023.08.00"))
     implementation("androidx.compose.material:material-icons-extended")
@@ -85,7 +85,7 @@ dependencies {
     annotationProcessor("android.arch.persistence.room:compiler:1.1.1")
     implementation("io.insert-koin:koin-androidx-compose:3.5.0")
     implementation("com.github.bumptech.glide:compose:1.0.0-beta01")
-
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.32.0")
 
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
@@ -93,7 +93,7 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.4.0")
 
-            testImplementation("junit:junit:4.13.2")
+    testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
