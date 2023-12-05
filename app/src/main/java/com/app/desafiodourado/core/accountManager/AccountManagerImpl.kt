@@ -16,6 +16,12 @@ class AccountManagerImpl(
     override suspend fun updateUserInfo(user: UserModel): Result<Boolean> =
         client.setSpecificDocument(FirebaseConstants.Collections.USERS, user.id, user)
 
+    override fun getUserLogged(): UserModel {
+        return sharedPreferences.getString(USER_ACCOUNT, "").run {
+            Gson().fromJson(this, UserModel::class.java)
+        }
+    }
+
     override fun postUserLogged(user: UserModel) {
         sharedPreferences.run {
             putBoolean(USER_LOGGED, true)

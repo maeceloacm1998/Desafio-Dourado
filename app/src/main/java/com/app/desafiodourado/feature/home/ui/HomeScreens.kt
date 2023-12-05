@@ -46,15 +46,13 @@ fun ChallengerFeed(
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
 ) {
-    val tabs = listOf("Desafios Pendentes", "Desafios Concluidos")
-
     HomeScreenWithList(
         uiState = uiState,
         onRefreshChallengers = onRefreshChallengers,
         onRetryChallengers = onRetryChallengers
     ) { uiState ->
         Column {
-            TopBar(coin = 200)
+            TopBar(coin = uiState.coin)
             ToolbarCustom(
                 title = "Premios Misteriosos",
                 badgeCount = 2,

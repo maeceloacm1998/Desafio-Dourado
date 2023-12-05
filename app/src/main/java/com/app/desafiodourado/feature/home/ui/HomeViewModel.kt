@@ -1,8 +1,10 @@
 package com.app.desafiodourado.feature.home.ui
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.desafiodourado.R
+import com.app.desafiodourado.core.accountManager.AccountManager
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.core.utils.Result.Success
 import com.app.desafiodourado.core.utils.Result.Error
@@ -17,7 +19,8 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 class HomeViewModel(
-    private val homeRepository: HomeRepository
+    private val homeRepository: HomeRepository,
+    private val accountManager: AccountManager,
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(HomeViewModelState(isLoading = true))
     private var challengerList: MutableList<Challenger.Card> = mutableListOf()
@@ -32,9 +35,6 @@ class HomeViewModel(
 
     init {
         updateChallengers()
-    }
-
-    fun updateCoin() {
     }
 
     fun updateChallengers() {
@@ -61,31 +61,51 @@ class HomeViewModel(
         }
     }
 
-    fun completedChallenger(challengerSelected: Challenger.Card) {
+    fun completedChallenger(
+        challengerSelected: Challenger.Card,
+        snackbarHostState: SnackbarHostState
+    ) {
         viewModelScope.launch {
-            val index = challengerList.indexOf(challengerSelected)
-            challengerList[index] = challengerList[index].copy(complete = true)
-            val result = homeRepository.completeChallenger(challengerList)
+            val userCoins = accountManager.getQuantityCoins()
 
-            viewModelState.update {
-                when (result) {
-                    is Success -> {
-                        it.copy(
-                            challengers = result.data,
-                            selectedChallenger = challengerSelected.copy(complete = true),
-                            isLoading = false
-                        )
-                    }
+            if (userCoins < challengerSelected.value) {
+                snackbarHostState.showSnackbar(INSUFFICIENT_QUANTITY)
+            } else {
+                viewModelState.update {
+                    val index = challengerList.indexOf(challengerSelected)
+                    challengerList[index] = challengerList[index].copy(complete = true)
+                    val result = homeRepository.completeChallenger(challengerList)
 
-                    is Error -> {
-                        val errorMessages = ErrorMessage(
-                            id = UUID.randomUUID().mostSignificantBits,
-                            messageId = R.string.load_error
-                        )
-                        it.copy(errorMessages = errorMessages, isLoading = false)
+                    when (result) {
+                        is Success -> {
+                            val newCoins = userCoins - challengerSelected.value
+                            updateCoin(newCoins)
+                            it.copy(
+                                challengers = result.data,
+                                selectedChallenger = challengerSelected.copy(complete = true)
+                            )
+                        }
+
+                        is Error -> {
+                            snackbarHostState.showSnackbar(ERROR)
+                            return@launch
+                        }
                     }
                 }
             }
+        }
+    }
+
+    fun updateCoin(coin: Int) {
+        viewModelScope.launch {
+            val user = accountManager.getUserLogged().copy(quantityCoins = coin)
+            accountManager.updateUserInfo(user)
+                .onSuccess {
+                    accountManager.postUserLogged(user)
+                    viewModelState.update {
+                        it.copy(coin = coin)
+                    }
+                }
         }
     }
 
@@ -101,5 +121,10 @@ class HomeViewModel(
         viewModelState.update {
             it.copy(selectedChallenger = null)
         }
+    }
+
+    companion object {
+        private const val INSUFFICIENT_QUANTITY = "Quantidade de moedas insuficientes"
+        private const val ERROR = "Erro ao completar esse desafio."
     }
 }

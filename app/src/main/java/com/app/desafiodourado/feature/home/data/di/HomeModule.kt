@@ -9,6 +9,11 @@ import org.koin.dsl.module
 object HomeModule {
     val modules = module {
         factory<HomeRepository> { HomeRepositoryImpl(client = get(), accountManager = get()) }
-        viewModel { HomeViewModel(homeRepository = get()) }
+        viewModel {
+            HomeViewModel(
+                homeRepository = get(),
+                accountManager = get()
+            )
+        }
     }
 }
