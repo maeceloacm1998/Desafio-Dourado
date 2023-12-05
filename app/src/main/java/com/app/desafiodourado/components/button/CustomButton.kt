@@ -32,12 +32,14 @@ fun CustomButton(
     OutlinedButton(
         modifier = modifier,
         onClick = { onClickListener() },
+        enabled = !isSuccess,
         border = BorderStroke(
             color = if (isSuccess) Success else BrowLight,
             width = CustomDimensions.padding1
         ),
         colors = ButtonDefaults.outlinedButtonColors(
-            containerColor = if (isSuccess) Success else Color.Transparent
+            containerColor = if (isSuccess) Success else Color.Transparent,
+            disabledContainerColor = if (isSuccess) Success else Color.Transparent
         )
     ) {
         ConstraintLayout {
