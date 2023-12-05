@@ -1,29 +1,39 @@
 package com.app.desafiodourado.feature.initial.ui
 
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 import com.app.desafiodourado.core.utils.UiState
+import com.app.desafiodourado.feature.initial.data.InitialRepository
+import com.app.desafiodourado.feature.initial.domain.CreateChallengersUseCase
+import com.app.desafiodourado.feature.initial.domain.CreateMissionsUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateUserUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-class InitialViewModel(private val createUserUseCase: CreateUserUseCase) : ViewModel() {
+class InitialViewModel(
+    private val createUserUseCase: CreateUserUseCase,
+    private val createChallengersUseCase: CreateChallengersUseCase,
+    private val createMissionsUseCase: CreateMissionsUseCase
+) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState<Boolean>?>(null)
     val uiState: StateFlow<UiState<Boolean>?> = _uiState
 
     private val _userNameError = MutableLiveData<Boolean>()
     val userNameError: LiveData<Boolean> = _userNameError
 
-    private val _snackbarType = MutableLiveData<SnackbarCustomType>()
-    val snackbarType: LiveData<SnackbarCustomType> = _snackbarType
+    fun init(userName: String) {
+        runBlocking {
+            createChallengersUseCase()
+            createMissionsUseCase()
+        }
+        createUser(userName)
+    }
 
-    fun createUser(userName: String) {
+    private fun createUser(userName: String) {
         viewModelScope.launch {
             if (userName.isNotEmpty()) {
                 _uiState.value = UiState.Loading
@@ -38,20 +48,6 @@ class InitialViewModel(private val createUserUseCase: CreateUserUseCase) : ViewM
             } else {
                 setUserNameError(true)
             }
-        }
-    }
-
-    fun showSnackBar(
-        snackbarHostState: SnackbarHostState,
-        snackbarType: SnackbarCustomType,
-        message: String
-    ) {
-        viewModelScope.launch {
-            _snackbarType.value = snackbarType
-            snackbarHostState.showSnackbar(
-                message = message,
-                duration = SnackbarDuration.Short
-            )
         }
     }
 

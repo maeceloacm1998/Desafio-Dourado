@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.background.Background
@@ -42,15 +43,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun InitialScreen(navController: NavController, viewModel: InitialViewModel = koinViewModel()) {
-    val snackbarHostState = remember { SnackbarHostState() }
     var nameState by rememberSaveable { mutableStateOf("") }
     var isLoading by rememberSaveable { mutableStateOf(false) }
 
     val userNameError by viewModel.userNameError.observeAsState(initial = false)
-    val snackbarType by viewModel.snackbarType.observeAsState(initial = SnackbarCustomType.SUCCESS)
 
     Observables(
-        snackbarHostState = snackbarHostState,
         navController = navController,
         viewModel = viewModel,
         onLoading = {
@@ -58,23 +56,20 @@ fun InitialScreen(navController: NavController, viewModel: InitialViewModel = ko
         })
 
     InitialComponents(
-        snackbarHostState = snackbarHostState,
         isLoading = isLoading,
         userNameError = userNameError,
-        snackbarType = snackbarType,
         onNameState = { name -> nameState = name },
-        onSubmitButton = { viewModel.createUser(nameState) }
+        onSubmitButton = { viewModel.init(nameState) }
     )
 }
 
 @Composable
 fun Observables(
-    snackbarHostState: SnackbarHostState,
     navController: NavController,
     viewModel: InitialViewModel,
     onLoading: (state: Boolean) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     when (uiState) {
         is UiState.Loading -> {
@@ -91,11 +86,6 @@ fun Observables(
 
         is UiState.Error -> {
             onLoading(false)
-            viewModel.showSnackBar(
-                snackbarHostState = snackbarHostState,
-                message = stringResource(id = R.string.initial_screen_snackbar_error),
-                snackbarType = SnackbarCustomType.ERROR
-            )
         }
 
         else -> Unit
@@ -104,10 +94,8 @@ fun Observables(
 
 @Composable
 fun InitialComponents(
-    snackbarHostState: SnackbarHostState,
     isLoading: Boolean,
     userNameError: Boolean,
-    snackbarType: SnackbarCustomType,
     onSubmitButton: () -> Unit,
     onNameState: (name: String) -> Unit
 ) {
@@ -195,13 +183,9 @@ fun InitialComponents(
 @Preview
 @Composable
 fun InitialScreenPreview() {
-    val fakeSnackbarHostState = remember { SnackbarHostState() }
-
     InitialComponents(
-        snackbarHostState = fakeSnackbarHostState,
         isLoading = false,
         userNameError = false,
-        snackbarType = SnackbarCustomType.ERROR,
         onSubmitButton = {},
         onNameState = {}
     )
