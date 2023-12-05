@@ -65,6 +65,7 @@ fun HomeRoute(
                     onClickSubmitListener = onClickSubmitListener
                 )
                 BackHandler {
+                    snackbarHostState.currentSnackbarData?.dismiss()
                     onInteractionWithFeed()
                 }
             }

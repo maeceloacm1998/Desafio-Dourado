@@ -74,9 +74,8 @@ class HomeViewModel(
                 viewModelState.update {
                     val index = challengerList.indexOf(challengerSelected)
                     challengerList[index] = challengerList[index].copy(complete = true)
-                    val result = homeRepository.completeChallenger(challengerList)
 
-                    when (result) {
+                    when (val result = homeRepository.completeChallenger(challengerList)) {
                         is Success -> {
                             val newCoins = userCoins - challengerSelected.value
                             updateCoin(newCoins)
@@ -96,7 +95,7 @@ class HomeViewModel(
         }
     }
 
-    fun updateCoin(coin: Int) {
+    private fun updateCoin(coin: Int) {
         viewModelScope.launch {
             val user = accountManager.getUserLogged().copy(quantityCoins = coin)
             accountManager.updateUserInfo(user)

@@ -79,7 +79,10 @@ fun DetailsComponent(
                         top.linkTo(parent.top)
                     },
                     title = "Detalhes do desafio",
-                    onNavigationListener = onBack,
+                    onNavigationListener = {
+                        snackbarHostState.currentSnackbarData?.dismiss()
+                        onBack()
+                    },
                     onChallengerListener = {}
                 )
 
