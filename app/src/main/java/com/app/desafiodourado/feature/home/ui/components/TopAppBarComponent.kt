@@ -15,7 +15,6 @@ import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.HomeUiState
 import com.app.desafiodourado.theme.Background
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomChallengerFeedTollBar(

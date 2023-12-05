@@ -21,7 +21,6 @@ import com.app.desafiodourado.theme.BlueDark
 import com.app.desafiodourado.theme.BrowLight
 import com.app.desafiodourado.theme.CustomDimensions
 
-
 @Composable
 fun CoinView(modifier: Modifier = Modifier, coin: Int) {
 

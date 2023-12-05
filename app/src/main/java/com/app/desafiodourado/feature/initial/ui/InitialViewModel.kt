@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.desafiodourado.core.utils.UiState
-import com.app.desafiodourado.feature.initial.data.InitialRepository
 import com.app.desafiodourado.feature.initial.domain.CreateChallengersUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateMissionsUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateUserUseCase
