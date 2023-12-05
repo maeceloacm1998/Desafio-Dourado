@@ -16,6 +16,7 @@ sealed interface HomeUiState {
         val challengers: Challenger,
         val selectedChallenger: Challenger.Card?,
         val badgeCount: Int,
+        val showMissions: Boolean,
         val coin: Int,
         override val isLoading: Boolean,
         override val errorMessages: ErrorMessage?,
@@ -27,6 +28,7 @@ data class HomeViewModelState(
     val selectedChallenger: Challenger.Card? = null,
     val coin: Int = 0,
     val badgeCount: Int = 0,
+    val showMissions: Boolean = false,
     val isLoading: Boolean = false,
     val errorMessages: ErrorMessage? = null,
 ) {
@@ -40,8 +42,9 @@ data class HomeViewModelState(
             HomeUiState.HasChallengers(
                 challengers = challengers,
                 selectedChallenger = selectedChallenger,
-                badgeCount = badgeCount,
                 coin = coin,
+                badgeCount = badgeCount,
+                showMissions = showMissions,
                 isLoading = isLoading,
                 errorMessages = errorMessages,
             )

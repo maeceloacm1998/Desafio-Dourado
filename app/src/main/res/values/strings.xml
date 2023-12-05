@@ -8,6 +8,8 @@
     <string name="initial_screen_bt_label">Praparar para a aventura</string>
     <string name="initial_screen_snackbar_error">Erro ao cadastrar você aventureiro, tente novamente.</string>
 
+    <string name="challengers_feed_screen_version_title">v1.0.0</string>
+    <string name="challengers_feed_screen_toolbar_title">"Premios Misteriosos"</string>
 
     <string name="dialog_title">Desafio da missaão</string>
     <string name="dialog_description">Essa carta é considerada comum, nela tem chance de vir algum presente ou item para sua coleção, contudo tem chances de não vir nada</string>

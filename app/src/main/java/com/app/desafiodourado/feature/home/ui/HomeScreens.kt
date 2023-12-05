@@ -4,16 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -25,16 +17,15 @@ import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.coinview.CoinView
 import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
-import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.data.FakeHomeRepositoryImpl
+import com.app.desafiodourado.feature.home.ui.components.ChallengerList
+import com.app.desafiodourado.feature.home.ui.components.CustomChallengerFeedTollBar
+import com.app.desafiodourado.feature.home.ui.components.InfoComponent
 import com.app.desafiodourado.feature.home.ui.model.Challenger
-import com.app.desafiodourado.ui.theme.Background
-import com.app.desafiodourado.ui.theme.BrowLight
 import com.app.desafiodourado.ui.theme.CustomDimensions
 import com.app.desafiodourado.ui.theme.DesafioDouradoTheme
-import com.app.desafiodourado.ui.theme.PurpleLight
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.runBlocking
@@ -53,14 +44,7 @@ fun ChallengerFeed(
     ) { uiState ->
         Column {
             TopBar(coin = uiState.coin)
-            ToolbarCustom(
-                title = "Premios Misteriosos",
-                badgeCount = 2,
-                showNavigationIcon = false,
-                showBadgeCount = true,
-                onChallengerListener = {},
-                onNavigationListener = {}
-            )
+            CustomChallengerFeedTollBar(uiState = uiState, onMissionsListener = {})
             InfoComponent()
             ChallengerList(uiState.challengers.challengers) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
@@ -139,8 +123,8 @@ fun TopBar(coin: Int) {
                     top.linkTo(parent.top)
                     start.linkTo(parent.start)
                 },
-            text = "v1.0.0",
-            style = MaterialTheme.typography.titleMedium,
+            text = stringResource(id = R.string.challengers_feed_screen_version_title),
+            style = MaterialTheme.typography.titleSmall,
             color = Color.White
         )
 
@@ -174,6 +158,7 @@ fun PreviewChallengerFeedScreen() {
                     selectedChallenger = null,
                     badgeCount = 0,
                     coin = 200,
+                    showMissions = true,
                     isLoading = false,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),

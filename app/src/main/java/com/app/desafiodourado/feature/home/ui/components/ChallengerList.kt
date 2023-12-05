@@ -1,7 +1,5 @@
-package com.app.desafiodourado.feature.home.ui
+package com.app.desafiodourado.feature.home.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
