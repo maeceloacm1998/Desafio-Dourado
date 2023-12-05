@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun Error(title: String, onClickRetryListener: () -> Unit) {

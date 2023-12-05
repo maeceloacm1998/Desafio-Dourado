@@ -17,9 +17,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.app.desafiodourado.R
-import com.app.desafiodourado.ui.theme.BlueDark
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.BlueDark
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
 
 
 @Composable

@@ -3,7 +3,6 @@ package com.app.desafiodourado.components.toolbar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,13 +10,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.EmojiEvents
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -30,12 +26,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.R
-import com.app.desafiodourado.ui.theme.Background
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
-import com.app.desafiodourado.ui.theme.Error
-import com.app.desafiodourado.ui.theme.PurpleLight
-import com.app.desafiodourado.ui.theme.RedDark
+import com.app.desafiodourado.theme.Background
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
+import com.app.desafiodourado.theme.PurpleLight
+import com.app.desafiodourado.theme.RedDark
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

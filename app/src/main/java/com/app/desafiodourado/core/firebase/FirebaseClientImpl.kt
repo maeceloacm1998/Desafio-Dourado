@@ -103,6 +103,7 @@ class FirebaseClientImpl(private val database: FirebaseFirestore) : FirebaseClie
     ): Result<DocumentSnapshot> {
         return try {
             val res = withContext(Dispatchers.IO) {
+                database.clearPersistence()
                 database.collection(collectionPath).document(documentPath).get().await()
             }
 
@@ -198,34 +199,6 @@ class FirebaseClientImpl(private val database: FirebaseFirestore) : FirebaseClie
         } catch (e: Exception) {
             handleLog(
                 typeRequisition = FirebaseConstants.MethodsFirebaseClient.DELETE_DOCUMENT,
-                collectionPath = collectionPath,
-                statusCode = FirebaseConstants.StatusCode.NOT_FOUND.toString(),
-                data = FirebaseConstants.MessageError.EMPTY_RESULT
-            )
-            Result.failure(Throwable(e.message, e.cause))
-        }
-    }
-
-    override suspend fun updateDocument(
-        collectionPath: String,
-        documentPath: String,
-        field: String,
-        value: Any
-    ) : Result<Boolean> {
-        return try {
-            withContext(Dispatchers.IO) {
-                database.collection(collectionPath).document(documentPath).update(field, value).await()
-            }
-            handleLog(
-                typeRequisition = FirebaseConstants.MethodsFirebaseClient.UPDATE_DOCUMENT,
-                collectionPath = collectionPath,
-                statusCode = FirebaseConstants.StatusCode.SUCCESS.toString(),
-                data = "SUCCESS UPDATE DOCUMENT"
-            )
-            Result.success(true)
-        } catch (e: Exception) {
-            handleLog(
-                typeRequisition = FirebaseConstants.MethodsFirebaseClient.UPDATE_DOCUMENT,
                 collectionPath = collectionPath,
                 statusCode = FirebaseConstants.StatusCode.NOT_FOUND.toString(),
                 data = FirebaseConstants.MessageError.EMPTY_RESULT

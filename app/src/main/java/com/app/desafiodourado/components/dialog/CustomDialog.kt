@@ -5,8 +5,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.window.Dialog
-import com.app.desafiodourado.ui.theme.Background
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.Background
+import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun CustomDialog(

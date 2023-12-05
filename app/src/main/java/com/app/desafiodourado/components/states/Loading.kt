@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun Loading(modifier: Modifier = Modifier) {
@@ -27,8 +27,8 @@ fun Loading(modifier: Modifier = Modifier) {
         CircularProgressIndicator(
             color = BrowLight,
             modifier = Modifier.size(
-                width = CustomDimensions.padding16,
-                height = CustomDimensions.padding16
+                width = CustomDimensions.padding20,
+                height = CustomDimensions.padding20
             )
         )
         Text(
