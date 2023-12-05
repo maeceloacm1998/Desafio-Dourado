@@ -24,8 +24,8 @@ import com.app.desafiodourado.feature.home.ui.components.ChallengerList
 import com.app.desafiodourado.feature.home.ui.components.CustomChallengerFeedTollBar
 import com.app.desafiodourado.feature.home.ui.components.InfoComponent
 import com.app.desafiodourado.feature.home.ui.model.Challenger
-import com.app.desafiodourado.ui.theme.CustomDimensions
-import com.app.desafiodourado.ui.theme.DesafioDouradoTheme
+import com.app.desafiodourado.theme.CustomDimensions
+import com.app.desafiodourado.theme.DesafioDouradoTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.runBlocking

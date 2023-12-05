@@ -21,12 +21,11 @@ import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.button.CustomButton
 import com.app.desafiodourado.components.image.ImageComponent
 import com.app.desafiodourado.components.snackbar.CustomSnackbar
-import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 import com.app.desafiodourado.components.snackbar.SnackbarCustomType.ERROR
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.model.Challenger
-import com.app.desafiodourado.ui.theme.CustomDimensions
-import com.app.desafiodourado.ui.theme.Success
+import com.app.desafiodourado.theme.CustomDimensions
+import com.app.desafiodourado.theme.Success
 
 @Composable
 fun DetailsScreen(

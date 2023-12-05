@@ -1,4 +1,4 @@
-package com.app.desafiodourado.ui.theme
+package com.app.desafiodourado.theme
 
 import android.app.Activity
 import android.os.Build

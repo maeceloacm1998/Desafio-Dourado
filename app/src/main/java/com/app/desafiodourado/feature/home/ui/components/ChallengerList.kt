@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import com.app.desafiodourado.components.image.ImageComponent
 import com.app.desafiodourado.feature.home.ui.model.Challenger
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun ChallengerList(

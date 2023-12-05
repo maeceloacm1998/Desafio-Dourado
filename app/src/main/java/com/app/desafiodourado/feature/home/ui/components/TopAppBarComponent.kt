@@ -13,7 +13,7 @@ import com.app.desafiodourado.R
 import com.app.desafiodourado.components.bottomsheet.BetterModalBottomSheet
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.HomeUiState
-import com.app.desafiodourado.ui.theme.Background
+import com.app.desafiodourado.theme.Background
 
 
 @OptIn(ExperimentalMaterial3Api::class)

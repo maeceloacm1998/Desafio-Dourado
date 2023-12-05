@@ -25,10 +25,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
-import com.app.desafiodourado.ui.theme.Background
-import com.app.desafiodourado.ui.theme.BackgroundTransparent
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.Error
+import com.app.desafiodourado.theme.BackgroundTransparent
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.Error
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

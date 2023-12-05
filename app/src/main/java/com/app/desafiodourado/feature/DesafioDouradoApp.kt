@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.core.accountManager.AccountManager
-import com.app.desafiodourado.ui.theme.DesafioDouradoTheme
+import com.app.desafiodourado.theme.DesafioDouradoTheme
 
 @Composable
 fun DesafioDouradoApp(accountManager: AccountManager) {

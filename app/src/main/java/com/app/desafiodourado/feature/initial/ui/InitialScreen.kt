@@ -10,10 +10,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.runtime.remember
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
@@ -31,14 +28,12 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.app.desafiodourado.R
-import com.app.desafiodourado.components.background.Background
-import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 import com.app.desafiodourado.components.textfield.TextFieldCustom
 import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.core.utils.UiState
-import com.app.desafiodourado.ui.theme.BackgroundTransparent
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.BackgroundTransparent
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
 import org.koin.androidx.compose.koinViewModel
 
 @Composable

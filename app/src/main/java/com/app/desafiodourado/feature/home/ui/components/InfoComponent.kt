@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.app.desafiodourado.components.bottomsheet.BetterModalBottomSheet
-import com.app.desafiodourado.ui.theme.Background
-import com.app.desafiodourado.ui.theme.BrowLight
-import com.app.desafiodourado.ui.theme.CustomDimensions
+import com.app.desafiodourado.theme.Background
+import com.app.desafiodourado.theme.BrowLight
+import com.app.desafiodourado.theme.CustomDimensions
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
