@@ -8,10 +8,12 @@ import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.feature.initial.domain.CreateChallengersUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateMissionsUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateUserUseCase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
 class InitialViewModel(
     private val createUserUseCase: CreateUserUseCase,
@@ -25,28 +27,32 @@ class InitialViewModel(
     val userNameError: LiveData<Boolean> = _userNameError
 
     fun init(userName: String) {
-        runBlocking {
-            createChallengersUseCase()
-            createMissionsUseCase()
+        viewModelScope.launch {
+            val job1 = async { createChallengersUseCase() }
+            val job2 = async { createMissionsUseCase() }
+
+            job1.await()
+            job2.await()
+
+            withContext(Dispatchers.Main) {
+                createUser(userName)
+            }
         }
-        createUser(userName)
     }
 
-    private fun createUser(userName: String) {
-        viewModelScope.launch {
-            if (userName.isNotEmpty()) {
-                _uiState.value = UiState.Loading
-                setUserNameError(false)
+    private suspend fun createUser(userName: String) {
+        if (userName.isNotEmpty()) {
+            _uiState.value = UiState.Loading
+            setUserNameError(false)
 
-                createUserUseCase(userName)
-                    .onSuccess { success ->
-                        _uiState.value = UiState.Success(true)
-                    }.onFailure {
-                        _uiState.value = UiState.Error(it)
-                    }
-            } else {
-                setUserNameError(true)
-            }
+            createUserUseCase(userName)
+                .onSuccess {
+                    _uiState.value = UiState.Success(true)
+                }.onFailure {
+                    _uiState.value = UiState.Error(it)
+                }
+        } else {
+            setUserNameError(true)
         }
     }
 

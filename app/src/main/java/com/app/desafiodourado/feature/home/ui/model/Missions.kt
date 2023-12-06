@@ -1,7 +1,7 @@
 package com.app.desafiodourado.feature.home.ui.model
 
 data class Missions(
-    val missions: List<MissionsModel>
+    val missions: List<MissionsModel> = mutableListOf()
 ) {
     data class MissionsModel(
         var title: String = "",

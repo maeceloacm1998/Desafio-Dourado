@@ -82,7 +82,7 @@ fun DetailsComponent(
                         snackbarHostState.currentSnackbarData?.dismiss()
                         onBack()
                     },
-                    onChallengerListener = {}
+                    onMissionsListener = {},
                 )
 
                 ImageComponent(

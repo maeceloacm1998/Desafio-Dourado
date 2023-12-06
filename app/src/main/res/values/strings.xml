@@ -2,6 +2,7 @@
     <string name="app_name">Desafio Dourado</string>
 
     <string name="load_error">Error ao carregar os desafios</string>
+    <string name="load_error_missions">Error ao carregar os desafios</string>
 
     <string name="initial_screen_tf_label">Nome de aventureiro(a)</string>
     <string name="initial_screen_tf_error">Digite seu nome para iniciar sua jornada :)</string>

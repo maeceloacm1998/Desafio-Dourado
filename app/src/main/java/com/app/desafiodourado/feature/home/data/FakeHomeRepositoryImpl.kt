@@ -4,7 +4,6 @@ import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-
 class FakeHomeRepositoryImpl : HomeRepository {
     override suspend fun getChallengers(): Result<Challenger> {
         return withContext(Dispatchers.IO) {

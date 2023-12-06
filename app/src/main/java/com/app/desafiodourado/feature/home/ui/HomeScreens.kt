@@ -34,6 +34,7 @@ import kotlinx.coroutines.runBlocking
 fun ChallengerFeed(
     uiState: HomeUiState,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
+    onMissionsListener: (visible: Boolean) -> Unit,
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
 ) {
@@ -44,7 +45,10 @@ fun ChallengerFeed(
     ) { uiState ->
         Column {
             TopBar(coin = uiState.coin)
-            CustomChallengerFeedTollBar(uiState = uiState, onMissionsListener = {})
+            CustomChallengerFeedTollBar(
+                uiState = uiState,
+                onMissionsListener = onMissionsListener
+            )
             InfoComponent()
             ChallengerList(uiState.challengers.challengers) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
@@ -163,6 +167,7 @@ fun PreviewChallengerFeedScreen() {
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
                 onChallengerSelected = {},
+                onMissionsListener = {},
                 onRefreshChallengers = {},
                 onRetryChallengers = {}
             )

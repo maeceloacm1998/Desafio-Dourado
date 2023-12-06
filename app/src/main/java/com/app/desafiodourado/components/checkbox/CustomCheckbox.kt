@@ -24,76 +24,91 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.R
+import com.app.desafiodourado.feature.home.ui.model.Missions
+import com.app.desafiodourado.feature.initial.data.missions
 import com.app.desafiodourado.theme.CustomDimensions
 import com.app.desafiodourado.theme.PurpleLight
 import com.app.desafiodourado.theme.Success
 
-@Preview
 @Composable
-fun CustomCheckbox() {
-    val (checkedState, onStateChange) = rememberSaveable { mutableStateOf(false) }
+fun CustomCheckbox(
+    mission: Missions.MissionsModel,
+    onChangeCheckbox: (checked: Boolean) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val (checkedState, onStateChange) = rememberSaveable { mutableStateOf(mission.isChecked) }
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .toggleable(
                 value = checkedState,
-                onValueChange = { onStateChange(!checkedState) },
+                onValueChange = {
+                    if(!checkedState) {
+                        onChangeCheckbox(true)
+                        onStateChange(true)
+                    }
+                },
                 role = Role.Checkbox
             ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
-            ) {
-                Checkbox(
-                    checked = checkedState,
-                    colors = CheckboxDefaults.colors(
-                        checkedColor = Success,
-                        uncheckedColor = PurpleLight
-                    ),
-                    onCheckedChange = null
+        Row(
+            modifier = Modifier.weight(5f),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Checkbox(
+                modifier = Modifier.weight(0.5f),
+                checked = checkedState,
+                colors = CheckboxDefaults.colors(
+                    checkedColor = Success,
+                    uncheckedColor = PurpleLight
+                ),
+                onCheckedChange = null
+            )
+            Column(modifier = Modifier.weight(5f)) {
+                Text(
+                    text = mission.title,
+                    style = MaterialTheme.typography.titleMedium,
+                    color = Color.White,
+                    textDecoration = if (checkedState) TextDecoration.LineThrough else TextDecoration.None,
+                    modifier = Modifier
+                        .padding(start = CustomDimensions.padding8)
+                        .fillMaxWidth()
                 )
-                Column {
-                    Text(
-                        text = "Option selection",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.White,
-                        textDecoration = if (checkedState) TextDecoration.LineThrough else TextDecoration.None,
-                        modifier = Modifier.padding(
-                            start = CustomDimensions.padding16
-                        )
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .weight(5f)
+                            .padding(start = CustomDimensions.padding8),
+                        progress = if (checkedState) 1f else 0.1f,
+                        color = Success,
+                        trackColor = Color.DarkGray,
                     )
 
-                    Row(
-                        modifier = Modifier,
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        LinearProgressIndicator(
-                            progress = if (checkedState) 1f else 0.1f,
-                            color = Success,
-                            trackColor = Color.DarkGray,
-                            modifier = Modifier.padding(start = CustomDimensions.padding16)
-                        )
-
-                        Text(
-                            text = if (checkedState) "100 %" else "0 %",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = Color.White,
-                            modifier = Modifier.padding(
+                    Text(
+                        text = if (checkedState) "100 %" else "0 %",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = Color.White,
+                        modifier = Modifier
+                            .weight(2f)
+                            .padding(
                                 start = CustomDimensions.padding16
                             )
-                        )
-                    }
+                    )
                 }
             }
         }
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.weight(1f),
+            horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Center
         ) {
             Image(
@@ -104,11 +119,20 @@ fun CustomCheckbox() {
             )
             Text(
                 modifier = Modifier,
-                text = "200",
+                text = mission.coinValue.toString(),
                 textDecoration = if (checkedState) TextDecoration.LineThrough else TextDecoration.None,
                 color = Color.White,
                 style = MaterialTheme.typography.titleMedium,
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun CustomCheckboxPreview() {
+    CustomCheckbox(
+        mission = missions[25],
+        onChangeCheckbox = {}
+    )
 }

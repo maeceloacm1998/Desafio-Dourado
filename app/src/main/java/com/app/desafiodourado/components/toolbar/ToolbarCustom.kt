@@ -40,7 +40,7 @@ fun ToolbarCustom(
     badgeCount: Int = 0,
     showNavigationIcon: Boolean = true,
     showBadgeCount: Boolean = false,
-    onChallengerListener: () -> Unit,
+    onMissionsListener: () -> Unit,
     onNavigationListener: () -> Unit,
 ) {
     TopAppBar(
@@ -90,7 +90,7 @@ fun ToolbarCustom(
                     modifier = Modifier.padding(end = CustomDimensions.padding20)
                 ) {
                     IconButton(
-                        onClick = { onChallengerListener() },
+                        onClick = { onMissionsListener() },
                         modifier = Modifier
                             .size(CustomDimensions.padding50)
                             .clip(CircleShape)
@@ -132,7 +132,7 @@ fun ToolbarPreview() {
         badgeCount = 2,
         showNavigationIcon = false,
         showBadgeCount = true,
-        onChallengerListener = {},
+        onMissionsListener = {},
         onNavigationListener = {}
     )
 }
@@ -142,7 +142,7 @@ fun ToolbarPreview() {
 fun ToolbarNavigationPreview() {
     ToolbarCustom(
         title = "Premios Misteriosos",
-        onChallengerListener = {},
+        onMissionsListener = {},
         onNavigationListener = {}
     )
 }

@@ -17,10 +17,18 @@ class InitialRepositoryImpl(
     }
 
     override suspend fun createChallengers(id: String): Result<Boolean> {
-        return client.setSpecificDocument(FirebaseConstants.Collections.CHALLENGERS, id, Challenger(challengers))
+        return client.setSpecificDocument(
+            FirebaseConstants.Collections.CHALLENGERS,
+            id,
+            Challenger(challengers)
+        )
     }
 
     override suspend fun createMissions(id: String): Result<Boolean> {
-        return client.setSpecificDocument(FirebaseConstants.Collections.MISSIONS, id, Missions(missions))
+        return client.setSpecificDocument(
+            FirebaseConstants.Collections.MISSIONS,
+            id,
+            Missions(missions)
+        )
     }
 }

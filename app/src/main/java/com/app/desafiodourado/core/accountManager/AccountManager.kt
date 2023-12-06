@@ -1,13 +1,19 @@
 package com.app.desafiodourado.core.accountManager
 
 import com.app.desafiodourado.core.firebase.models.UserModel
+import com.app.desafiodourado.feature.home.ui.model.Missions
+import kotlinx.coroutines.flow.Flow
 
 interface AccountManager {
     suspend fun createUser(user: UserModel): Result<Boolean>
     suspend fun updateUserInfo(user: UserModel): Result<Boolean>
+    suspend fun updateMissions()
+    fun observeCoins(): Flow<Int>
+    fun observeMissions(): Flow<List<Missions.MissionsModel>>
+    fun updateCoins()
     fun getUserLogged(): UserModel
-    fun postUserLogged(user: UserModel)
     fun getQuantityCoins(): Int
+    fun postUserLogged(user: UserModel)
     fun getUserId(): String
     fun userIsLogged(): Boolean
 }

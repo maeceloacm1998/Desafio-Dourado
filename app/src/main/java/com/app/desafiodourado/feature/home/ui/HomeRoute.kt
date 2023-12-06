@@ -24,6 +24,7 @@ fun HomeRoute(
         snackbarHostState = snackbarHostState,
         onChallengerSelected = { homeViewModel.challengerSelected(it) },
         onInteractionWithFeed = { homeViewModel.onInteractionFeed() },
+        onMissionsListener = { homeViewModel.openMissions(it) },
         onClickSubmitListener = {
             homeViewModel.completedChallenger(
                 challengerSelected = it,
@@ -42,6 +43,7 @@ fun HomeRoute(
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
     onInteractionWithFeed: () -> Unit,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
+    onMissionsListener: (visible: Boolean) -> Unit,
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
 ) {
@@ -50,6 +52,7 @@ fun HomeRoute(
             ChallengerFeed(
                 uiState = uiState,
                 onChallengerSelected = onChallengerSelected,
+                onMissionsListener = onMissionsListener,
                 onRefreshChallengers = onRefreshChallengers,
                 onRetryChallengers = onRetryChallengers
             )

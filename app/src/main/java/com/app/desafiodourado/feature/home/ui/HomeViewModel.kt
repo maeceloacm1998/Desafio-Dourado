@@ -34,11 +34,15 @@ class HomeViewModel(
         )
 
     init {
+        accountManager.updateCoins()
         updateChallengers()
+        observables()
     }
 
     fun updateChallengers() {
         viewModelScope.launch {
+            accountManager.updateMissions()
+
             val result = homeRepository.getChallengers()
             viewModelState.update { it.copy(isLoading = true) }
 
@@ -61,6 +65,24 @@ class HomeViewModel(
         }
     }
 
+    private fun observables() {
+        viewModelScope.launch {
+            accountManager.observeCoins().collect { coin ->
+                viewModelState.update { it.copy(coin = coin) }
+            }
+        }
+
+        viewModelScope.launch {
+            accountManager.observeMissions().collect { missions ->
+                if (missions.isNotEmpty()) {
+                    viewModelState.update {
+                        it.copy(badgeCount = missions.filter { mission -> !mission.isChecked }.size)
+                    }
+                }
+            }
+        }
+    }
+
     fun completedChallenger(
         challengerSelected: Challenger.Card,
         snackbarHostState: SnackbarHostState
@@ -71,23 +93,26 @@ class HomeViewModel(
             if (userCoins < challengerSelected.value) {
                 snackbarHostState.showSnackbar(INSUFFICIENT_QUANTITY)
             } else {
-                viewModelState.update {
-                    val index = challengerList.indexOf(challengerSelected)
+                val index = challengerList.indexOf(challengerSelected)
+
+                if (index != -1) {
                     challengerList[index] = challengerList[index].copy(complete = true)
 
-                    when (val result = homeRepository.completeChallenger(challengerList)) {
-                        is Success -> {
-                            val newCoins = userCoins - challengerSelected.value
-                            updateCoin(newCoins)
-                            it.copy(
-                                challengers = result.data,
-                                selectedChallenger = challengerSelected.copy(complete = true)
-                            )
-                        }
+                    viewModelState.update {
+                        when (val result = homeRepository.completeChallenger(challengerList)) {
+                            is Success -> {
+                                val newCoins = userCoins - challengerSelected.value
+                                updateCoin(newCoins)
+                                it.copy(
+                                    challengers = result.data,
+                                    selectedChallenger = challengerSelected.copy(complete = true)
+                                )
+                            }
 
-                        is Error -> {
-                            snackbarHostState.showSnackbar(ERROR)
-                            return@launch
+                            is Error -> {
+                                snackbarHostState.showSnackbar(ERROR)
+                                return@launch
+                            }
                         }
                     }
                 }
@@ -100,13 +125,13 @@ class HomeViewModel(
             val user = accountManager.getUserLogged().copy(quantityCoins = coin)
             accountManager.updateUserInfo(user)
                 .onSuccess {
-                    accountManager.postUserLogged(user)
                     viewModelState.update {
                         it.copy(coin = coin)
                     }
                 }
         }
     }
+
 
     fun challengerSelected(challengers: Challenger.Card) {
         viewModelState.update {
@@ -119,6 +144,12 @@ class HomeViewModel(
     fun onInteractionFeed() {
         viewModelState.update {
             it.copy(selectedChallenger = null)
+        }
+    }
+
+    fun openMissions(visible: Boolean) {
+        viewModelState.update {
+            it.copy(showMissions = visible)
         }
     }
 
