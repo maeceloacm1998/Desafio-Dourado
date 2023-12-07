@@ -74,9 +74,15 @@ class HomeViewModel(
 
         viewModelScope.launch {
             accountManager.observeMissions().collect { missions ->
+                val missionsNotChecked = missions.filter { mission -> !mission.isChecked }.size
+                val isFinishAllMissions = missionsNotChecked == 0
+
                 if (missions.isNotEmpty()) {
                     viewModelState.update {
-                        it.copy(badgeCount = missions.filter { mission -> !mission.isChecked }.size)
+                        it.copy(
+                            badgeCount = missionsNotChecked,
+                            finishAllMissions = isFinishAllMissions
+                        )
                     }
                 }
             }

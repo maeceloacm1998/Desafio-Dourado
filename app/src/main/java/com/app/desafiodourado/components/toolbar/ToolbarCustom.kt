@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.EmojiEvents
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +32,7 @@ import com.app.desafiodourado.theme.BrowLight
 import com.app.desafiodourado.theme.CustomDimensions
 import com.app.desafiodourado.theme.PurpleLight
 import com.app.desafiodourado.theme.RedDark
+import com.app.desafiodourado.theme.Success
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,6 +40,7 @@ fun ToolbarCustom(
     modifier: Modifier = Modifier,
     title: String,
     badgeCount: Int = 0,
+    finishAllMissions: Boolean = false,
     showNavigationIcon: Boolean = true,
     showBadgeCount: Boolean = false,
     onMissionsListener: () -> Unit,
@@ -118,6 +121,27 @@ fun ToolbarCustom(
                             )
                         }
                     }
+
+                    if (finishAllMissions) {
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .offset(x = CustomDimensions.padding10)
+                                .size(CustomDimensions.padding24)
+                                .background(Success, CircleShape)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Check,
+                                tint = Color.White,
+                                contentDescription = "check",
+                                modifier = Modifier.size(
+                                    width = CustomDimensions.padding14,
+                                    height = CustomDimensions.padding14
+                                )
+                            )
+                        }
+                    }
                 }
             }
         },
@@ -130,6 +154,7 @@ fun ToolbarPreview() {
     ToolbarCustom(
         title = "Premios Misteriosos",
         badgeCount = 2,
+        finishAllMissions = false,
         showNavigationIcon = false,
         showBadgeCount = true,
         onMissionsListener = {},

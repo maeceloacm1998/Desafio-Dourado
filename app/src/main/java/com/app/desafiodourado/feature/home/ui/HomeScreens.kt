@@ -161,6 +161,7 @@ fun PreviewChallengerFeedScreen() {
                     challengers = challengerFeed,
                     selectedChallenger = null,
                     badgeCount = 0,
+                    finishAllMissions = false,
                     coin = 200,
                     showMissions = true,
                     isLoading = false,

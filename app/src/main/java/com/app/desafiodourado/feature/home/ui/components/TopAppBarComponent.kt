@@ -29,6 +29,7 @@ fun CustomChallengerFeedTollBar(
     ToolbarCustom(
         title = stringResource(id = R.string.challengers_feed_screen_toolbar_title),
         badgeCount = uiState.badgeCount,
+        finishAllMissions = uiState.finishAllMissions,
         showNavigationIcon = false,
         showBadgeCount = true,
         onMissionsListener = {
@@ -61,6 +62,7 @@ fun MissionBottomSheet() {
             showMissions = true,
             coin = 2000,
             badgeCount = 2,
+            finishAllMissions = true,
             selectedChallenger = challengers[0],
             isLoading = false,
             errorMessages = null
