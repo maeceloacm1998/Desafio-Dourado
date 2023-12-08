@@ -3,7 +3,7 @@ package com.app.desafiodourado.feature
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.app.desafiodourado.core.accountManager.AccountManager
+import com.app.desafiodourado.core.accountmanager.AccountManager
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

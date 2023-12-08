@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import com.app.desafiodourado.core.firebase.models.UserModel
+import com.app.desafiodourado.core.utils.DateUtils
 import com.app.desafiodourado.feature.initial.data.InitialRepository
 import com.app.desafiodourado.feature.initial.data.missions
 
@@ -18,7 +19,8 @@ class CreateUserUseCase(
             id = getDeviceId(),
             name = userName,
             quantityCoins = 0,
-            currentMissions = randomMissions
+            currentMissions = randomMissions,
+            lastUpdateMissions = DateUtils.getCurrentDate()
         )
         return repository.createUserInFirebase(userModel)
     }

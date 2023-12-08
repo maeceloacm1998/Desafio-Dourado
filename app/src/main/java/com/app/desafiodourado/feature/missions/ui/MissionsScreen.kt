@@ -50,7 +50,7 @@ fun MissionsScreen(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = "12:34:22",
+                    text = uiState.timer ?: "00:00:00",
                     style = MaterialTheme.typography.titleMedium,
                     color = BrowLight,
                     textAlign = TextAlign.Center

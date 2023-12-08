@@ -1,4 +1,4 @@
-package com.app.desafiodourado.core.sharedPreferences
+package com.app.desafiodourado.core.sharedpreferences
 
 interface SharedPreferencesBuilder {
     fun putString(key: String, data: String)

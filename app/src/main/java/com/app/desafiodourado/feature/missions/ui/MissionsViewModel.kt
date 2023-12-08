@@ -2,26 +2,16 @@ package com.app.desafiodourado.feature.missions.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.desafiodourado.R
-import com.app.desafiodourado.core.accountManager.AccountManager
-import com.app.desafiodourado.core.utils.ErrorMessage
-import com.app.desafiodourado.core.utils.Result
+import com.app.desafiodourado.core.accountmanager.AccountManager
 import com.app.desafiodourado.feature.home.ui.model.Missions
-import com.app.desafiodourado.feature.missions.data.MissionsRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.UUID
 
-const val EMPTY_SEARCH = -1
-
-class MissionsViewModel(
-    private val missionsRepository: MissionsRepository,
-    private val accountManager: AccountManager
-) : ViewModel() {
+class MissionsViewModel(private val accountManager: AccountManager) : ViewModel() {
     private val viewModelState = MutableStateFlow(MissionsViewModelState(isLoading = true))
 
     val uiState = viewModelState
@@ -33,6 +23,10 @@ class MissionsViewModel(
         )
 
     init {
+        observables()
+    }
+
+    private fun observables() {
         viewModelScope.launch {
             accountManager.observeMissions().collect { missions ->
                 if (missions.isNotEmpty()) {
@@ -40,21 +34,28 @@ class MissionsViewModel(
                 }
             }
         }
+
+        viewModelScope.launch {
+            accountManager.observeCountdown().collect { timer ->
+                viewModelState.update { it.copy(timer = timer) }
+            }
+        }
     }
 
-    fun missionsChecked(mission: Missions.MissionsModel) {
+    fun missionsChecked(missionChecked: Missions.MissionsModel) {
         viewModelScope.launch {
-            val missions = accountManager.getUserLogged().currentMissions
-            val getMissions = missions.toMutableList()
-            val index = getMissionsIndex(missions = missions, mission = mission)
-            if (index != EMPTY_SEARCH) {
-                val missionsPosition = missions[index]
-                val quantityCoin = missionsPosition.coinValue + mission.coinValue
-                getMissions[index] = missionsPosition.copy(
-                    coinValue = quantityCoin,
-                    isChecked = !mission.isChecked
-                )
-                updateUserMissions(missions = getMissions, quantityCoins = quantityCoin)
+            val user = accountManager.getUserLogged()
+
+            val userCoin = user.quantityCoins
+            val currentMissions = user.currentMissions.toMutableList()
+
+            if (existMission(currentMissions, missionChecked)) {
+                val missionIndex = currentMissions.indexOf(missionChecked)
+                val mission = currentMissions[missionIndex]
+                val newUserCoin = userCoin + missionChecked.coinValue
+
+                currentMissions[missionIndex] = mission.copy(isChecked = !missionChecked.isChecked)
+                updateUserMissions(missions = currentMissions, quantityCoins = newUserCoin)
             }
         }
     }
@@ -72,44 +73,8 @@ class MissionsViewModel(
         )
     }
 
-    private fun getMissionsIndex(
+    private fun existMission(
         missions: List<Missions.MissionsModel>,
         mission: Missions.MissionsModel
-    ): Int = missions.indexOf(mission)
-
-    private fun updateMissions() {
-        viewModelScope.launch {
-            viewModelState.update {
-                when (val result = missionsRepository.getRandomMissions()) {
-                    is Result.Success -> {
-                        updateCurrentMissionsInUser(missions = result.data)
-                        it.copy(missions = result.data)
-                    }
-
-                    is Result.Error -> {
-                        val errorMessages = ErrorMessage(
-                            id = UUID.randomUUID().mostSignificantBits,
-                            messageId = R.string.load_error
-                        )
-                        it.copy(errorMessages = errorMessages, isLoading = false)
-                    }
-                }
-            }
-        }
-    }
-
-    private suspend fun updateCurrentMissionsInUser(missions: List<Missions.MissionsModel>) {
-        val user = accountManager.getUserLogged().copy(currentMissions = missions)
-
-        accountManager.updateUserInfo(user).onFailure { _ ->
-            viewModelState.update {
-                val errorMessages = ErrorMessage(
-                    id = UUID.randomUUID().mostSignificantBits,
-                    messageId = R.string.load_error
-                )
-                it.copy(errorMessages = errorMessages, isLoading = false)
-            }
-        }
-    }
-
+    ): Boolean = missions.contains(mission)
 }

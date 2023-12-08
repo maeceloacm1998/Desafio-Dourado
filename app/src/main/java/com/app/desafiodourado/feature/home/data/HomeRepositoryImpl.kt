@@ -1,11 +1,12 @@
 package com.app.desafiodourado.feature.home.data
 
-import com.app.desafiodourado.core.accountManager.AccountManager
+import com.app.desafiodourado.core.accountmanager.AccountManager
 import com.app.desafiodourado.core.firebase.FirebaseClient
 import com.app.desafiodourado.core.firebase.FirebaseConstants
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.Dispatchers
 import com.app.desafiodourado.core.utils.Result
+import com.app.desafiodourado.feature.home.ui.model.Missions
 import kotlinx.coroutines.withContext
 
 class HomeRepositoryImpl(
@@ -47,5 +48,24 @@ class HomeRepositoryImpl(
         return Result.Success(challenger)
     }
 
+    override suspend fun getRandomMissions(): Result<List<Missions.MissionsModel>> {
+        val id = accountManager.getUserId()
+        val request = withContext(Dispatchers.IO) {
+            client.getSpecificDocument(
+                collectionPath = FirebaseConstants.Collections.MISSIONS,
+                documentPath = id
+            )
+        }
+
+        if (request.isFailure) {
+            return Result.Error(IllegalArgumentException("Error get missions"))
+        }
+
+        val result = request.getOrThrow().toObject(Missions::class.java)
+
+        return Result.Success(checkNotNull(result?.missions?.shuffled()?.take(4)))
+    }
+
     override fun getCoins(): Int = accountManager.getQuantityCoins()
+
 }

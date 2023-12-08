@@ -1,4 +1,4 @@
-package com.app.desafiodourado.core.sharedPreferences
+package com.app.desafiodourado.core.sharedpreferences
 
 import android.content.Context
 import android.content.SharedPreferences

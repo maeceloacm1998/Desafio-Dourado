@@ -2,6 +2,7 @@ package com.app.desafiodourado.feature.home.data
 
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Challenger
+import com.app.desafiodourado.feature.home.ui.model.Missions
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 class FakeHomeRepositoryImpl : HomeRepository {
@@ -25,6 +26,10 @@ class FakeHomeRepositoryImpl : HomeRepository {
                 Result.Success(challengerWithCardComplete)
             }
         }
+    }
+
+    override suspend fun getRandomMissions(): Result<List<Missions.MissionsModel>> {
+        TODO("Not yet implemented")
     }
 
     override fun getCoins(): Int {

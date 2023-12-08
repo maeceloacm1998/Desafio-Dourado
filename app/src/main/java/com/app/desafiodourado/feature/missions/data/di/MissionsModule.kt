@@ -15,10 +15,7 @@ object MissionsModule {
             )
         }
         viewModel {
-            MissionsViewModel(
-                missionsRepository = get(),
-                accountManager = get()
-            )
+            MissionsViewModel(accountManager = get())
         }
     }
 }

@@ -1,10 +1,11 @@
-package com.app.desafiodourado.core.accountManager
+package com.app.desafiodourado.core.accountmanager
 
 import com.app.desafiodourado.core.firebase.FirebaseClient
 import com.app.desafiodourado.core.firebase.FirebaseConstants
 import com.app.desafiodourado.core.firebase.models.UserModel
 import com.google.gson.Gson
-import com.app.desafiodourado.core.sharedPreferences.SharedPreferencesBuilder
+import com.app.desafiodourado.core.sharedpreferences.SharedPreferencesBuilder
+import com.app.desafiodourado.core.timermanager.TimerManager
 import com.app.desafiodourado.feature.home.ui.model.Missions
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.update
 
 class AccountManagerImpl(
     private val client: FirebaseClient,
-    private val sharedPreferences: SharedPreferencesBuilder
+    private val sharedPreferences: SharedPreferencesBuilder,
+    private val timerManager: TimerManager
 ) : AccountManager {
     private val coins = MutableStateFlow(0)
     private val missions = MutableStateFlow<List<Missions.MissionsModel>>(mutableListOf())
@@ -34,12 +36,15 @@ class AccountManagerImpl(
     override fun observeCoins(): Flow<Int> = coins
 
     override fun observeMissions(): Flow<List<Missions.MissionsModel>> = missions
+    override fun observeCountdown(): Flow<String> = timerManager.observeCountdown()
+
     override fun updateCoins() {
         val user = getUserLogged()
         coins.update { user.quantityCoins }
     }
 
-    override suspend fun updateMissions() {
+    override suspend fun getCurrentMissions() {
+        timerManager.startCountDown()
         val id = getUserId()
         client.getSpecificDocument(FirebaseConstants.Collections.USERS, id)
             .onSuccess {

@@ -1,4 +1,4 @@
-package com.app.desafiodourado.core.accountManager
+package com.app.desafiodourado.core.accountmanager
 
 import org.koin.dsl.module
 
@@ -7,7 +7,8 @@ object AccountManagerModule {
         single<AccountManager> {
             AccountManagerImpl(
                 client = get(),
-                sharedPreferences = get()
+                sharedPreferences = get(),
+                timerManager = get()
             )
         }
     }

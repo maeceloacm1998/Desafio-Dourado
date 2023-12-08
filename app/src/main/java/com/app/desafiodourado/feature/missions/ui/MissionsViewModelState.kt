@@ -16,6 +16,7 @@ sealed interface MissionsUiState {
     data class HasMissions(
         val missions: List<Missions.MissionsModel>,
         val selectedMissions: Missions.MissionsModel?,
+        val timer: String?,
         override val isLoading: Boolean,
         override val errorMessages: ErrorMessage?,
     ): MissionsUiState
@@ -24,6 +25,7 @@ sealed interface MissionsUiState {
 data class MissionsViewModelState(
     val missions: List<Missions.MissionsModel>? = null,
     val selectedMissions: Missions.MissionsModel? = null,
+    val timer: String? = null,
     val isLoading: Boolean = false,
     val errorMessages: ErrorMessage? = null,
 ) {
@@ -37,6 +39,7 @@ data class MissionsViewModelState(
             MissionsUiState.HasMissions(
                 missions = missions,
                 selectedMissions = selectedMissions,
+                timer = timer,
                 isLoading = isLoading,
                 errorMessages = errorMessages,
             )
