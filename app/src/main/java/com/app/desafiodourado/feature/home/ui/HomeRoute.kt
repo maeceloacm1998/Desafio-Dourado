@@ -31,8 +31,8 @@ fun HomeRoute(
                 snackbarHostState = snackbarHostState
             )
         },
-        onRefreshChallengers = { homeViewModel.updateChallengers() },
-        onRetryChallengers = { homeViewModel.updateChallengers() },
+        onRefreshChallengers = { homeViewModel.handleUpdateChallengers() },
+        onRetryChallengers = { homeViewModel.handleUpdateChallengers() },
     )
 }
 

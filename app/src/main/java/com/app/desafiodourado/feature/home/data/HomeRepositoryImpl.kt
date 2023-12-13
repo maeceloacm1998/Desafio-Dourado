@@ -9,6 +9,7 @@ import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.Dispatchers
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Missions
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 class HomeRepositoryImpl(
@@ -73,13 +74,14 @@ class HomeRepositoryImpl(
     }
 
     override suspend fun createNewMissions() {
-        when(val request = getRandomMissions()) {
+        when (val request = getRandomMissions()) {
             is Result.Success -> {
                 updateWithNewMissionsLocal(
                     missions = request.data,
                     lastUpdateCurrentMissions = getCurrentDate()
                 )
             }
+
             else -> {}
         }
     }
@@ -94,6 +96,14 @@ class HomeRepositoryImpl(
         )
         accountManager.updateUserInfo(user)
     }
+
+    override suspend fun updateCoins() {
+        accountManager.updateCoins()
+    }
+
+    override fun observeCoins(): Flow<Int> = accountManager.observeCoins()
+    override fun observeMissions(): Flow<List<Missions.MissionsModel>> =
+        accountManager.observeMissions()
 
     override fun getUser(): UserModel = accountManager.getUserLogged()
     override fun getCoins(): Int = accountManager.getQuantityCoins()

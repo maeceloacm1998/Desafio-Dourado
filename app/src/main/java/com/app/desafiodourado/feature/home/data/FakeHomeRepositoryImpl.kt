@@ -5,6 +5,7 @@ import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.model.Missions
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 class FakeHomeRepositoryImpl : HomeRepository {
     override suspend fun getChallengers(): Result<Challenger> {
@@ -38,6 +39,18 @@ class FakeHomeRepositoryImpl : HomeRepository {
     }
 
     override suspend fun createNewMissions() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateCoins() {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeCoins(): Flow<Int> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeMissions(): Flow<List<Missions.MissionsModel>> {
         TODO("Not yet implemented")
     }
 

@@ -12,6 +12,7 @@ import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.data.HomeRepository
 import com.app.desafiodourado.feature.home.domain.StartCountDownUseCase
 import com.app.desafiodourado.feature.home.domain.UpdateMissionsUseCase
+import com.app.desafiodourado.feature.home.domain.UpdateQuantityCoinsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -22,8 +23,8 @@ import java.util.UUID
 
 class HomeViewModel(
     private val homeRepository: HomeRepository,
-    private val accountManager: AccountManager,
     private val updateMissionsUseCase: UpdateMissionsUseCase,
+    private val updateQuantityCoinsUseCase: UpdateQuantityCoinsUseCase,
     startCountDownUseCase: StartCountDownUseCase
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(HomeViewModelState(isLoading = true))
@@ -40,7 +41,8 @@ class HomeViewModel(
     init {
         startCountDownUseCase()
         handleUpdateMissions()
-        updateChallengers()
+        handleUpdateChallengers()
+        handleUpdateCoins()
         observables()
     }
 
@@ -50,50 +52,52 @@ class HomeViewModel(
         }
     }
 
-    fun updateChallengers() {
+    private fun handleUpdateCoins() {
         viewModelScope.launch {
-            val result = homeRepository.getChallengers()
-            viewModelState.update { it.copy(isLoading = true) }
+            homeRepository.updateCoins()
+        }
+    }
 
-            viewModelState.update {
-                when (result) {
-                    is Success -> {
-                        challengerList = result.data.challengers.toMutableList()
-                        it.copy(challengers = result.data, isLoading = false)
-                    }
+    fun handleUpdateChallengers() {
+        onLoading(true)
 
-                    is Error -> {
-                        val errorMessages = ErrorMessage(
-                            id = UUID.randomUUID().mostSignificantBits,
-                            messageId = R.string.load_error
-                        )
-                        it.copy(errorMessages = errorMessages, isLoading = false)
-                    }
+        viewModelScope.launch {
+            when (val result = homeRepository.getChallengers()) {
+                is Success -> {
+                    challengerList = result.data.challengers.toMutableList()
+                    onUpdateChallengerList(challenger = result.data)
+                }
+
+                is Error -> {
+                    val errorMessages = ErrorMessage(
+                        id = UUID.randomUUID().mostSignificantBits,
+                        messageId = R.string.load_error
+                    )
+                    onUpdateMessageError(errorMessages)
                 }
             }
         }
+
+        onLoading(false)
     }
 
     private fun observables() {
         viewModelScope.launch {
-            accountManager.updateCoins()
-            accountManager.observeCoins().collect { coin ->
-                viewModelState.update { it.copy(coin = coin) }
+            homeRepository.observeCoins().collect { coin ->
+                onUpdateCoin(coin)
             }
         }
 
         viewModelScope.launch {
-            accountManager.observeMissions().collect { missions ->
+            homeRepository.observeMissions().collect { missions ->
                 val missionsNotChecked = missions.filter { mission -> !mission.isChecked }.size
                 val isFinishAllMissions = missionsNotChecked == 0
 
                 if (missions.isNotEmpty()) {
-                    viewModelState.update {
-                        it.copy(
-                            badgeCount = missionsNotChecked,
-                            finishAllMissions = isFinishAllMissions
-                        )
-                    }
+                    onUpdateBadgeMissions(
+                        badgeCount = missionsNotChecked,
+                        isFinishAllMissions = isFinishAllMissions
+                    )
                 }
             }
         }
@@ -104,69 +108,99 @@ class HomeViewModel(
         snackbarHostState: SnackbarHostState
     ) {
         viewModelScope.launch {
-            val userCoins = accountManager.getQuantityCoins()
+            val userCoins = homeRepository.getCoins()
 
             if (userCoins < challengerSelected.value) {
                 snackbarHostState.showSnackbar(INSUFFICIENT_QUANTITY)
             } else {
-                val index = challengerList.indexOf(challengerSelected)
+                handleCompleteChallenger(
+                    userCoins = userCoins,
+                    challengerSelected = challengerSelected,
+                    snackbarHostState = snackbarHostState
+                )
+            }
+        }
+    }
 
-                if (index != -1) {
-                    challengerList[index] = challengerList[index].copy(complete = true)
+    private suspend fun handleCompleteChallenger(
+        userCoins: Int,
+        challengerSelected: Challenger.Card,
+        snackbarHostState: SnackbarHostState
+    ) {
+        val existChallenger = challengerList.contains(challengerSelected)
 
-                    viewModelState.update {
-                        when (val result = homeRepository.completeChallenger(challengerList)) {
-                            is Success -> {
-                                val newCoins = userCoins - challengerSelected.value
-                                updateCoin(newCoins)
-                                it.copy(
-                                    challengers = result.data,
-                                    selectedChallenger = challengerSelected.copy(complete = true)
-                                )
-                            }
+        if (existChallenger) {
+            val challengerIndex = challengerList.indexOf(challengerSelected)
+            challengerList[challengerIndex] = challengerList[challengerIndex].copy(complete = true)
 
-                            is Error -> {
-                                snackbarHostState.showSnackbar(ERROR)
-                                return@launch
-                            }
-                        }
-                    }
+            when (val result = homeRepository.completeChallenger(challengerList)) {
+                is Success -> {
+                    val newQuantityCoins = userCoins - challengerSelected.value
+                    onUpdateCoin(newQuantityCoins)
+                    onUpdateChallengerList(
+                        challenger = result.data,
+                        challengerSelected = challengerSelected
+                    )
+                }
+
+                is Error -> {
+                    snackbarHostState.showSnackbar(ERROR)
                 }
             }
         }
     }
 
-    private fun updateCoin(coin: Int) {
+    fun challengerSelected(challengers: Challenger.Card) {
+        viewModelState.update { it.copy(selectedChallenger = challengers) }
+    }
+
+    fun onInteractionFeed() {
+        viewModelState.update { it.copy(selectedChallenger = null) }
+    }
+
+    fun openMissions(visible: Boolean) {
+        viewModelState.update { it.copy(showMissions = visible) }
+    }
+
+    private fun onUpdateCoin(coin: Int) {
         viewModelScope.launch {
-            val user = accountManager.getUserLogged().copy(quantityCoins = coin)
-            accountManager.updateUserInfo(user)
-                .onSuccess {
-                    viewModelState.update {
-                        it.copy(coin = coin)
-                    }
-                }
+            updateQuantityCoinsUseCase(coin)
+                .onSuccess { viewModelState.update { it.copy(coin = coin) } }
         }
     }
 
-    fun challengerSelected(challengers: Challenger.Card) {
+    private fun onUpdateChallengerList(
+        challenger: Challenger,
+        challengerSelected: Challenger.Card? = null
+    ) {
         viewModelState.update {
             it.copy(
-                selectedChallenger = challengers
+                challengers = challenger,
+                selectedChallenger = challengerSelected?.copy(complete = true)
             )
         }
     }
 
-    fun onInteractionFeed() {
+    private fun onUpdateBadgeMissions(
+        badgeCount: Int,
+        isFinishAllMissions: Boolean
+    ) {
         viewModelState.update {
-            it.copy(selectedChallenger = null)
+            it.copy(
+                badgeCount = badgeCount,
+                finishAllMissions = isFinishAllMissions
+            )
         }
     }
 
-    fun openMissions(visible: Boolean) {
-        viewModelState.update {
-            it.copy(showMissions = visible)
-        }
+    private fun onUpdateMessageError(errorMessages: ErrorMessage) {
+        viewModelState.update { it.copy(errorMessages = errorMessages) }
     }
+
+    private fun onLoading(state: Boolean) {
+        viewModelState.update { it.copy(isLoading = state) }
+    }
+
 
     companion object {
         private const val INSUFFICIENT_QUANTITY = "Quantidade de moedas insuficientes"

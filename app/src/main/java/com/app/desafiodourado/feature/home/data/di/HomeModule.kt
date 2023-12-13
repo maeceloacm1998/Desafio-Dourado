@@ -16,8 +16,8 @@ object HomeModule {
         viewModel {
             HomeViewModel(
                 homeRepository = get(),
-                accountManager = get(),
                 updateMissionsUseCase = get(),
+                updateQuantityCoinsUseCase = get(),
                 startCountDownUseCase = get()
             )
         }
