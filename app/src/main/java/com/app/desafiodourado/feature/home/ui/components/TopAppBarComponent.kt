@@ -5,7 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,7 +13,7 @@ import com.app.desafiodourado.components.bottomsheet.BetterModalBottomSheet
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.HomeUiState
 import com.app.desafiodourado.feature.home.ui.model.Challenger
-import com.app.desafiodourado.feature.initial.data.challengers
+import com.app.desafiodourado.commons.mock.challengers
 import com.app.desafiodourado.feature.missions.ui.MissionsRoute
 import com.app.desafiodourado.theme.Background
 

@@ -24,8 +24,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.R
+import com.app.desafiodourado.commons.mock.missions
 import com.app.desafiodourado.feature.home.ui.model.Missions
-import com.app.desafiodourado.feature.initial.data.missions
 import com.app.desafiodourado.theme.CustomDimensions
 import com.app.desafiodourado.theme.PurpleLight
 import com.app.desafiodourado.theme.Success

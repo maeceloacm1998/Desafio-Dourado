@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.home.data
+package com.app.desafiodourado.commons.mock
 
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 

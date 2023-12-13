@@ -19,7 +19,7 @@ import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.core.utils.Result
-import com.app.desafiodourado.feature.home.data.FakeHomeRepositoryImpl
+import com.app.desafiodourado.commons.FakeHomeRepositoryImpl
 import com.app.desafiodourado.feature.home.ui.components.ChallengerList
 import com.app.desafiodourado.feature.home.ui.components.CustomChallengerFeedTollBar
 import com.app.desafiodourado.feature.home.ui.components.InfoComponent

@@ -4,7 +4,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.desafiodourado.R
-import com.app.desafiodourado.core.accountmanager.AccountManager
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.core.utils.Result.Success
 import com.app.desafiodourado.core.utils.Result.Error
@@ -200,7 +199,6 @@ class HomeViewModel(
     private fun onLoading(state: Boolean) {
         viewModelState.update { it.copy(isLoading = state) }
     }
-
 
     companion object {
         private const val INSUFFICIENT_QUANTITY = "Quantidade de moedas insuficientes"
