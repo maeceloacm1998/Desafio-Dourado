@@ -3,6 +3,8 @@ package com.app.desafiodourado.feature.home.data
 import com.app.desafiodourado.core.accountmanager.AccountManager
 import com.app.desafiodourado.core.firebase.FirebaseClient
 import com.app.desafiodourado.core.firebase.FirebaseConstants
+import com.app.desafiodourado.core.firebase.models.UserModel
+import com.app.desafiodourado.core.utils.DateUtils.getCurrentDate
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.Dispatchers
 import com.app.desafiodourado.core.utils.Result
@@ -66,6 +68,34 @@ class HomeRepositoryImpl(
         return Result.Success(checkNotNull(result?.missions?.shuffled()?.take(4)))
     }
 
+    override suspend fun updateCurrentMissions() {
+        return accountManager.updateCurrentMissions()
+    }
+
+    override suspend fun createNewMissions() {
+        when(val request = getRandomMissions()) {
+            is Result.Success -> {
+                updateWithNewMissionsLocal(
+                    missions = request.data,
+                    lastUpdateCurrentMissions = getCurrentDate()
+                )
+            }
+            else -> {}
+        }
+    }
+
+    private suspend fun updateWithNewMissionsLocal(
+        missions: List<Missions.MissionsModel>,
+        lastUpdateCurrentMissions: String
+    ) {
+        val user = accountManager.getUserLogged().copy(
+            currentMissions = missions,
+            lastUpdateMissions = lastUpdateCurrentMissions
+        )
+        accountManager.updateUserInfo(user)
+    }
+
+    override fun getUser(): UserModel = accountManager.getUserLogged()
     override fun getCoins(): Int = accountManager.getQuantityCoins()
 
 }

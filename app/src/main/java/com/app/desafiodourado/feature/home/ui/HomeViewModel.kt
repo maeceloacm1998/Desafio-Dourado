@@ -5,14 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.desafiodourado.R
 import com.app.desafiodourado.core.accountmanager.AccountManager
-import com.app.desafiodourado.core.utils.DateUtils.compareDates
-import com.app.desafiodourado.core.utils.DateUtils.getCurrentDate
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.core.utils.Result.Success
 import com.app.desafiodourado.core.utils.Result.Error
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.data.HomeRepository
-import com.app.desafiodourado.feature.home.ui.model.Missions
+import com.app.desafiodourado.feature.home.domain.StartCountDownUseCase
+import com.app.desafiodourado.feature.home.domain.UpdateMissionsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -23,7 +22,9 @@ import java.util.UUID
 
 class HomeViewModel(
     private val homeRepository: HomeRepository,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val updateMissionsUseCase: UpdateMissionsUseCase,
+    startCountDownUseCase: StartCountDownUseCase
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(HomeViewModelState(isLoading = true))
     private var challengerList: MutableList<Challenger.Card> = mutableListOf()
@@ -37,6 +38,7 @@ class HomeViewModel(
         )
 
     init {
+        startCountDownUseCase()
         handleUpdateMissions()
         updateChallengers()
         observables()
@@ -44,12 +46,7 @@ class HomeViewModel(
 
     private fun handleUpdateMissions() {
         viewModelScope.launch {
-            val lastUpdateMissionDate = accountManager.getUserLogged().lastUpdateMissions
-            if (compareDates(lastUpdateMissionDate, getCurrentDate())) {
-                updateNewMissions()
-            } else {
-                accountManager.getCurrentMissions()
-            }
+            updateMissionsUseCase()
         }
     }
 
@@ -80,7 +77,6 @@ class HomeViewModel(
     private fun observables() {
         viewModelScope.launch {
             accountManager.updateCoins()
-
             accountManager.observeCoins().collect { coin ->
                 viewModelState.update { it.copy(coin = coin) }
             }
@@ -151,52 +147,6 @@ class HomeViewModel(
                 }
         }
     }
-
-    private fun updateNewMissions() {
-        viewModelScope.launch {
-            when (val result = homeRepository.getRandomMissions()) {
-                is Success -> {
-
-                    updateCurrentMissionsInUser(
-                        missions = result.data,
-                        lastUpdateCurrentMissions = getCurrentDate()
-                    )
-                }
-
-                is Error -> {
-                    viewModelState.update {
-                        val errorMessages = ErrorMessage(
-                            id = UUID.randomUUID().mostSignificantBits,
-                            messageId = R.string.load_error
-                        )
-                        it.copy(errorMessages = errorMessages, isLoading = false)
-                    }
-                }
-            }
-
-        }
-    }
-
-    private suspend fun updateCurrentMissionsInUser(
-        missions: List<Missions.MissionsModel>,
-        lastUpdateCurrentMissions: String
-    ) {
-        val user = accountManager.getUserLogged().copy(
-            currentMissions = missions,
-            lastUpdateMissions = lastUpdateCurrentMissions
-        )
-
-        accountManager.updateUserInfo(user).onFailure { _ ->
-            viewModelState.update {
-                val errorMessages = ErrorMessage(
-                    id = UUID.randomUUID().mostSignificantBits,
-                    messageId = R.string.load_error
-                )
-                it.copy(errorMessages = errorMessages, isLoading = false)
-            }
-        }
-    }
-
 
     fun challengerSelected(challengers: Challenger.Card) {
         viewModelState.update {

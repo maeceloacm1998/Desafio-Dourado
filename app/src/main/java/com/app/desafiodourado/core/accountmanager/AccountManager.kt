@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface AccountManager {
     suspend fun createUser(user: UserModel): Result<Boolean>
     suspend fun updateUserInfo(user: UserModel): Result<Boolean>
-    suspend fun getCurrentMissions()
+    suspend fun updateCurrentMissions()
+    fun startCountDownTimer()
     fun observeCoins(): Flow<Int>
     fun observeMissions(): Flow<List<Missions.MissionsModel>>
     fun observeCountdown(): Flow<String>

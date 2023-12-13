@@ -43,14 +43,17 @@ class AccountManagerImpl(
         coins.update { user.quantityCoins }
     }
 
-    override suspend fun getCurrentMissions() {
-        timerManager.startCountDown()
+    override suspend fun updateCurrentMissions() {
         val id = getUserId()
         client.getSpecificDocument(FirebaseConstants.Collections.USERS, id)
             .onSuccess {
                 val user = it.toObject(UserModel::class.java)
                 updateUserInfo(checkNotNull(user))
             }
+    }
+
+    override fun startCountDownTimer() {
+        timerManager.startCountDown()
     }
 
     override fun getUserLogged(): UserModel {

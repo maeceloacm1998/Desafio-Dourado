@@ -1,5 +1,6 @@
 package com.app.desafiodourado.feature.home.data
 
+import com.app.desafiodourado.core.firebase.models.UserModel
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.model.Missions
@@ -29,6 +30,18 @@ class FakeHomeRepositoryImpl : HomeRepository {
     }
 
     override suspend fun getRandomMissions(): Result<List<Missions.MissionsModel>> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateCurrentMissions() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun createNewMissions() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getUser(): UserModel {
         TODO("Not yet implemented")
     }
 
