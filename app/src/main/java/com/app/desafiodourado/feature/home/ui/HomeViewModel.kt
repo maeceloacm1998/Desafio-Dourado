@@ -24,7 +24,7 @@ class HomeViewModel(
     private val homeRepository: HomeRepository,
     private val updateMissionsUseCase: UpdateMissionsUseCase,
     private val updateQuantityCoinsUseCase: UpdateQuantityCoinsUseCase,
-    startCountDownUseCase: StartCountDownUseCase
+    val startCountDownUseCase: StartCountDownUseCase
 ) : ViewModel() {
     private val viewModelState = MutableStateFlow(HomeViewModelState(isLoading = true))
     private var challengerList: MutableList<Challenger.Card> = mutableListOf()

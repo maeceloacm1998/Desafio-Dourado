@@ -15,10 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.desafiodourado.commons.FakeHomeRepositoryImpl
 import com.app.desafiodourado.components.checkbox.CustomCheckbox
+import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Missions
 import com.app.desafiodourado.theme.BrowLight
 import com.app.desafiodourado.theme.CustomDimensions
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun MissionsScreen(
@@ -27,7 +30,7 @@ fun MissionsScreen(
 ) {
     Column(
         modifier = Modifier
-            .padding(CustomDimensions.padding20)
+            .padding(horizontal = CustomDimensions.padding20)
             .fillMaxWidth()
     ) {
         Row(
@@ -78,4 +81,14 @@ fun MissionsScreen(
 @Preview
 @Composable
 fun MissionScreenPreview() {
+    val missionsFeed = runBlocking {
+        (FakeHomeRepositoryImpl().getRandomMissions() as Result.Success).data
+    }
+    MissionsScreen(uiState = MissionsUiState.HasMissions(
+        isLoading = false,
+        missions = missionsFeed,
+        timer = "20:00:00",
+        errorMessages = null,
+        selectedMissions = null
+    ), onCheckMission = {})
 }
