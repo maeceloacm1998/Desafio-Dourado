@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -25,6 +26,7 @@ import com.app.desafiodourado.theme.Success
 @Composable
 fun CustomButton(
     modifier: Modifier = Modifier,
+    loading: Boolean = false,
     isSuccess: Boolean = false,
     coin: Int,
     onClickListener: () -> Unit,
@@ -59,33 +61,42 @@ fun CustomButton(
                         }
                 )
             } else {
-                Image(
-                    painter = painterResource(id = R.drawable.coin),
-                    contentDescription = "coin",
-                    modifier = Modifier
-                        .padding(end = CustomDimensions.padding5)
-                        .size(
-                            height = CustomDimensions.padding24,
-                            width = CustomDimensions.padding24
+                if (loading) {
+                    CircularProgressIndicator(
+                        color = Color.White, modifier = Modifier.size(
+                            width = CustomDimensions.padding20,
+                            height = CustomDimensions.padding20
                         )
-                        .constrainAs(image) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(parent.start)
-                        },
-                )
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.coin),
+                        contentDescription = "coin",
+                        modifier = Modifier
+                            .padding(end = CustomDimensions.padding5)
+                            .size(
+                                height = CustomDimensions.padding24,
+                                width = CustomDimensions.padding24
+                            )
+                            .constrainAs(image) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                            },
+                    )
 
-                Text(
-                    text = coin.toString(),
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier
-                        .constrainAs(text) {
-                            top.linkTo(parent.top)
-                            bottom.linkTo(parent.bottom)
-                            start.linkTo(image.end)
-                        },
-                )
+                    Text(
+                        text = coin.toString(),
+                        color = Color.White,
+                        style = MaterialTheme.typography.titleSmall,
+                        modifier = Modifier
+                            .constrainAs(text) {
+                                top.linkTo(parent.top)
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(image.end)
+                            },
+                    )
+                }
             }
         }
     }
@@ -97,6 +108,17 @@ fun CustomButton(
 fun CustomButtonPreview() {
     CustomButton(
         isSuccess = false,
+        coin = 13000,
+        onClickListener = {}
+    )
+}
+
+@Preview
+@Composable
+fun CustomButtonLoadingPreview() {
+    CustomButton(
+        isSuccess = false,
+        loading = true,
         coin = 13000,
         onClickListener = {}
     )

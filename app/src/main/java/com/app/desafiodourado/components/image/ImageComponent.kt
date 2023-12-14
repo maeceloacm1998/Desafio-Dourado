@@ -28,7 +28,7 @@ fun ImageComponent(
         contentAlignment = Alignment.Center
     ) {
         GlideImage(
-            url, "imagem",
+            url, "image",
             transition = CrossFade,
             loading = placeholder {
                 CircularProgressIndicator(

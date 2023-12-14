@@ -28,11 +28,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.app.desafiodourado.R
+import com.app.desafiodourado.components.button.NormalButton
 import com.app.desafiodourado.components.textfield.TextFieldCustom
 import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.core.utils.UiState
-import com.app.desafiodourado.theme.BackgroundTransparent
-import com.app.desafiodourado.theme.BrowLight
 import com.app.desafiodourado.theme.CustomDimensions
 import org.koin.androidx.compose.koinViewModel
 
@@ -141,37 +140,18 @@ fun InitialComponents(
             supportText = if (userNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
         )
 
-        Button(
+
+        NormalButton(
+            title = stringResource(id = R.string.initial_screen_bt_label),
+            onButtonListener = { onSubmitButton() },
+            loading = isLoading,
             modifier = Modifier
-                .fillMaxWidth()
-                .height(CustomDimensions.padding50)
                 .padding(horizontal = CustomDimensions.padding20)
                 .constrainAs(btGoToAdventure) {
                     top.linkTo(tfName.bottom)
                     bottom.linkTo(parent.bottom)
-                },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = BrowLight,
-                disabledContainerColor = BackgroundTransparent
-            ),
-            enabled = !isLoading,
-            onClick = { onSubmitButton() },
-        ) {
-            if (isLoading) {
-                CircularProgressIndicator(
-                    color = Color.White, modifier = Modifier.size(
-                        width = CustomDimensions.padding20,
-                        height = CustomDimensions.padding20
-                    )
-                )
-            } else {
-                Text(
-                    text = stringResource(id = R.string.initial_screen_bt_label),
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-        }
+                }
+        )
     }
 }
 
