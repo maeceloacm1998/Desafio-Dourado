@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.home.domain
+package com.app.desafiodourado.feature.details.domain
 
 import com.app.desafiodourado.core.accountmanager.AccountManager
 

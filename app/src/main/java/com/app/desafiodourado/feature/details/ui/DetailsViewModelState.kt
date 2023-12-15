@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.challengerdetails.ui
+package com.app.desafiodourado.feature.details.ui
 
 import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.feature.home.ui.model.Challenger

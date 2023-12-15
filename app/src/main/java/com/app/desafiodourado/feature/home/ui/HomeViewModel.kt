@@ -11,7 +11,6 @@ import com.app.desafiodourado.feature.home.data.HomeRepository
 import com.app.desafiodourado.feature.home.domain.GetChallengersUseCase
 import com.app.desafiodourado.feature.home.domain.StartCountDownUseCase
 import com.app.desafiodourado.feature.home.domain.UpdateMissionsUseCase
-import com.app.desafiodourado.feature.home.domain.UpdateQuantityCoinsUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -23,7 +22,6 @@ import java.util.UUID
 class HomeViewModel(
     private val homeRepository: HomeRepository,
     private val updateMissionsUseCase: UpdateMissionsUseCase,
-    private val updateQuantityCoinsUseCase: UpdateQuantityCoinsUseCase,
     private val getChallengersUseCase: GetChallengersUseCase,
     val startCountDownUseCase: StartCountDownUseCase
 ) : ViewModel() {
@@ -58,13 +56,11 @@ class HomeViewModel(
     }
 
     private fun handleUpdateChallengers() {
-        onLoading(true)
-
         viewModelScope.launch {
             when (val result = getChallengersUseCase()) {
                 is Success -> {
                     onUpdateChallengerList(result.data)
-                    onLoading(false)
+                    onChallengerLoading(false)
                 }
 
                 is Error -> {
@@ -73,7 +69,7 @@ class HomeViewModel(
                         messageId = R.string.load_error
                     )
                     onUpdateMessageError(errorMessages)
-                    onLoading(false)
+                    onChallengerLoading(false)
                 }
             }
         }
@@ -83,6 +79,7 @@ class HomeViewModel(
         viewModelScope.launch {
             homeRepository.observeCoins().collect { coin ->
                 onUpdateCoin(coin)
+                onLoading(false)
             }
         }
 
@@ -96,12 +93,14 @@ class HomeViewModel(
                         badgeCount = missionsNotChecked,
                         isFinishAllMissions = isFinishAllMissions
                     )
+                    onLoading(false)
                 }
             }
         }
     }
 
     fun refresh() {
+        onChallengerLoading(true)
         handleUpdateMissions()
         handleUpdateChallengers()
         handleUpdateCoins()
@@ -154,5 +153,9 @@ class HomeViewModel(
 
     private fun onLoading(state: Boolean) {
         viewModelState.update { it.copy(isLoading = state) }
+    }
+
+    private fun onChallengerLoading(state: Boolean) {
+        viewModelState.update { it.copy(isChallengerLoading = state) }
     }
 }

@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.challengerdetails.ui
+package com.app.desafiodourado.feature.details.ui
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable

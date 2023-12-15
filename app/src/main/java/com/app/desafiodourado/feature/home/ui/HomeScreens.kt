@@ -50,7 +50,7 @@ fun ChallengerFeed(
                 onMissionsListener = onMissionsListener
             )
             InfoComponent()
-            ChallengerList(uiState.challengers.challengers) { challengerSelected ->
+            ChallengerList(uiState) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
             }
         }
@@ -165,6 +165,7 @@ fun PreviewChallengerFeedScreen() {
                     coin = 200,
                     showMissions = true,
                     isLoading = false,
+                    isChallengerLoading = true,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
                 onChallengerSelected = {},

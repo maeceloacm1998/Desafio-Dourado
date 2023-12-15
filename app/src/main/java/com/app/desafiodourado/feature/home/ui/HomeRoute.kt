@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.app.desafiodourado.feature.challengerdetails.ui.DetailsRoute
+import com.app.desafiodourado.feature.details.ui.DetailsRoute
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.HomeScreenType.ChallengerFeed
 import com.app.desafiodourado.feature.home.ui.HomeScreenType.ChallengerDetails

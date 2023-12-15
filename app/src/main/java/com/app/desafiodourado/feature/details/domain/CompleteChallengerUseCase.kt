@@ -1,8 +1,7 @@
-package com.app.desafiodourado.feature.challengerdetails.domain
+package com.app.desafiodourado.feature.details.domain
 
 import com.app.desafiodourado.core.utils.Result
-import com.app.desafiodourado.feature.challengerdetails.data.DetailsRepository
-import com.app.desafiodourado.feature.home.domain.UpdateQuantityCoinsUseCase
+import com.app.desafiodourado.feature.details.data.DetailsRepository
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 
 class CompleteChallengerUseCase(

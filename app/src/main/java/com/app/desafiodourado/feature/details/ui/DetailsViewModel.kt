@@ -1,10 +1,10 @@
-package com.app.desafiodourado.feature.challengerdetails.ui
+package com.app.desafiodourado.feature.details.ui
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.desafiodourado.core.utils.Result
-import com.app.desafiodourado.feature.challengerdetails.domain.CompleteChallengerUseCase
+import com.app.desafiodourado.feature.details.domain.CompleteChallengerUseCase
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

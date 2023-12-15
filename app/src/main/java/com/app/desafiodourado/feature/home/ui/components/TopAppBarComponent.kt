@@ -49,24 +49,3 @@ fun CustomChallengerFeedTollBar(
         MissionsRoute()
     }
 }
-
-@Preview
-@Composable
-fun MissionBottomSheet() {
-    CustomChallengerFeedTollBar(
-        uiState = HomeUiState.HasChallengers(
-            challengers = Challenger(
-                challengers
-            ),
-            showMissions = true,
-            coin = 2000,
-            badgeCount = 2,
-            finishAllMissions = true,
-            selectedChallenger = challengers[0],
-            isLoading = false,
-            errorMessages = null
-        ),
-        onMissionsListener = {}
-    )
-}
-

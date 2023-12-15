@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.challengerdetails.data
+package com.app.desafiodourado.feature.details.data
 
 import com.app.desafiodourado.core.accountmanager.AccountManager
 import com.app.desafiodourado.core.firebase.FirebaseClient

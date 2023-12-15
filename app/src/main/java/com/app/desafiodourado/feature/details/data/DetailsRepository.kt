@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.challengerdetails.data
+package com.app.desafiodourado.feature.details.data
 
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Challenger
