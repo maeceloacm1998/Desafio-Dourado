@@ -60,9 +60,6 @@ private fun getMissionsScreenType(
     }
 
     is MissionsUiState.NoMissions -> {
-        if (!uiState.isLoading) {
-            MissionError
-        } else {
-        }
+        MissionError
     }
 }

@@ -1,4 +1,4 @@
-package com.app.desafiodourado.feature.challengerdetails
+package com.app.desafiodourado.feature.challengerdetails.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,13 +29,13 @@ import com.app.desafiodourado.theme.Success
 
 @Composable
 fun DetailsScreen(
-    challengerItem: Challenger.Card,
+    uiState: DetailsUiState.HasChallengersDetails,
     snackbarHostState: SnackbarHostState,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit
 ) {
     DetailsComponent(
-        challenger = challengerItem,
+        uiState = uiState,
         snackbarHostState = snackbarHostState,
         onClickSubmitListener = onClickSubmitListener,
         onBack = onBack
@@ -44,11 +44,13 @@ fun DetailsScreen(
 
 @Composable
 fun DetailsComponent(
-    challenger: Challenger.Card,
+    uiState: DetailsUiState.HasChallengersDetails,
     snackbarHostState: SnackbarHostState,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit,
 ) {
+    val selectedChallenger: Challenger.Card = uiState.selectedChallenger
+
     Scaffold(
         snackbarHost = {
             CustomSnackbar(
@@ -86,7 +88,7 @@ fun DetailsComponent(
                 )
 
                 ImageComponent(
-                    url = if (challenger.complete) challenger.completeImage else challenger.image,
+                    url = if (selectedChallenger.complete) selectedChallenger.completeImage else selectedChallenger.image,
                     modifier = Modifier
                         .size(
                             width = CustomDimensions.padding150,
@@ -113,12 +115,12 @@ fun DetailsComponent(
                             start.linkTo(parent.start)
                             end.linkTo(parent.end)
                         },
-                    text = challenger.details,
+                    text = selectedChallenger.details,
                     color = Color.White,
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                if (challenger.complete) {
+                if (selectedChallenger.complete) {
                     Text(
                         modifier = Modifier
                             .constrainAs(txtShowAward) {
@@ -131,7 +133,7 @@ fun DetailsComponent(
                                 start = CustomDimensions.padding16,
                                 end = CustomDimensions.padding16,
                             ),
-                        text = challenger.award,
+                        text = selectedChallenger.award,
                         textAlign = TextAlign.Center,
                         color = Success,
                         style = MaterialTheme.typography.titleLarge
@@ -165,7 +167,7 @@ fun DetailsComponent(
                                 start.linkTo(parent.start)
                                 end.linkTo(parent.end)
                             },
-                        url = challenger.awardImage
+                        url = selectedChallenger.awardImage
                     ) {}
 
                     Text(
@@ -196,11 +198,9 @@ fun DetailsComponent(
                         .constrainAs(btOpenAward) {
                             bottom.linkTo(parent.bottom)
                         },
-                    coin = challenger.value,
-                    isSuccess = challenger.complete,
-                    onClickListener = {
-                        onClickSubmitListener(challenger)
-                    }
+                    coin = selectedChallenger.value,
+                    isSuccess = selectedChallenger.complete,
+                    onClickListener = { onClickSubmitListener(selectedChallenger) }
                 )
             }
         }

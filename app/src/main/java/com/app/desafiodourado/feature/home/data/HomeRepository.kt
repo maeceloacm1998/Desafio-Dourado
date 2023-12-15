@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface HomeRepository {
     suspend fun getChallengers(): Result<Challenger>
-    suspend fun completeChallenger(challengerList: List<Challenger.Card>): Result<Challenger>
     suspend fun getRandomMissions(): Result<List<Missions.MissionsModel>>
     suspend fun updateCurrentMissions()
     suspend fun createNewMissions()

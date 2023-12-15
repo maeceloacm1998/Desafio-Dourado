@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.app.desafiodourado.feature.challengerdetails.DetailsScreen
+import com.app.desafiodourado.feature.challengerdetails.ui.DetailsRoute
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.HomeScreenType.ChallengerFeed
 import com.app.desafiodourado.feature.home.ui.HomeScreenType.ChallengerDetails
@@ -25,14 +25,8 @@ fun HomeRoute(
         onChallengerSelected = { homeViewModel.challengerSelected(it) },
         onInteractionWithFeed = { homeViewModel.onInteractionFeed() },
         onMissionsListener = { homeViewModel.openMissions(it) },
-        onClickSubmitListener = {
-            homeViewModel.completedChallenger(
-                challengerSelected = it,
-                snackbarHostState = snackbarHostState
-            )
-        },
-        onRefreshChallengers = { homeViewModel.handleUpdateChallengers() },
-        onRetryChallengers = { homeViewModel.handleUpdateChallengers() },
+        onRefreshChallengers = { homeViewModel.refresh() },
+        onRetryChallengers = { homeViewModel.refresh() },
     )
 }
 
@@ -42,7 +36,6 @@ fun HomeRoute(
     snackbarHostState: SnackbarHostState,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
     onInteractionWithFeed: () -> Unit,
-    onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onMissionsListener: (visible: Boolean) -> Unit,
     onRefreshChallengers: () -> Unit,
     onRetryChallengers: () -> Unit
@@ -61,11 +54,11 @@ fun HomeRoute(
         ChallengerDetails -> {
             check(uiState is HomeUiState.HasChallengers)
             uiState.selectedChallenger?.let {
-                DetailsScreen(
+                DetailsRoute(
                     challengerItem = it,
-                    snackbarHostState = snackbarHostState,
+                    challengerList = uiState.challengers.challengers,
+                    userCoins = uiState.coin,
                     onBack = onInteractionWithFeed,
-                    onClickSubmitListener = onClickSubmitListener
                 )
                 BackHandler {
                     snackbarHostState.currentSnackbarData?.dismiss()

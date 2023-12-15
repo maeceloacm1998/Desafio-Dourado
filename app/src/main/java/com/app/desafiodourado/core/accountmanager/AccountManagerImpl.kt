@@ -38,9 +38,13 @@ class AccountManagerImpl(
     override fun observeMissions(): Flow<List<Missions.MissionsModel>> = missions
     override fun observeCountdown(): Flow<String> = timerManager.observeCountdown()
 
-    override fun updateCoins() {
-        val user = getUserLogged()
-        coins.update { user.quantityCoins }
+    override suspend fun updateCoins() {
+        val id = getUserId()
+        client.getSpecificDocument(FirebaseConstants.Collections.USERS, id)
+            .onSuccess {
+                val user = it.toObject(UserModel::class.java)
+                updateUserInfo(checkNotNull(user))
+            }
     }
 
     override suspend fun updateCurrentMissions() {

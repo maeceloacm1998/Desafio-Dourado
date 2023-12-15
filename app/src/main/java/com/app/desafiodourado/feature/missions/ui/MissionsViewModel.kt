@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MissionsViewModel(private val accountManager: AccountManager) : ViewModel() {
-    private val viewModelState = MutableStateFlow(MissionsViewModelState(isLoading = true))
+    private val viewModelState = MutableStateFlow(MissionsViewModelState())
 
     val uiState = viewModelState
         .map(MissionsViewModelState::toUiState)

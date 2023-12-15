@@ -8,11 +8,11 @@ interface AccountManager {
     suspend fun createUser(user: UserModel): Result<Boolean>
     suspend fun updateUserInfo(user: UserModel): Result<Boolean>
     suspend fun updateCurrentMissions()
+    suspend fun updateCoins()
     fun startCountDownTimer()
     fun observeCoins(): Flow<Int>
     fun observeMissions(): Flow<List<Missions.MissionsModel>>
     fun observeCountdown(): Flow<String>
-    fun updateCoins()
     fun getUserLogged(): UserModel
     fun getQuantityCoins(): Int
     fun postUserLogged(user: UserModel)

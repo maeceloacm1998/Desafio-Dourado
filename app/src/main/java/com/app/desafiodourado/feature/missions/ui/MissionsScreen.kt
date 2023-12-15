@@ -85,7 +85,6 @@ fun MissionScreenPreview() {
         (FakeHomeRepositoryImpl().getRandomMissions() as Result.Success).data
     }
     MissionsScreen(uiState = MissionsUiState.HasMissions(
-        isLoading = false,
         missions = missionsFeed,
         timer = "20:00:00",
         errorMessages = null,

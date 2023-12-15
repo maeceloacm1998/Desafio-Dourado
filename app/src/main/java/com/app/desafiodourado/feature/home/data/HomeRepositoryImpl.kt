@@ -33,24 +33,6 @@ class HomeRepositoryImpl(
         return Result.Success(checkNotNull(response))
     }
 
-    override suspend fun completeChallenger(challengerList: List<Challenger.Card>): Result<Challenger> {
-        val id = accountManager.getUserId()
-        val challenger = Challenger(challengerList)
-        val request = withContext(Dispatchers.IO) {
-            client.setSpecificDocument(
-                collectionPath = FirebaseConstants.Collections.CHALLENGERS,
-                documentPath = id,
-                data = challenger
-            )
-        }
-
-        if (request.isFailure) {
-            return Result.Error(IllegalArgumentException("Error"))
-        }
-
-        return Result.Success(challenger)
-    }
-
     override suspend fun getRandomMissions(): Result<List<Missions.MissionsModel>> {
         val id = accountManager.getUserId()
         val request = withContext(Dispatchers.IO) {
