@@ -5,12 +5,12 @@ import com.app.desafiodourado.feature.home.ui.model.Challenger
 
 sealed interface HomeUiState {
     val isLoading: Boolean
-    val isChallengerLoading: Boolean
+    val isRefresh: Boolean
     val errorMessages: ErrorMessage?
 
     data class NoChallengers(
         override val isLoading: Boolean,
-        override val isChallengerLoading: Boolean,
+        override val isRefresh: Boolean,
         override val errorMessages: ErrorMessage?
     ) : HomeUiState
 
@@ -22,27 +22,27 @@ sealed interface HomeUiState {
         val showMissions: Boolean,
         val coin: Int,
         override val isLoading: Boolean,
-        override val isChallengerLoading: Boolean,
+        override val isRefresh: Boolean,
         override val errorMessages: ErrorMessage?,
     ) : HomeUiState
 }
 
 data class HomeViewModelState(
+    val isLoading: Boolean = false,
+    val isRefresh: Boolean = false,
+    val errorMessages: ErrorMessage? = null,
     val challengers: Challenger? = null,
     val selectedChallenger: Challenger.Card? = null,
     val coin: Int = 0,
     val badgeCount: Int = 0,
     val finishAllMissions: Boolean = false,
     val showMissions: Boolean = false,
-    val isLoading: Boolean = false,
-    val isChallengerLoading: Boolean = false,
-    val errorMessages: ErrorMessage? = null,
 ) {
     fun toUiState(): HomeUiState =
         if (challengers == null) {
             HomeUiState.NoChallengers(
                 isLoading = isLoading,
-                isChallengerLoading = isChallengerLoading,
+                isRefresh = isRefresh,
                 errorMessages = errorMessages,
             )
         } else {
@@ -54,7 +54,7 @@ data class HomeViewModelState(
                 finishAllMissions = finishAllMissions,
                 showMissions = showMissions,
                 isLoading = isLoading,
-                isChallengerLoading = isChallengerLoading,
+                isRefresh = isRefresh,
                 errorMessages = errorMessages,
             )
         }

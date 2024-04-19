@@ -17,6 +17,6 @@
     <string name="dialog_award_title">Prêmio</string>
     <string name="dialog_cancel_button_title">Cancelar</string>
 
-    <string name="challenger_list_error_title">Nenhum evento encontrado</string>
+    <string name="challenger_list_error_title">Nenhum desafio encontrado</string>
 
 </resources>

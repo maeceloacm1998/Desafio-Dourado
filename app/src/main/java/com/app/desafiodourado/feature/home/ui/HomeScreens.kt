@@ -18,8 +18,7 @@ import com.app.desafiodourado.components.coinview.CoinView
 import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.core.utils.ErrorMessage
-import com.app.desafiodourado.core.utils.Result
-import com.app.desafiodourado.commons.FakeHomeRepositoryImpl
+import com.app.desafiodourado.commons.mock.challengers
 import com.app.desafiodourado.feature.home.ui.components.ChallengerList
 import com.app.desafiodourado.feature.home.ui.components.CustomChallengerFeedTollBar
 import com.app.desafiodourado.feature.home.ui.components.InfoComponent
@@ -28,7 +27,6 @@ import com.app.desafiodourado.theme.CustomDimensions
 import com.app.desafiodourado.theme.DesafioDouradoTheme
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import kotlinx.coroutines.runBlocking
 
 @Composable
 fun ChallengerFeed(
@@ -42,15 +40,15 @@ fun ChallengerFeed(
         uiState = uiState,
         onRefreshChallengers = onRefreshChallengers,
         onRetryChallengers = onRetryChallengers
-    ) { uiState ->
+    ) { state ->
         Column {
-            TopBar(coin = uiState.coin)
+            TopBar(coin = state.coin)
             CustomChallengerFeedTollBar(
-                uiState = uiState,
+                uiState = state,
                 onMissionsListener = onMissionsListener
             )
             InfoComponent()
-            ChallengerList(uiState) { challengerSelected ->
+            ChallengerList(state) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
             }
         }
@@ -67,12 +65,8 @@ private fun HomeScreenWithList(
     ) -> Unit
 ) {
     LoadingContent(
-        empty = when (uiState) {
-            is HomeUiState.HasChallengers -> false
-            is HomeUiState.NoChallengers -> uiState.isLoading
-        },
-        emptyContent = { Loading() },
-        loading = uiState.isLoading,
+        isLoading = uiState.isLoading,
+        isRefresh = uiState.isRefresh,
         onRefresh = onRefreshChallengers,
         content = {
             when (uiState) {
@@ -93,19 +87,18 @@ private fun HomeScreenWithList(
 
 @Composable
 private fun LoadingContent(
-    empty: Boolean,
-    emptyContent: @Composable () -> Unit,
-    loading: Boolean,
+    isLoading: Boolean,
+    isRefresh: Boolean,
     onRefresh: () -> Unit,
     content: @Composable () -> Unit
 ) {
-    if (empty) {
-        emptyContent()
-    } else {
-        SwipeRefresh(
-            state = rememberSwipeRefreshState(loading),
+
+    when {
+        isLoading -> Loading()
+        else -> SwipeRefresh(
+            state = rememberSwipeRefreshState(isRefresh),
             onRefresh = onRefresh,
-            content = content,
+            content = content
         )
     }
 }
@@ -147,25 +140,100 @@ fun TopBar(coin: Int) {
     }
 }
 
-@Preview("Home challenger screen")
-@Preview("Home list drawer screen (big font)", fontScale = 1.5f)
+@Preview(showBackground = true)
 @Composable
 fun PreviewChallengerFeedScreen() {
-    val challengerFeed = runBlocking {
-        (FakeHomeRepositoryImpl().getChallengers() as Result.Success).data
-    }
     DesafioDouradoTheme {
         Background {
             ChallengerFeed(
                 uiState = HomeUiState.HasChallengers(
-                    challengers = challengerFeed,
+                    challengers = Challenger(
+                        challengers
+                    ),
                     selectedChallenger = null,
                     badgeCount = 0,
                     finishAllMissions = false,
                     coin = 200,
-                    showMissions = true,
+                    showMissions = false,
                     isLoading = false,
-                    isChallengerLoading = true,
+                    isRefresh = false,
+                    errorMessages = ErrorMessage(
+                        id = 20L,
+                        messageId = R.string.load_error
+                    ),
+                ),
+                onChallengerSelected = {},
+                onMissionsListener = {},
+                onRefreshChallengers = {},
+                onRetryChallengers = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewChallengerFeedLoadingScreen() {
+    DesafioDouradoTheme {
+        Background {
+            ChallengerFeed(
+                uiState = HomeUiState.HasChallengers(
+                    challengers = Challenger(
+                        challengers
+                    ),
+                    selectedChallenger = null,
+                    badgeCount = 0,
+                    finishAllMissions = false,
+                    coin = 200,
+                    showMissions = false,
+                    isLoading = true,
+                    isRefresh = false,
+                    errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
+                ),
+                onChallengerSelected = {},
+                onMissionsListener = {},
+                onRefreshChallengers = {},
+                onRetryChallengers = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewChallengerFeedErrorScreen() {
+    DesafioDouradoTheme {
+        Background {
+            ChallengerFeed(
+                uiState = HomeUiState.NoChallengers(
+                    isLoading = false,
+                    isRefresh = false,
+                    errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
+                ),
+                onChallengerSelected = {},
+                onMissionsListener = {},
+                onRefreshChallengers = {},
+                onRetryChallengers = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun PreviewChallengerFeedEmptyScreen() {
+    DesafioDouradoTheme {
+        Background {
+            ChallengerFeed(
+                uiState = HomeUiState.HasChallengers(
+                    challengers = Challenger(mutableListOf()),
+                    selectedChallenger = null,
+                    badgeCount = 0,
+                    finishAllMissions = false,
+                    coin = 200,
+                    showMissions = false,
+                    isLoading = false,
+                    isRefresh = false,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
                 onChallengerSelected = {},

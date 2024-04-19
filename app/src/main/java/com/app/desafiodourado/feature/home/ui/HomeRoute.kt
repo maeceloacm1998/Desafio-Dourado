@@ -22,9 +22,9 @@ fun HomeRoute(
     HomeRoute(
         uiState = uiState,
         snackbarHostState = snackbarHostState,
-        onChallengerSelected = { homeViewModel.challengerSelected(it) },
+        onChallengerSelected = { homeViewModel.onSetChallengerSelected(it) },
         onInteractionWithFeed = { homeViewModel.onInteractionFeed() },
-        onMissionsListener = { homeViewModel.openMissions(it) },
+        onMissionsListener = { homeViewModel.onOpenMissions(it) },
         onRefreshChallengers = { homeViewModel.refresh() },
         onRetryChallengers = { homeViewModel.refresh() },
     )

@@ -36,31 +36,33 @@ class HomeViewModel(
         )
 
     init {
-        startCountDownUseCase()
-        handleUpdateMissions()
-        handleUpdateChallengers()
-        handleUpdateCoins()
-        observables()
+        viewModelScope.launch {
+            startCountDownUseCase()
+            handleUpdateMissions()
+            handleUpdateCoins()
+            handleUpdateChallengers()
+            observables()
+        }
     }
 
-    private fun handleUpdateMissions() {
+    private suspend fun handleUpdateMissions() {
         viewModelScope.launch {
             updateMissionsUseCase()
         }
     }
 
-    private fun handleUpdateCoins() {
+    private suspend fun handleUpdateCoins() {
         viewModelScope.launch {
             homeRepository.updateCoins()
         }
     }
 
-    private fun handleUpdateChallengers() {
+    private suspend fun handleUpdateChallengers() {
         viewModelScope.launch {
             when (val result = getChallengersUseCase()) {
                 is Success -> {
                     onUpdateChallengerList(result.data)
-                    onChallengerLoading(false)
+                    onLoading(false)
                 }
 
                 is Error -> {
@@ -69,7 +71,7 @@ class HomeViewModel(
                         messageId = R.string.load_error
                     )
                     onUpdateMessageError(errorMessages)
-                    onChallengerLoading(false)
+                    onLoading(false)
                 }
             }
         }
@@ -79,7 +81,6 @@ class HomeViewModel(
         viewModelScope.launch {
             homeRepository.observeCoins().collect { coin ->
                 onUpdateCoin(coin)
-                onLoading(false)
             }
         }
 
@@ -93,20 +94,23 @@ class HomeViewModel(
                         badgeCount = missionsNotChecked,
                         isFinishAllMissions = isFinishAllMissions
                     )
-                    onLoading(false)
                 }
             }
         }
     }
 
     fun refresh() {
-        onChallengerLoading(true)
-        handleUpdateMissions()
-        handleUpdateChallengers()
-        handleUpdateCoins()
+        viewModelScope.launch {
+            onRefreshState(true)
+            onLoading(true)
+            handleUpdateMissions()
+            handleUpdateChallengers()
+            handleUpdateCoins()
+            onRefreshState(false)
+        }
     }
 
-    fun challengerSelected(challengers: Challenger.Card) {
+    fun onSetChallengerSelected(challengers: Challenger.Card) {
         viewModelState.update { it.copy(selectedChallenger = challengers) }
     }
 
@@ -115,7 +119,7 @@ class HomeViewModel(
         refresh()
     }
 
-    fun openMissions(visible: Boolean) {
+    fun onOpenMissions(visible: Boolean) {
         viewModelState.update { it.copy(showMissions = visible) }
     }
 
@@ -155,7 +159,7 @@ class HomeViewModel(
         viewModelState.update { it.copy(isLoading = state) }
     }
 
-    private fun onChallengerLoading(state: Boolean) {
-        viewModelState.update { it.copy(isChallengerLoading = state) }
+    private fun onRefreshState(state: Boolean) {
+        viewModelState.update { it.copy(isRefresh = state) }
     }
 }
