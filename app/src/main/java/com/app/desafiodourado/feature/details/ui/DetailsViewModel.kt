@@ -46,8 +46,10 @@ class DetailsViewModel(private val completeChallengerUseCase: CompleteChallenger
         userCoins: Int
     ) {
         viewModelScope.launch {
+            onLoading(true)
             if (userCoins < challengerSelected.value) {
                 snackbarHostState.showSnackbar(INSUFFICIENT_QUANTITY)
+                onLoading(false)
             } else {
                 handleCompleteChallenger(
                     challengerList = challengerList,
@@ -71,15 +73,23 @@ class DetailsViewModel(private val completeChallengerUseCase: CompleteChallenger
             userCoins = userCoins
         )) {
             is Result.Success -> {
-                viewModelState.update {
-                    it.copy(selectedChallenger = result.data)
-                }
+                onLoading(false)
+                onSetChallengerResult(result.data)
             }
 
             is Result.Error -> {
+                onLoading(false)
                 snackbarHostState.showSnackbar(ERROR)
             }
         }
+    }
+
+    private fun onSetChallengerResult(card: Challenger.Card) {
+        viewModelState.update { it.copy(selectedChallenger = card) }
+    }
+
+    private fun onLoading(state: Boolean) {
+        viewModelState.update { it.copy(isLoading = state) }
     }
 
     companion object {

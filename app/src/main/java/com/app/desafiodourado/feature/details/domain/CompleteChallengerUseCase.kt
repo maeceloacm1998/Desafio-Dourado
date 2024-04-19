@@ -18,8 +18,8 @@ class CompleteChallengerUseCase(
         if (existChallenger) {
             val challengerIndex = challengerList.indexOf(challengerSelected)
             val challengerItem = challengerList[challengerIndex].copy(complete = true)
-
             challengerList[challengerIndex] = challengerItem
+
             return when (detailsRepository.completeChallenger(challengerList)) {
                 is Result.Success -> {
                     val newQuantityCoins = userCoins - challengerSelected.value

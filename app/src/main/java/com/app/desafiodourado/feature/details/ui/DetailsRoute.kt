@@ -39,7 +39,10 @@ fun DetailsRoute(
                 snackbarHostState = snackbarHostState
             )
         },
-        onBack = onBack
+        onBack = {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            onBack()
+        }
     )
 }
 
