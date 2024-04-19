@@ -3,96 +3,31 @@ package com.app.desafiodourado.feature.initial.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.button.NormalButton
 import com.app.desafiodourado.components.textfield.TextFieldCustom
-import com.app.desafiodourado.core.routes.Routes
-import com.app.desafiodourado.core.utils.UiState
 import com.app.desafiodourado.theme.CustomDimensions
-import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun InitialScreen(navController: NavController, viewModel: InitialViewModel = koinViewModel()) {
+fun InitialScreen(
+    uiState: InitialViewModelUiState.Data,
+    onSubmitButton: (userName: String) -> Unit,
+) {
     var nameState by rememberSaveable { mutableStateOf("") }
-    var isLoading by rememberSaveable { mutableStateOf(false) }
-
-    val userNameError by viewModel.userNameError.observeAsState(initial = false)
-
-    Observables(
-        navController = navController,
-        viewModel = viewModel,
-        onLoading = {
-            isLoading = it
-        })
-
-    InitialComponents(
-        isLoading = isLoading,
-        userNameError = userNameError,
-        onNameState = { name -> nameState = name },
-        onSubmitButton = { viewModel.init(nameState) }
-    )
-}
-
-@Composable
-fun Observables(
-    navController: NavController,
-    viewModel: InitialViewModel,
-    onLoading: (state: Boolean) -> Unit
-) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    when (uiState) {
-        is UiState.Loading -> {
-            onLoading(true)
-        }
-
-        is UiState.Success -> {
-            navController.navigate(Routes.Home.route) {
-                popUpTo(Routes.Initial.route) {
-                    inclusive = true
-                }
-            }
-        }
-
-        is UiState.Error -> {
-            onLoading(false)
-        }
-
-        else -> Unit
-    }
-}
-
-@Composable
-fun InitialComponents(
-    isLoading: Boolean,
-    userNameError: Boolean,
-    onSubmitButton: () -> Unit,
-    onNameState: (name: String) -> Unit
-) {
 
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (imgChallenger, tfName, btGoToAdventure) = createRefs()
@@ -134,17 +69,17 @@ fun InitialComponents(
                 },
             label = stringResource(id = R.string.initial_screen_tf_label),
             onChangeListener = {
-                onNameState(it)
+                nameState = it
             },
-            error = userNameError,
-            supportText = if (userNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
+            error = uiState.isUserNameError,
+            supportText = if (uiState.isUserNameError) stringResource(id = R.string.initial_screen_tf_error) else ""
         )
 
 
         NormalButton(
             title = stringResource(id = R.string.initial_screen_bt_label),
-            onButtonListener = { onSubmitButton() },
-            loading = isLoading,
+            onButtonListener = { onSubmitButton(nameState) },
+            loading = uiState.isLoading,
             modifier = Modifier
                 .padding(horizontal = CustomDimensions.padding20)
                 .constrainAs(btGoToAdventure) {
@@ -158,10 +93,11 @@ fun InitialComponents(
 @Preview
 @Composable
 fun InitialScreenPreview() {
-    InitialComponents(
-        isLoading = false,
-        userNameError = false,
-        onSubmitButton = {},
-        onNameState = {}
+    InitialScreen(
+        uiState = InitialViewModelUiState.Data(
+            isLoading = false,
+            isUserNameError = false
+        ),
+        onSubmitButton = {}
     )
 }

@@ -1,62 +1,90 @@
 package com.app.desafiodourado.feature.initial.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.app.desafiodourado.core.utils.UiState
+import androidx.navigation.NavController
+import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.feature.initial.domain.CreateChallengersUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateMissionsUseCase
 import com.app.desafiodourado.feature.initial.domain.CreateUserUseCase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class InitialViewModel(
     private val createUserUseCase: CreateUserUseCase,
     private val createChallengersUseCase: CreateChallengersUseCase,
     private val createMissionsUseCase: CreateMissionsUseCase
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<Boolean>?>(null)
-    val uiState: StateFlow<UiState<Boolean>?> = _uiState
+    private val viewModelState = MutableStateFlow(InitialViewModelState())
 
-    private val _userNameError = MutableLiveData<Boolean>()
-    val userNameError: LiveData<Boolean> = _userNameError
+    val uiState = viewModelState
+        .map(InitialViewModelState::toUiState)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.Eagerly,
+            viewModelState.value.toUiState()
+        )
 
-    fun init(userName: String) {
+    init {
         viewModelScope.launch {
-            val job1 = async { createChallengersUseCase() }
-            val job2 = async { createMissionsUseCase() }
+            handleChallengerScheme()
+            handleMissionScheme()
+        }
+    }
 
-            job1.await()
-            job2.await()
+    fun createUser(userName: String, navController: NavController) {
+        val userNameIsEmpty = userName.isEmpty()
+        onSetLoading(true)
 
-            withContext(Dispatchers.Main) {
-                createUser(userName)
+        if (userNameIsEmpty) {
+            onSetError(true)
+            onSetLoading(false)
+        } else {
+            handleUserScheme(
+                userName = userName,
+                navController = navController
+            )
+        }
+    }
+
+    private fun handleUserScheme(userName: String, navController: NavController) {
+        viewModelScope.launch {
+            createUserUseCase(userName)
+                .onSuccess {
+                    goToHome(navController)
+                }
+                .onFailure {
+                    onSetError(true)
+                    onSetLoading(false)
+                }
+        }
+    }
+
+    private suspend fun handleMissionScheme() {
+        createMissionsUseCase()
+    }
+
+    private suspend fun handleChallengerScheme() {
+        createChallengersUseCase()
+    }
+
+    private fun goToHome(navController: NavController) {
+        navController.navigate(Routes.Home.route) {
+            popUpTo(Routes.Initial.route) {
+                inclusive = true
             }
         }
     }
 
-    private suspend fun createUser(userName: String) {
-        if (userName.isNotEmpty()) {
-            _uiState.value = UiState.Loading
-            setUserNameError(false)
-
-            createUserUseCase(userName)
-                .onSuccess {
-                    _uiState.value = UiState.Success(true)
-                }.onFailure {
-                    _uiState.value = UiState.Error(it)
-                }
-        } else {
-            setUserNameError(true)
-        }
+    private fun onSetLoading(state: Boolean) {
+        viewModelState.update { it.copy(isLoading = state) }
     }
 
-    private fun setUserNameError(value: Boolean) {
-        _userNameError.value = value
+    private fun onSetError(state: Boolean) {
+        viewModelState.update { it.copy(isUserNameError = state) }
     }
 }
