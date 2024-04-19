@@ -3,8 +3,10 @@
 package com.app.desafiodourado.feature.home.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
@@ -93,6 +95,13 @@ fun InfoBottomSheet() {
                     "Existem dois tipos de cartões no jogo: os cartões normais, que têm uma imagem de coruja no centro, e os DESAFIOS DOURADOS, que oferecem prêmios incríveis. Os cartões normais podem ou não conter prêmios, enquanto os cartões de DESAFIO DOURADO sempre contêm algum prêmio. No entanto, para obter esses cartões, você precisará de muitas moedas.",
             color = Color.White,
             style = MaterialTheme.typography.titleMedium
+        )
+
+        Spacer(
+            modifier = Modifier.size(
+                height = CustomDimensions.padding20,
+                width = CustomDimensions.padding20
+            )
         )
     }
 }
