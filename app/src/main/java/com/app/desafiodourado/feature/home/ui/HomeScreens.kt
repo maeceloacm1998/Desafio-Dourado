@@ -47,7 +47,7 @@ fun ChallengerFeed(
                 uiState = state,
                 onMissionsListener = onMissionsListener
             )
-            InfoComponent()
+            InfoComponent(state.challengers.challengers)
             ChallengerList(state) { challengerSelected ->
                 onChallengerSelected(challengerSelected)
             }

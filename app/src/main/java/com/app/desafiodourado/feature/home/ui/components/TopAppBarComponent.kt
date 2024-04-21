@@ -14,6 +14,7 @@ import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.HomeUiState
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.commons.mock.challengers
+import com.app.desafiodourado.core.utils.ErrorMessage
 import com.app.desafiodourado.feature.missions.ui.MissionsRoute
 import com.app.desafiodourado.theme.Background
 
@@ -48,4 +49,44 @@ fun CustomChallengerFeedTollBar(
     ) {
         MissionsRoute()
     }
+}
+
+@Preview
+@Composable
+fun CustomChallengerFeedTollBarPreview() {
+    CustomChallengerFeedTollBar(
+        uiState = HomeUiState.HasChallengers(
+            challengers = Challenger(
+                challengers
+            ),
+            selectedChallenger = null,
+            badgeCount = 6,
+            finishAllMissions = false,
+            coin = 200,
+            showMissions = false,
+            isLoading = true,
+            isRefresh = false,
+            errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
+        )
+    ) {}
+}
+
+@Preview
+@Composable
+fun CustomChallengerFeedTollBarCompleteQuestionsPreview() {
+    CustomChallengerFeedTollBar(
+        uiState = HomeUiState.HasChallengers(
+            challengers = Challenger(
+                challengers
+            ),
+            selectedChallenger = null,
+            badgeCount = 6,
+            finishAllMissions = true,
+            coin = 200,
+            showMissions = false,
+            isLoading = true,
+            isRefresh = false,
+            errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
+        )
+    ) {}
 }
