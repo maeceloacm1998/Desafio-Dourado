@@ -26,6 +26,8 @@ import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.components.textfield.TextFieldCustom
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
+import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.HasFeedbackTypes
+import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.NoHasFeedbackTypes
 import com.app.desafiodourado.feature.feedback.ui.models.FeedbackTypes
 import com.app.desafiodourado.theme.CustomDimensions
 
@@ -38,18 +40,18 @@ fun FeedbackScreen(
     onBack: () -> Unit
 ) {
     LoadingContent(
-        isEmpty = uiState is FeedbackViewModelUiState.NoHasFeedbackTypes,
-        isLoading = uiState is FeedbackViewModelUiState.HasFeedbackTypes && uiState.isLoading,
+        uiState = uiState,
+        isEmpty = uiState is NoHasFeedbackTypes && !uiState.isLoading,
+        isLoading = uiState.isLoading,
         emptyContent = {
             Error(
                 title = stringResource(id = R.string.load_error_feedback),
                 onClickRetryListener = {}
             )
         },
-        content = {
-            check(uiState is FeedbackViewModelUiState.HasFeedbackTypes)
+        content = { state ->
             FeedbackContainer(
-                uiState = uiState,
+                uiState = state,
                 onChangeFeedbackListener = onChangeFeedbackListener,
                 onClickFeedbackTypeListener = onClickFeedbackTypeListener,
                 onClickFinishFeedback = onClickFinishFeedback,
@@ -61,21 +63,25 @@ fun FeedbackScreen(
 
 @Composable
 private fun LoadingContent(
+    uiState: FeedbackViewModelUiState,
     isEmpty: Boolean,
     isLoading: Boolean,
     emptyContent: @Composable () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable (state: HasFeedbackTypes) -> Unit
 ) {
     when {
         isLoading -> Loading()
         isEmpty -> emptyContent()
-        else -> content()
+        else -> {
+            check(uiState is HasFeedbackTypes)
+            content(uiState)
+        }
     }
 }
 
 @Composable
 fun FeedbackContainer(
-    uiState: FeedbackViewModelUiState.HasFeedbackTypes,
+    uiState: HasFeedbackTypes,
     onChangeFeedbackListener: (feedbackText: String) -> Unit,
     onClickFeedbackTypeListener: (FeedbackTypes) -> Unit,
     onClickFinishFeedback: () -> Unit,
@@ -128,7 +134,10 @@ fun FeedbackContainer(
                         end.linkTo(parent.end)
                     }
                     .fillMaxWidth()
-                    .padding(horizontal = CustomDimensions.padding24, vertical = CustomDimensions.padding16),
+                    .padding(
+                        horizontal = CustomDimensions.padding24,
+                        vertical = CustomDimensions.padding16
+                    ),
                 label = stringResource(id = R.string.feedback_screen_label),
                 isSingleLine = false,
                 maxLines = 12,
@@ -190,7 +199,7 @@ fun FeedbackTypesList(
 @Composable
 fun FeedbackScreenPreview() {
     FeedbackScreen(
-        uiState = FeedbackViewModelUiState.HasFeedbackTypes(
+        uiState = HasFeedbackTypes(
             isLoading = false,
             isErrorFetchData = false,
             isLoadingFinishFeedback = false,
