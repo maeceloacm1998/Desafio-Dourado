@@ -1,22 +1,23 @@
 package com.app.desafiodourado.feature.feedback.ui
 
+import com.app.desafiodourado.components.snackbar.SnackbarCustomType
 import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.HasFeedbackTypes
 import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.NoHasFeedbackTypes
 import com.app.desafiodourado.feature.feedback.ui.models.FeedbackTypes
 
 sealed interface FeedbackViewModelUiState {
     val isLoading: Boolean
-    val isErrorFetchData: Boolean
 
     data class NoHasFeedbackTypes(
         override val isLoading: Boolean,
-        override val isErrorFetchData: Boolean
     ): FeedbackViewModelUiState
 
     data class HasFeedbackTypes(
         override val isLoading: Boolean,
-        override val isErrorFetchData: Boolean,
+        val isErrorFeedbackTypesNotSelected: Boolean,
+        val isErrorFeedbackTextIsEmpty: Boolean,
         val isLoadingFinishFeedback: Boolean,
+        val snackBarType: SnackbarCustomType,
         val feedbackText: String,
         val feedbackTypesList: List<FeedbackTypes>
     ) : FeedbackViewModelUiState
@@ -24,24 +25,25 @@ sealed interface FeedbackViewModelUiState {
 
 data class FeedbackViewModelState(
     val isLoading: Boolean = false,
-    val isErrorFetchData: Boolean = false,
+    val isErrorFeedbackTypesNotSelected: Boolean = false,
+    val isErrorFeedbackTextIsEmpty: Boolean = false,
     val isLoadingFinishFeedback: Boolean = false,
-    val feedbackText: String = "",
-    val feedbackTypesList: List<FeedbackTypes> = mutableListOf()
+    val snackBarType: SnackbarCustomType = SnackbarCustomType.SUCCESS,
+    val feedbackTypesList: List<FeedbackTypes> = mutableListOf(),
+    val feedbackText: String = ""
 ) {
     fun toUiState(): FeedbackViewModelUiState =
         if(feedbackTypesList.isEmpty()) {
-            NoHasFeedbackTypes(
-                isLoading = isLoading,
-                isErrorFetchData = isErrorFetchData
-            )
+            NoHasFeedbackTypes(isLoading = isLoading)
         } else {
             HasFeedbackTypes(
                 isLoading = isLoading,
-                isErrorFetchData = isErrorFetchData,
+                isErrorFeedbackTypesNotSelected = isErrorFeedbackTypesNotSelected,
+                isErrorFeedbackTextIsEmpty = isErrorFeedbackTextIsEmpty,
                 isLoadingFinishFeedback = isLoadingFinishFeedback,
-                feedbackText = feedbackText,
-                feedbackTypesList = feedbackTypesList
+                snackBarType = snackBarType,
+                feedbackTypesList = feedbackTypesList,
+                feedbackText = feedbackText
             )
         }
 }

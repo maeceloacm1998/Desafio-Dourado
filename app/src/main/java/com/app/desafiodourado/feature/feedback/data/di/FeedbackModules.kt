@@ -2,6 +2,7 @@ package com.app.desafiodourado.feature.feedback.data.di
 
 import com.app.desafiodourado.feature.feedback.data.FeedbackRepository
 import com.app.desafiodourado.feature.feedback.data.FeedbackRepositoryImpl
+import com.app.desafiodourado.feature.feedback.domain.CreateFeedbackUseCase
 import com.app.desafiodourado.feature.feedback.domain.GetFeedbackTypesUseCase
 import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -16,10 +17,12 @@ object FeedbackModules {
         }
 
         factory { GetFeedbackTypesUseCase(feedbackRepository = get()) }
+        factory { CreateFeedbackUseCase(feedbackRepository = get()) }
 
         viewModel {
             FeedbackViewModel(
-                getFeedbackTypesUseCase = get()
+                getFeedbackTypesUseCase = get(),
+                createFeedbackUseCase = get()
             )
         }
     }

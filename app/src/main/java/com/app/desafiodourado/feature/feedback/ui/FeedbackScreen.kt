@@ -1,5 +1,6 @@
 package com.app.desafiodourado.feature.feedback.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import com.app.desafiodourado.R
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.button.NormalButton
 import com.app.desafiodourado.components.chips.ChipsCustom
+import com.app.desafiodourado.components.snackbar.SnackbarCustomType.ERROR
 import com.app.desafiodourado.components.states.Error
 import com.app.desafiodourado.components.states.Loading
 import com.app.desafiodourado.components.textfield.TextFieldCustom
@@ -29,11 +32,13 @@ import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.HasFeedbackTypes
 import com.app.desafiodourado.feature.feedback.ui.FeedbackViewModelUiState.NoHasFeedbackTypes
 import com.app.desafiodourado.feature.feedback.ui.models.FeedbackTypes
+import com.app.desafiodourado.theme.Error
 import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun FeedbackScreen(
     uiState: FeedbackViewModelUiState,
+    snackbarHostState: SnackbarHostState,
     onChangeFeedbackListener: (feedbackText: String) -> Unit,
     onClickFeedbackTypeListener: (FeedbackTypes) -> Unit,
     onClickFinishFeedback: () -> Unit,
@@ -52,6 +57,7 @@ fun FeedbackScreen(
         content = { state ->
             FeedbackContainer(
                 uiState = state,
+                snackBarHostState = snackbarHostState,
                 onChangeFeedbackListener = onChangeFeedbackListener,
                 onClickFeedbackTypeListener = onClickFeedbackTypeListener,
                 onClickFinishFeedback = onClickFinishFeedback,
@@ -82,12 +88,16 @@ private fun LoadingContent(
 @Composable
 fun FeedbackContainer(
     uiState: HasFeedbackTypes,
+    snackBarHostState: SnackbarHostState,
     onChangeFeedbackListener: (feedbackText: String) -> Unit,
     onClickFeedbackTypeListener: (FeedbackTypes) -> Unit,
     onClickFinishFeedback: () -> Unit,
     onBack: () -> Unit,
 ) {
-    Background {
+    Background(
+        snackbarHostState = snackBarHostState,
+        snackbarType = uiState.snackBarType
+    ){
         ConstraintLayout(
             modifier = Modifier
                 .fillMaxSize()
@@ -139,6 +149,8 @@ fun FeedbackContainer(
                         vertical = CustomDimensions.padding16
                     ),
                 label = stringResource(id = R.string.feedback_screen_label),
+                error = uiState.isErrorFeedbackTextIsEmpty,
+                errorText = stringResource(id = R.string.feedback_screen_error_text),
                 isSingleLine = false,
                 maxLines = 12,
                 maxLength = 200,
@@ -154,6 +166,7 @@ fun FeedbackContainer(
                     end.linkTo(parent.end)
                 },
                 feedbackTypesList = uiState.feedbackTypesList,
+                isError = uiState.isErrorFeedbackTypesNotSelected,
                 onClickFeedbackTypeListener = onClickFeedbackTypeListener
             )
 
@@ -166,6 +179,7 @@ fun FeedbackContainer(
                     }
                     .padding(CustomDimensions.padding24),
                 title = stringResource(id = R.string.feedback_screen_button),
+                loading = uiState.isLoadingFinishFeedback,
                 onButtonListener = onClickFinishFeedback
             )
         }
@@ -177,6 +191,7 @@ fun FeedbackContainer(
 fun FeedbackTypesList(
     modifier: Modifier = Modifier,
     feedbackTypesList: List<FeedbackTypes>,
+    isError: Boolean = false,
     onClickFeedbackTypeListener: (FeedbackTypes) -> Unit
 ) {
     FlowRow(
@@ -192,6 +207,15 @@ fun FeedbackTypesList(
                 onClickChipListener = { onClickFeedbackTypeListener(it) }
             )
         }
+        AnimatedVisibility(visible = isError) {
+            Text(
+                text = stringResource(
+                    id = R.string.feedback_screen_error_types
+                ),
+                color = Error,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
 
@@ -201,14 +225,17 @@ fun FeedbackScreenPreview() {
     FeedbackScreen(
         uiState = HasFeedbackTypes(
             isLoading = false,
-            isErrorFetchData = false,
+            isErrorFeedbackTypesNotSelected = false,
+            isErrorFeedbackTextIsEmpty = false,
             isLoadingFinishFeedback = false,
+            snackBarType = ERROR,
             feedbackText = "",
             feedbackTypesList = mutableListOf()
         ),
         onChangeFeedbackListener = {},
         onClickFeedbackTypeListener = {},
         onClickFinishFeedback = {},
+        snackbarHostState = SnackbarHostState(),
         onBack = {}
     )
 }

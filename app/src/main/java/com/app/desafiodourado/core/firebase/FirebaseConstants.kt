@@ -12,7 +12,6 @@ class FirebaseConstants {
         const val GET_SPECIFIC_DOCUMENT = "GET_SPECIFIC_DOCUMENT"
         const val GET_FILTER_DOCUMENT = "GET_FILTER_DOCUMENT"
         const val SET_SPECIFIC_DOCUMENT = "SET_SPECIFIC_DOCUMENT"
-        const val UPDATE_DOCUMENT = "UPDATE_DOCUMENT"
         const val DELETE_DOCUMENT = "DELETE_DOCUMENT"
     }
 
@@ -24,6 +23,7 @@ class FirebaseConstants {
         const val USERS = "users"
         const val CHALLENGERS = "challengers"
         const val MISSIONS = "missions"
+        const val FEEDBACK = "feedback"
         const val FEEDBACK_TYPES = "feedbacktypes"
     }
 }

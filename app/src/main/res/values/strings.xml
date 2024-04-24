@@ -17,6 +17,8 @@
     <string name="feedback_screen_description">Sua opinião é muito importante para nós. Por favor, compartilhe suas ideias ou reporte qualquer problema que você tenha encontrado.</string>
     <string name="feedback_screen_label">Digite sua sugestão aqui…</string>
     <string name="feedback_screen_button">Enviar Feedback</string>
+    <string name="feedback_screen_error_text">Digite seu feedback para enviar.</string>
+    <string name="feedback_screen_error_types">Escolha uma categoria de feedback.</string>
 
     <string name="dialog_title">Desafio da missaão</string>
     <string name="dialog_description">Essa carta é considerada comum, nela tem chance de vir algum presente ou item para sua coleção, contudo tem chances de não vir nada</string>
