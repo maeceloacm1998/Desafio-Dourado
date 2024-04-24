@@ -40,6 +40,7 @@ fun TextFieldCustom(
     imeAction: ImeAction = ImeAction.Go,
     keyboardActions: KeyboardActions? = null,
     isPasswordToggle: Boolean = false,
+    isSingleLine: Boolean = true,
     maxLines: Int = 1,
     maxLength: Int = 100,
     onChangeListener: (text: String) -> Unit,
@@ -59,6 +60,7 @@ fun TextFieldCustom(
                 onChangeListener(it)
             }
         },
+
         modifier,
         label = {
             Text(
@@ -77,12 +79,21 @@ fun TextFieldCustom(
         ),
         keyboardActions = keyboardActions ?: KeyboardActions { },
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+        singleLine = isSingleLine,
         maxLines = maxLines,
         isError = error,
         supportingText = {
-            Text(
-                supportText, color = if (error) Error else Color.White
-            )
+            if(maxLength != 100) {
+                Text(
+                    text = "${text.length}/$maxLength",
+                    color = if (error) Error else BrowLight
+                )
+            } else {
+                Text(
+                    text = supportText,
+                    color = if (error) Error else BrowLight
+                )
+            }
         },
         trailingIcon = {
             if (isPasswordToggle) {
