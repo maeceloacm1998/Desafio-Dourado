@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.app.desafiodourado.core.routes.Routes
+import com.app.desafiodourado.feature.feedback.ui.FeedbackRoute
 import com.app.desafiodourado.feature.home.ui.HomeRoute
 import com.app.desafiodourado.feature.initial.ui.InitialRoute
 
@@ -28,6 +29,10 @@ fun DesafioDouradoNavGraph(
 
         composable(route = Routes.Home.route) {
             HomeRoute()
+        }
+
+        composable(route = Routes.Feedback.route) {
+            FeedbackRoute(navController)
         }
     }
 }

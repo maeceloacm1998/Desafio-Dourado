@@ -24,5 +24,6 @@ class FirebaseConstants {
         const val USERS = "users"
         const val CHALLENGERS = "challengers"
         const val MISSIONS = "missions"
+        const val FEEDBACK_TYPES = "feedbacktypes"
     }
 }
