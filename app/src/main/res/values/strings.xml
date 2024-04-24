@@ -3,6 +3,7 @@
 
     <string name="load_error">Error ao carregar os desafios</string>
     <string name="load_error_missions">Error ao carregar os desafios</string>
+    <string name="load_error_feedback">Error ao carregar a tela de feedback</string>
 
     <string name="initial_screen_tf_label">Nome de aventureiro(a)</string>
     <string name="initial_screen_tf_error">Digite seu nome para iniciar sua jornada :)</string>
@@ -11,6 +12,11 @@
 
     <string name="challengers_feed_screen_version_title">v1.0.0</string>
     <string name="challengers_feed_screen_toolbar_title">"Premios Misteriosos"</string>
+
+    <string name="feedback_screen_toolbar_title">Feedback do Usuário</string>
+    <string name="feedback_screen_description">Sua opinião é muito importante para nós. Por favor, compartilhe suas ideias ou reporte qualquer problema que você tenha encontrado.</string>
+    <string name="feedback_screen_label">Digite sua sugestão aqui…</string>
+    <string name="feedback_screen_button">Enviar Feedback</string>
 
     <string name="dialog_title">Desafio da missaão</string>
     <string name="dialog_description">Essa carta é considerada comum, nela tem chance de vir algum presente ou item para sua coleção, contudo tem chances de não vir nada</string>

@@ -15,9 +15,10 @@ sealed interface FeedbackViewModelUiState {
 
     data class HasFeedbackTypes(
         override val isLoading: Boolean,
+        override val isErrorFetchData: Boolean,
         val isLoadingFinishFeedback: Boolean,
         val feedbackText: String,
-        val feedbackTypesList: List<FeedbackTypes>, override val isErrorFetchData: Boolean
+        val feedbackTypesList: List<FeedbackTypes>
     ) : FeedbackViewModelUiState
 }
 
