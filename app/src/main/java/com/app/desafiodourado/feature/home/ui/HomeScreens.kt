@@ -12,6 +12,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.coinview.CoinView
@@ -31,6 +33,7 @@ import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 @Composable
 fun ChallengerFeed(
     uiState: HomeUiState,
+    navController: NavController,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
     onMissionsListener: (visible: Boolean) -> Unit,
     onRefreshChallengers: () -> Unit,
@@ -44,6 +47,7 @@ fun ChallengerFeed(
         Column {
             TopBar(coin = state.coin)
             CustomChallengerFeedTollBar(
+                navController = navController,
                 uiState = state,
                 onMissionsListener = onMissionsListener
             )
@@ -162,6 +166,7 @@ fun PreviewChallengerFeedScreen() {
                         messageId = R.string.load_error
                     ),
                 ),
+                navController = rememberNavController(),
                 onChallengerSelected = {},
                 onMissionsListener = {},
                 onRefreshChallengers = {},
@@ -190,6 +195,7 @@ fun PreviewChallengerFeedLoadingScreen() {
                     isRefresh = false,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
+                navController = rememberNavController(),
                 onChallengerSelected = {},
                 onMissionsListener = {},
                 onRefreshChallengers = {},
@@ -210,6 +216,7 @@ fun PreviewChallengerFeedErrorScreen() {
                     isRefresh = false,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
+                navController = rememberNavController(),
                 onChallengerSelected = {},
                 onMissionsListener = {},
                 onRefreshChallengers = {},
@@ -236,6 +243,7 @@ fun PreviewChallengerFeedEmptyScreen() {
                     isRefresh = false,
                     errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
                 ),
+                navController = rememberNavController(),
                 onChallengerSelected = {},
                 onMissionsListener = {},
                 onRefreshChallengers = {},

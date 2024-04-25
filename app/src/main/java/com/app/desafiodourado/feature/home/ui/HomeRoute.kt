@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.app.desafiodourado.feature.details.ui.DetailsRoute
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import com.app.desafiodourado.feature.home.ui.HomeScreenType.ChallengerFeed
@@ -14,6 +15,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun HomeRoute(
+    navController: NavController,
     homeViewModel: HomeViewModel = koinViewModel(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
@@ -21,6 +23,7 @@ fun HomeRoute(
 
     HomeRoute(
         uiState = uiState,
+        navController = navController,
         snackbarHostState = snackbarHostState,
         onChallengerSelected = { homeViewModel.onSetChallengerSelected(it) },
         onInteractionWithFeed = { homeViewModel.onInteractionFeed() },
@@ -33,6 +36,7 @@ fun HomeRoute(
 @Composable
 fun HomeRoute(
     uiState: HomeUiState,
+    navController: NavController,
     snackbarHostState: SnackbarHostState,
     onChallengerSelected: (challengerSelected: Challenger.Card) -> Unit,
     onInteractionWithFeed: () -> Unit,
@@ -44,6 +48,7 @@ fun HomeRoute(
         ChallengerFeed -> {
             ChallengerFeed(
                 uiState = uiState,
+                navController = navController,
                 onChallengerSelected = onChallengerSelected,
                 onMissionsListener = onMissionsListener,
                 onRefreshChallengers = onRefreshChallengers,
@@ -55,6 +60,7 @@ fun HomeRoute(
             check(uiState is HomeUiState.HasChallengers)
             uiState.selectedChallenger?.let {
                 DetailsRoute(
+                    navController = navController,
                     challengerItem = it,
                     challengerList = uiState.challengers.challengers,
                     userCoins = uiState.coin,

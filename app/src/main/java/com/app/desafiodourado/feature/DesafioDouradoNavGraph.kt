@@ -28,7 +28,7 @@ fun DesafioDouradoNavGraph(
         }
 
         composable(route = Routes.Home.route) {
-            HomeRoute()
+            HomeRoute(navController)
         }
 
         composable(route = Routes.Feedback.route) {

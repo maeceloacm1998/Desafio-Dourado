@@ -17,11 +17,10 @@ fun InitialRoute(
     InitialRoute(
         uiState = uiState,
         onSubmitButton = { userName ->
-//            viewModel.createUser(
-//                userName,
-//                navController
-//            )
-            navController.navigate(Routes.Feedback.route)
+            viewModel.createUser(
+                userName,
+                navController
+            )
         })
 }
 

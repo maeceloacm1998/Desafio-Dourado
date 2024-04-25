@@ -59,7 +59,7 @@ fun ChallengerGrid(
         columns = StaggeredGridCells.Fixed(3),
         contentPadding = PaddingValues(CustomDimensions.padding10),
         horizontalArrangement = Arrangement.spacedBy(CustomDimensions.padding10),
-        verticalItemSpacing = CustomDimensions.padding10,
+        verticalItemSpacing = CustomDimensions.padding5,
         state = listState
     ) {
         items(challengerList.size) { index ->

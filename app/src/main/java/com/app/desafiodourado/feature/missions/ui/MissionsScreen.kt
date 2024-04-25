@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,9 +20,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.commons.FakeHomeRepositoryImpl
+import com.app.desafiodourado.components.button.CustomIconButton
 import com.app.desafiodourado.components.checkbox.CustomCheckbox
 import com.app.desafiodourado.core.utils.Result
 import com.app.desafiodourado.feature.home.ui.model.Missions
+import com.app.desafiodourado.theme.BrowDark
 import com.app.desafiodourado.theme.BrowLight
 import com.app.desafiodourado.theme.CustomDimensions
 import kotlinx.coroutines.runBlocking
@@ -28,6 +32,7 @@ import kotlinx.coroutines.runBlocking
 @Composable
 fun MissionsScreen(
     uiState: MissionsUiState.HasMissions,
+    onClickFeedback: () -> Unit,
     onCheckMission: (mission: Missions.MissionsModel) -> Unit
 ) {
     Column(
@@ -78,6 +83,16 @@ fun MissionsScreen(
             }
         }
 
+        CustomIconButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = CustomDimensions.padding20),
+            title = "Tem alguma sugestão?",
+            icon = Icons.Outlined.Message,
+            iconColor = BrowDark,
+            onClick = onClickFeedback
+        )
+
         Spacer(
             modifier = Modifier.size(
                 height = CustomDimensions.padding20,
@@ -93,10 +108,12 @@ fun MissionScreenPreview() {
     val missionsFeed = runBlocking {
         (FakeHomeRepositoryImpl().getRandomMissions() as Result.Success).data
     }
-    MissionsScreen(uiState = MissionsUiState.HasMissions(
-        missions = missionsFeed,
-        timer = "20:00:00",
-        errorMessages = null,
-        selectedMissions = null
-    ), onCheckMission = {})
+    MissionsScreen(
+        uiState = MissionsUiState.HasMissions(
+            missions = missionsFeed,
+            timer = "20:00:00",
+            errorMessages = null,
+            selectedMissions = null
+        ), onCheckMission = {},
+        onClickFeedback = {})
 }

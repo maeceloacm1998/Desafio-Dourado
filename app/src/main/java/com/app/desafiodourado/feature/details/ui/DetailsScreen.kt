@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHostState
@@ -24,11 +26,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.background.Background
 import com.app.desafiodourado.components.button.CustomButton
+import com.app.desafiodourado.components.button.CustomIconButton
 import com.app.desafiodourado.components.image.ImageComponent
 import com.app.desafiodourado.components.snackbar.CustomSnackbar
 import com.app.desafiodourado.components.snackbar.SnackbarCustomType.ERROR
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
 import com.app.desafiodourado.feature.home.ui.model.Challenger
+import com.app.desafiodourado.theme.BrowDark
 import com.app.desafiodourado.theme.CustomDimensions
 import com.app.desafiodourado.theme.Success
 
@@ -37,12 +41,14 @@ fun DetailsScreen(
     uiState: DetailsUiState.HasChallengersDetails,
     snackbarHostState: SnackbarHostState,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
+    onClickFeedback: () -> Unit,
     onBack: () -> Unit
 ) {
     DetailsSnackBar(snackbarHostState = snackbarHostState) { contentPadding ->
         DetailsComponent(
             uiState = uiState,
             contentPadding = contentPadding,
+            onClickFeedback = onClickFeedback,
             onClickSubmitListener = onClickSubmitListener,
             onBack = onBack
         )
@@ -72,6 +78,7 @@ fun DetailsSnackBar(
 fun DetailsComponent(
     uiState: DetailsUiState.HasChallengersDetails,
     contentPadding: PaddingValues,
+    onClickFeedback: () -> Unit,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit,
 ) {
@@ -112,19 +119,37 @@ fun DetailsComponent(
             CardGiftContainer(selectedChallenger = selectedChallenger)
         }
 
-        CustomButton(
+        Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = CustomDimensions.padding30,
-                    horizontal = CustomDimensions.padding20
-                )
-                .height(CustomDimensions.padding50),
-            coin = selectedChallenger.value,
-            loading = uiState.isLoading,
-            isSuccess = selectedChallenger.complete,
-            onClickListener = { onClickSubmitListener(selectedChallenger) }
-        )
+                .weight(0.5f)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Bottom
+        ) {
+            CustomIconButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = CustomDimensions.padding20),
+                title = "Tem alguma sugestão?",
+                icon = Icons.Outlined.Message,
+                iconColor = BrowDark,
+                onClick = onClickFeedback
+            )
+
+            CustomButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = CustomDimensions.padding16,
+                        horizontal = CustomDimensions.padding20
+                    )
+                    .height(CustomDimensions.padding50),
+                coin = selectedChallenger.value,
+                loading = uiState.isLoading,
+                isSuccess = selectedChallenger.complete,
+                onClickListener = { onClickSubmitListener(selectedChallenger) }
+            )
+        }
     }
 }
 
@@ -232,6 +257,7 @@ fun DetailsScreenPreview() {
             errorMessages = null
         ),
         snackbarHostState = SnackbarHostState(),
+        onClickFeedback = {},
         onClickSubmitListener = {},
         onBack = {}
     )
