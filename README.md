@@ -34,6 +34,10 @@ O Desafio Dourado é um aplicativo projetado para aproximar casais, oferecendo u
 
 Se você estiver interessado em contribuir com o Desafio Dourado, fique à vontade para enviar pull requests com melhorias, correções de bugs ou novas funcionalidades. Sua contribuição é muito bem-vinda!
 
+Sinta-se à vontade para entrar em contato conosco pelo LinkedIn!
+<a href="https://www.linkedin.com/in/marcelochmendes/">
+  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="30">
+</a>
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
