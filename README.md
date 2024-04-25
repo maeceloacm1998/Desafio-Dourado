@@ -6,6 +6,8 @@
 
 O Desafio Dourado é um aplicativo projetado para aproximar casais, oferecendo uma experiência interativa onde eles têm a oportunidade de ganhar prêmios emocionantes para presentear um ao outro, seja algo material ou um passeio especial. O jogo é baseado em missões diárias que oferecem recompensas na forma de moedas.
 
+![GIF animado](https://example.com/exemplo.gif)
+
 ## Funcionalidades Principais
 
 - **Missões Diárias:** O aplicativo oferece missões atualizadas diariamente, cada uma com uma recompensa específica em moedas. Os casais podem completar essas missões para ganhar moedas.
@@ -34,4 +36,4 @@ Se você estiver interessado em contribuir com o Desafio Dourado, fique à vonta
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
