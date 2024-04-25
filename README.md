@@ -1,5 +1,9 @@
 # Desafio Dourado
 
+<p align="center">
+  <img src="./app/src/main/res/drawable/challenger.png" alt="Desafio Dourado" width="300">
+</p>
+
 O Desafio Dourado é um aplicativo projetado para aproximar casais, oferecendo uma experiência interativa onde eles têm a oportunidade de ganhar prêmios emocionantes para presentear um ao outro, seja algo material ou um passeio especial. O jogo é baseado em missões diárias que oferecem recompensas na forma de moedas.
 
 ## Funcionalidades Principais
