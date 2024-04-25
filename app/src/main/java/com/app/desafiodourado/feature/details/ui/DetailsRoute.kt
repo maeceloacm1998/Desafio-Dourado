@@ -6,6 +6,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import com.app.desafiodourado.core.routes.Routes
 import com.app.desafiodourado.feature.home.ui.model.Challenger
 import org.koin.androidx.compose.koinViewModel
 
@@ -15,6 +17,7 @@ fun DetailsRoute(
     challengerItem: Challenger.Card,
     userCoins: Int,
     onBack: () -> Unit,
+    navController: NavController,
     detailsViewModel: DetailsViewModel = koinViewModel(),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
@@ -31,6 +34,7 @@ fun DetailsRoute(
     DetailsRoute(
         uiState = uiState,
         snackbarHostState = snackbarHostState,
+        onClickFeedback = { navController.navigate(Routes.Feedback.route) },
         onClickSubmitListener = { challengerSelected ->
             detailsViewModel.completeChallenger(
                 challengerList = challengerList,
@@ -50,6 +54,7 @@ fun DetailsRoute(
 fun DetailsRoute(
     uiState: DetailsUiState,
     snackbarHostState: SnackbarHostState,
+    onClickFeedback: () -> Unit,
     onClickSubmitListener: (challengerSelected: Challenger.Card) -> Unit,
     onBack: () -> Unit
 ) {
@@ -57,6 +62,7 @@ fun DetailsRoute(
     DetailsScreen(
         uiState = uiState,
         snackbarHostState = snackbarHostState,
+        onClickFeedback = onClickFeedback,
         onClickSubmitListener = onClickSubmitListener,
         onBack = onBack
     )

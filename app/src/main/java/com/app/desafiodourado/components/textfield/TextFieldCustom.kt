@@ -1,5 +1,6 @@
 package com.app.desafiodourado.components.textfield
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -36,10 +37,12 @@ fun TextFieldCustom(
     label: String,
     placeholder: String = "",
     supportText: String = "",
+    errorText: String = "",
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Go,
     keyboardActions: KeyboardActions? = null,
     isPasswordToggle: Boolean = false,
+    isSingleLine: Boolean = true,
     maxLines: Int = 1,
     maxLength: Int = 100,
     onChangeListener: (text: String) -> Unit,
@@ -52,6 +55,7 @@ fun TextFieldCustom(
     var passwordHidden by rememberSaveable { mutableStateOf(isPasswordToggle) }
 
     OutlinedTextField(
+        modifier = modifier.fillMaxWidth(),
         value = text,
         onValueChange = {
             if (it.length <= maxLength) {
@@ -59,30 +63,42 @@ fun TextFieldCustom(
                 onChangeListener(it)
             }
         },
-        modifier,
         label = {
             Text(
-                text = label, color = if (error) MaterialTheme.colorScheme.error else BrowLight
+                text = label,
+                color = if (error) MaterialTheme.colorScheme.error else BrowLight
             )
         },
         placeholder = { Text(placeholder, color = BrowLight) },
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = BrowLight, errorLabelColor = Error,
+            focusedBorderColor = BrowLight,
+            focusedTextColor = Color.White,
+            errorLabelColor = Error,
+            errorContainerColor = BackgroundTransparent,
+            errorTextColor = Error,
             containerColor = BackgroundTransparent,
-            unfocusedBorderColor = BrowLight,
-            focusedTextColor = Color.White
+            unfocusedBorderColor = BrowLight
         ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = keyboardType, imeAction = imeAction
         ),
         keyboardActions = keyboardActions ?: KeyboardActions { },
         visualTransformation = if (passwordHidden) PasswordVisualTransformation() else VisualTransformation.None,
+        singleLine = isSingleLine,
         maxLines = maxLines,
         isError = error,
         supportingText = {
-            Text(
-                supportText, color = if (error) Error else Color.White
-            )
+            if (maxLength != 100) {
+                Text(
+                    text = "${text.length}/$maxLength",
+                    color = if (error) Error else BrowLight
+                )
+            } else {
+                Text(
+                    text = if (error) errorText else supportText,
+                    color = if (error) Error else BrowLight
+                )
+            }
         },
         trailingIcon = {
             if (isPasswordToggle) {
@@ -96,15 +112,15 @@ fun TextFieldCustom(
                         tint = if (error) Error else BrowLight
                     )
                 }
-            } else {
+            }
+
+            if (endIconImageVector != null) {
                 IconButton(onClick = { endIconListener?.let { it() } }) {
-                    endIconImageVector?.let {
-                        Icon(
-                            imageVector = it,
-                            contentDescription = endIconDescription,
-                            tint = if (error) Error else BrowLight
-                        )
-                    }
+                    Icon(
+                        imageVector = endIconImageVector,
+                        contentDescription = endIconDescription,
+                        tint = if (error) Error else BrowLight
+                    )
                 }
             }
         },

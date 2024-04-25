@@ -17,12 +17,12 @@ import com.app.desafiodourado.theme.CustomDimensions
 
 @Composable
 fun NormalButton(
+    modifier: Modifier = Modifier,
     title: String,
     titleColor: Color? = null,
     containerColor: Color? = null,
     loading: Boolean = false,
     onButtonListener: () -> Unit,
-    modifier: Modifier = Modifier,
 ) {
     Button(
         modifier = modifier

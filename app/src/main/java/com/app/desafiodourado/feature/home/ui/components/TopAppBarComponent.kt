@@ -8,6 +8,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.app.desafiodourado.R
 import com.app.desafiodourado.components.bottomsheet.BetterModalBottomSheet
 import com.app.desafiodourado.components.toolbar.ToolbarCustom
@@ -21,6 +23,7 @@ import com.app.desafiodourado.theme.Background
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomChallengerFeedTollBar(
+    navController: NavController,
     uiState: HomeUiState.HasChallengers,
     onMissionsListener: (visible: Boolean) -> Unit
 ) {
@@ -47,7 +50,7 @@ fun CustomChallengerFeedTollBar(
         },
         containerColor = Background
     ) {
-        MissionsRoute()
+        MissionsRoute(navController = navController)
     }
 }
 
@@ -67,7 +70,8 @@ fun CustomChallengerFeedTollBarPreview() {
             isLoading = true,
             isRefresh = false,
             errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
-        )
+        ),
+        navController = rememberNavController(),
     ) {}
 }
 
@@ -87,6 +91,7 @@ fun CustomChallengerFeedTollBarCompleteQuestionsPreview() {
             isLoading = true,
             isRefresh = false,
             errorMessages = ErrorMessage(id = 20L, messageId = R.string.load_error),
-        )
+        ),
+        navController = rememberNavController(),
     ) {}
 }
