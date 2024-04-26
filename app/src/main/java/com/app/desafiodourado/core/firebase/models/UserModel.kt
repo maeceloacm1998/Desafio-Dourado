@@ -7,5 +7,7 @@ data class UserModel(
     val name: String = "",
     val quantityCoins: Int = 0,
     val currentMissions: List<Missions.MissionsModel> = mutableListOf(),
-    val lastUpdateMissions: String = ""
+    val lastUpdateMissions: String = "",
+    val dtCreate: String ="",
+    val yearCreate: String = ""
 )
