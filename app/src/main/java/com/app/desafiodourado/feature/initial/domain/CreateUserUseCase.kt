@@ -20,7 +20,9 @@ class CreateUserUseCase(
             name = userName,
             quantityCoins = 0,
             currentMissions = randomMissions,
-            lastUpdateMissions = DateUtils.getCurrentDate()
+            lastUpdateMissions = DateUtils.getCurrentDate(),
+            dtCreate = DateUtils.getCurrentDate(),
+            yearCreate = DateUtils.getCurrentYear()
         )
         return repository.createUserInFirebase(userModel)
     }

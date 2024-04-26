@@ -30,6 +30,11 @@ object DateUtils {
         return format.format(calendar.time)
     }
 
+    fun getCurrentYear(): String {
+        val calendar = Calendar.getInstance()
+        return calendar.get(Calendar.YEAR).toString()
+    }
+
     @SuppressLint("SimpleDateFormat")
     fun compareDates(date1: String, date2: String): Boolean {
         val format = SimpleDateFormat(PATTERN_COMPLETE_DATA)
